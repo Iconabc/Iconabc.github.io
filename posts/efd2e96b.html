@@ -1,0 +1,458 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>ffuf使用介绍 | icon'Blog</title><meta name="author" content="icon"><meta name="copyright" content="icon"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="FFUF进阶使用指南前言​		虽然很多人都熟悉使用 ffuf的基本使用，但真正了解的人却寥寥无几。本文介绍了ffuf的更多使用方法，旨在提升你的ffuf使用水平，从而帮助你发现那些别人可能会忽略的漏洞。 ​		文末付上ffuf使用笔记在线网站 为什么要用 ffuf？​		ffuf 是一款功能强大、高效的fuzz工具，可以对参数、目录、子域等进行暴力破解。它的速度和灵活性使其成为很多人最喜欢使用的f">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ffuf使用介绍">
+<meta property="og:url" content="https://iconabc.github.io/posts/efd2e96b.html">
+<meta property="og:site_name" content="icon&#39;Blog">
+<meta property="og:description" content="FFUF进阶使用指南前言​		虽然很多人都熟悉使用 ffuf的基本使用，但真正了解的人却寥寥无几。本文介绍了ffuf的更多使用方法，旨在提升你的ffuf使用水平，从而帮助你发现那些别人可能会忽略的漏洞。 ​		文末付上ffuf使用笔记在线网站 为什么要用 ffuf？​		ffuf 是一款功能强大、高效的fuzz工具，可以对参数、目录、子域等进行暴力破解。它的速度和灵活性使其成为很多人最喜欢使用的f">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://iconabc.github.io/img/mbc.jpg">
+<meta property="article:published_time" content="2024-12-10T01:16:26.000Z">
+<meta property="article:modified_time" content="2024-12-10T02:12:41.949Z">
+<meta property="article:author" content="icon">
+<meta property="article:tag" content="tool">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://iconabc.github.io/img/mbc.jpg"><link rel="shortcut icon" href="/img/shasha.png"><link rel="canonical" href="https://iconabc.github.io/posts/efd2e96b.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":150,"languages":{"author":"作者: icon","link":"链接: ","source":"来源: icon'Blog","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'ffuf使用介绍',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  isShuoshuo: false
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/mbc.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">14</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">8</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">14</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> about</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/img/shuai.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">icon'Blog</span></a><a class="nav-page-title" href="/"><span class="site-name">ffuf使用介绍</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> about</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">ffuf使用介绍</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-12-10T01:16:26.000Z" title="发表于 2024-12-10 09:16:26">2024-12-10</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-12-10T02:12:41.949Z" title="更新于 2024-12-10 10:12:41">2024-12-10</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/ffuf-tool/">ffuf_tool</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">3.5k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>13分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="FFUF进阶使用指南"><a href="#FFUF进阶使用指南" class="headerlink" title="FFUF进阶使用指南"></a>FFUF进阶使用指南</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>​		虽然很多人都熟悉使用 ffuf的基本使用，但真正了解的人却寥寥无几。本文介绍了ffuf的更多使用方法，旨在提升你的ffuf使用水平，从而帮助你发现那些别人可能会忽略的漏洞。</p>
+<p>​		文末付上ffuf使用笔记在线网站</p>
+<h2 id="为什么要用-ffuf？"><a href="#为什么要用-ffuf？" class="headerlink" title="为什么要用 ffuf？"></a>为什么要用 ffuf？</h2><p>​		ffuf 是一款功能强大、高效的fuzz工具，可以对<strong>参数、目录、子域等</strong>进行暴力破解。它的速度和灵活性使其成为很多人最喜欢使用的fuzz工具之一。</p>
+<h3 id="自定义字典和递归测试："><a href="#自定义字典和递归测试：" class="headerlink" title="自定义字典和递归测试："></a>自定义字典和递归测试：</h3><ul>
+<li>问题：普通字典经常会遗漏一些东西或目录。</li>
+<li>解决方案：使用针对目标环境定制的字典。将其与fuzz相结合，爆破嵌套的目录。例如</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffuf -w /path/to/custom-wordlist.txt -u https://target.com/FUZZ -recursion -recursion-depth 3 -e .php,.asp,.html</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>可以使用 Cewl （自动字典生成，kali自带）等工具或通过分析目标网站的独特关键词、目录名称和文件扩展名来生成自定义字典。</li>
+</ul>
+<h3 id="处理其他-HTTP-方法："><a href="#处理其他-HTTP-方法：" class="headerlink" title="处理其他 HTTP 方法："></a>处理其他 HTTP 方法：</h3><ul>
+<li>问题：大多数人只使用 GET 和 POST 方法进行测试，而忽略了其他 HTTP 方法中的潜在漏洞。</li>
+<li>解决方案：ffuf 可以对可能暴露敏感功能的不常用 HTTP 方法（如 PUT、DELETE、PATCH）进行处理。</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffuf -w /path/to/wordlist.txt -X PUT -u https://target.com/FUZZ -b &#x27;session=abcdef&#x27;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>使用 <strong>TRACE</strong>、<strong>OPTIONS</strong> 和 <strong>CONNECT</strong> 等方法，查找潜在的错误配置或者功能</li>
+</ul>
+<h3 id="利用基于参数的漏洞："><a href="#利用基于参数的漏洞：" class="headerlink" title="利用基于参数的漏洞："></a>利用基于参数的漏洞：</h3><ul>
+<li>问题：传统的处理方法经常会漏掉基于参数的漏洞，尤其是在复杂的测试环境中。</li>
+<li>解决方案：利用 ffuf 同时测试多个参数。</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffuf -w params.txt:PARAM -u https://target.com/page?PARAM=value</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>将 ffuf 与 ParamSpider 或 Arjun 等工具结合使用，可发现隐藏参数并创建有效的测试策略。</li>
+</ul>
+<h3 id="使用-ffuf-的-DNS-模式爆破子域："><a href="#使用-ffuf-的-DNS-模式爆破子域：" class="headerlink" title="使用 ffuf 的 DNS 模式爆破子域："></a>使用 ffuf 的 DNS 模式爆破子域：</h3><ul>
+<li>问题：子域枚举通常仅限于常用工具，遗漏了一些子域。</li>
+<li>解决方案：ffuf 的 DNS 模式允许枚举子域，从而发现容易被遗漏的子域。</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffuf -w /path/to/subdomains.txt -u https://FUZZ.target.com -H &quot;Host: FUZZ.target.com&quot;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>使用将常用子域与潜在通配符或排列组合相结合的字典，以发现更多子域。</li>
+</ul>
+<h3 id="利用-Burp-进行复杂fuzz："><a href="#利用-Burp-进行复杂fuzz：" class="headerlink" title="利用 Burp 进行复杂fuzz："></a>利用 Burp 进行复杂fuzz：</h3><ul>
+<li>问题：有些目标需要复杂的身份验证，或受到 WAF 的保护。</li>
+<li>解决方案：将 ffuf 与 Burp Suite 集成，用于高级测试场景，利用 Burp 的强大功能绕过 WAF 并处理会话。</li>
+<li>使用 Burp 的 Collaborator 或 Intruder 捕捉和重放会话，通过 ffuf 发送这些请求，以进行精确fuzz。</li>
+<li>将 ffuf 与 Burp 的宏功能相结合，可处理复杂的多步骤身份验证流程，确保即使在受保护的环境中也能有效进行fuzz。</li>
+</ul>
+<h3 id="API-和-WebSockets："><a href="#API-和-WebSockets：" class="headerlink" title="API 和 WebSockets："></a>API 和 WebSockets：</h3><ul>
+<li>问题：API 和 WebSockets 需要专门的fuzz，而许多人都没有做。</li>
+<li>解决方案：通过制作包含必要header、令牌和 JSON 主体的自定义请求，为 API 端点调整 ffuf。</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffuf -w /path/to/wordlist.txt -X POST -d &#x27;&#123;&quot;param&quot;:&quot;FUZZ&quot;&#125;&#x27; -H &#x27;Content-Type: application/json&#x27; -u https://api.target.com/endpoint</span><br></pre></td></tr></table></figure>
+
+<h2 id="🛠️-ffuf-高级手册-🛠️"><a href="#🛠️-ffuf-高级手册-🛠️" class="headerlink" title="🛠️ ffuf 高级手册 🛠️"></a>🛠️ ffuf 高级手册 🛠️</h2><h3 id="HTTP-选项："><a href="#HTTP-选项：" class="headerlink" title="HTTP 选项："></a>HTTP 选项：</h3><p><strong>自定义Header：</strong></p>
+<ul>
+<li><code>-H &quot;Custom-Header：FUZZ&quot;</code>- 对自定义标头进行测试处理，以发现隐藏功能。</li>
+<li>例如 <code>ffuf -w headers.txt -u https://target.com/ -H &quot;X-Custom-Header: FUZZ&quot;</code></li>
+</ul>
+<p><strong>身份验证：</strong></p>
+<ul>
+<li><code>-cc</code>和<code>-ck </code>-使用客户端证书和密钥在安全端点后面进行测试处理。</li>
+<li>例如<code> ffuf -w wordlist.txt -u https://securetarget.com/FUZZ -cc client.crt -ck client.key</code></li>
+</ul>
+<p><strong>HTTP 方法fuzz</strong></p>
+<ul>
+<li>-<code>X FUZZ</code>- 测试不常见的 HTTP 方法，如 PUT、DELETE 等。</li>
+<li>例如 <code>ffuf -w methods.txt -X FUZZ -u [https://target.com/resource](https://target.com/resource)</code></li>
+</ul>
+<p><strong>递归fuzz</strong></p>
+<ul>
+<li><code>-recursion</code>- 在目录内自动递归测试。</li>
+<li><code>-recursion-depth</code> - 控制递归深度，避免过多层级。</li>
+<li>例如 <code>ffuf -w dirs.txt -u https://target.com/FUZZ -recursion -recursion-depth 3</code></li>
+</ul>
+<p><strong>超时调整：</strong></p>
+<ul>
+<li><code>-timeout 30</code>- 增加反应慢的目标的超时。</li>
+<li>例如 <code>ffuf -w wordlist.txt -u https://slowtarget.com/FUZZ -timeout 30</code></li>
+</ul>
+<h3 id="代理和重放："><a href="#代理和重放：" class="headerlink" title="代理和重放："></a>代理和重放：</h3><p><strong>代理：</strong></p>
+<ul>
+<li><code>http代理</code><ul>
+<li><code>ffuf -x http://127.0.0.1:8080 -w wordlist.txt -u https://host.name/FUZZ</code></li>
+</ul>
+</li>
+<li><code>socks代理</code><ul>
+<li><code>ffuf -x socks5://127.0.0.1:1080 -w wordlist.txt -u https://host.name/FUZZ</code></li>
+</ul>
+</li>
+</ul>
+<p><strong>重放代理：</strong></p>
+<ul>
+<li><code>-replay-proxy http://127.0.0.1:8080</code> - 通过代理重放匹配的请求。</li>
+<li>例如 <code>ffuf -w wordlist.txt -u https://target.com/FUZZ -replay-proxy [http://127.0.0.1:8080](http://127.0.0.1:8080/)</code></li>
+</ul>
+<p><strong>与 Burp 集成：</strong></p>
+<ul>
+<li><code>-x http://127.0.0.1:8080</code>- 通过 Burp Suite 发送请求以进行被动fuzz。</li>
+<li>例如 <code>ffuf -w wordlist.txt -u https://target.com/FUZZ -x [http://127.0.0.1:8080]</code></li>
+</ul>
+<h3 id="API-Fuzzing-WebSockets"><a href="#API-Fuzzing-WebSockets" class="headerlink" title="API Fuzzing &amp; WebSockets:"></a>API Fuzzing &amp; WebSockets:</h3><p><strong>测试 API 接口</strong></p>
+<ul>
+<li><code>-H &quot;Content-Type: application/json&quot;</code> - 测试基于 JSON 的 API 接口。</li>
+<li>例如 <code>ffuf -w params.txt -u https://api.target.com/endpoint -X POST -d &#39;&#123;&quot;key&quot;:&quot;FUZZ&quot;&#125;&#39;</code></li>
+</ul>
+<p><strong>WebSocket Fuzzing</strong></p>
+<ul>
+<li>与 Burp Suite 集成的示例：在 Burp 中捕获 WebSocket 流量并通过 ffuf 重放。</li>
+</ul>
+<h3 id="性能调整："><a href="#性能调整：" class="headerlink" title="性能调整："></a>性能调整：</h3><p>提高效率：</p>
+<ul>
+<li><code>-t 100</code>- 增加并发线程数。</li>
+<li><code>-rate 1000</code>- 控制每秒请求的速度。</li>
+<li>例如 <code>ffuf -w wordlist.txt -u https://target.com/FUZZ -t 100 -rate 1000</code></li>
+</ul>
+<p>规避限速</p>
+<ul>
+<li><code>-p 0.1-2.0</code>- 引入随机延迟，以避免速度限制。</li>
+<li>例如 <code>ffuf -w wordlist.txt -u https://target.com/FUZZ -p 0.5-1.5</code></li>
+</ul>
+<h3 id="与其他工具联动："><a href="#与其他工具联动：" class="headerlink" title="与其他工具联动："></a>与其他工具联动：</h3><p><strong>与 Nuclei 联动：</strong></p>
+<ul>
+<li>将 ffuf 与 Nuclei 联动，在fuzz过程中扫描漏洞。</li>
+<li>例如 <code>ffuf -w wordlist.txt -u https://target.com/FUZZ -of json | nuclei -t nuclei-templates/</code></li>
+</ul>
+<p><strong>与 HTTPx 联动：</strong></p>
+<ul>
+<li>在进行测试前，使用 HTTPx 过滤存活主机。</li>
+<li>例如 <code>httpx -silent -l targets.txt | ffuf -w wordlist.txt -u [https://FUZZ/](https://fuzz/)</code></li>
+</ul>
+<p><strong>将 ffuf 与 Nmap 结合使用：</strong></p>
+<p>另一个强大的组合是将 ffuf 与 nmap 结合使用。例如，你可以使用 nmap 扫描开放端口，然后使用 ffuf 对发现的 HTTP 服务进行测试处理：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">nmap -p- -oG open_ports.txt 192.168.1.1</span><br><span class="line">ffuf -w open_ports.txt -u http://192.168.1.1:FUZZ -o results.html</span><br></pre></td></tr></table></figure>
+
+<h3 id="多个字典"><a href="#多个字典" class="headerlink" title="多个字典:"></a>多个字典:</h3><p>​		ffuf 可以使用多个字典同时测试 URL 或数据字段的多个部分。你不仅可以测试 URL 路径，还可以测试参数或查询字符串。在测试需要多个变量的 API 或端点时，该功能非常有用。</p>
+<p>​		在<code>ffuf</code>中使用多个字典进行fuzz是一种强大的技术，可用于测试网络应用程序的不同部分。在<code>ffuf</code>中，有三种主要模式可用于处理多个字典：<strong>clusterbomb</strong>、<strong>pitchfork</strong>和<strong>sniper</strong>。每种模式都有不同的用途，具体取决于你在fuzz过程中如何组合字典。</p>
+<p>​		下面举例说明如何使用每种模式：</p>
+<h4 id="clusterbomb模式"><a href="#clusterbomb模式" class="headerlink" title="clusterbomb模式"></a>clusterbomb模式</h4><p><strong>集束炸弹</strong></p>
+<p>​		<strong>clusterbomb</strong>模式会尝试多个字典中每种值的组合。当你需要测试输入参数的所有可能组合，比如同时尝试不同的用户名和密码。</p>
+<p>例如：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffuf -w users.txt:USER -w passwords.txt:PASS -u https://example.com/login?username=USER&amp;password=PASS --mode clusterbomb</span><br></pre></td></tr></table></figure>
+
+<p>​		在此模式下，<code>ffuf</code>会尝试用户名和密码的所有可能组合，确保涵盖所有配对。适用于爆破账号密码或同时测试多个字段。</p>
+<p>​		你可以对 JSON 请求的多个部分进行测试处理：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffuf -w usernames.txt:U -w passwords.txt:P -X POST -d &#x27;&#123;&quot;username&quot;:&quot;U&quot;,&quot;password&quot;:&quot;P&quot;&#125;&#x27; -H &#x27;Content-Type: application/json&#x27; -u https://example.com/api/login</span><br></pre></td></tr></table></figure>
+
+<p>​		或者对目录名和文件名都进行测试处理，从而增加发现嵌套路径中隐藏路径的机会：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffuf -w dirs.txt:DIR -w files.txt:FILE -u https://example.com/DIR/FILE</span><br></pre></td></tr></table></figure>
+
+<hr>
+
+<h4 id="Pitchfork模式"><a href="#Pitchfork模式" class="headerlink" title="Pitchfork模式"></a>Pitchfork模式</h4><p><strong>一一对应映射</strong></p>
+<p>​		<strong>Pitchfork</strong>模式以一对一的映射方式同时处理每个字典。它从第一个字典中提取第一个项目，从第二个字典中提取第一个项目，然后将它们配对在一起。这种模式非常适合测试匹配的输入对，例如用户名-密码对。</p>
+<p>例如：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffuf -w users.txt:USER -w passwords.txt:PASS -u https://example.com/login?username=USER&amp;password=PASS --mode pitchfork</span><br></pre></td></tr></table></figure>
+
+<p>​		在这里，<code>ffuf</code>会从<code>users.txt</code>列表中获取第一个用户名，从<code>passwords.txt</code>列表中获取第一个密码，然后一起发送。然后，它将从每个列表中提取第二个项目，依此类推，因此当参数需要按顺序匹配时，这种模式非常有用。</p>
+<hr>
+
+<h4 id="Sniper模式"><a href="#Sniper模式" class="headerlink" title="Sniper模式"></a>Sniper模式</h4><p><strong>单个狙击</strong></p>
+<p>​		<strong>Sniper</strong>模式用于使用单个字典一次测试一个参数，而其他参数保持不变。该模式非常适合用于发现不同输入对请求特定部分的影响。</p>
+<p>例如：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffuf -w payloads.txt -u https://example.com/search?query=FUZZ&amp;staticparam=value --mode sniper</span><br></pre></td></tr></table></figure>
+
+<p>​		在这种情况下，<code>ffuf</code>将使用<code>payloads.txt</code>字典只测试<code>查询</code>参数，而保持<code>staticparam=value</code>不变。<strong>Sniper</strong>模式适用于一次只针对一个输入字段或参数的集中fuzz。</p>
+<hr>
+
+<h4 id="主要区别"><a href="#主要区别" class="headerlink" title="主要区别"></a>主要区别</h4><ul>
+<li><code>clusterbomb</code>：测试多个字典的所有组合</li>
+<li><code>Pitchfork</code>：将多个字典中匹配的项目配对。</li>
+<li><code>Sniper</code>：每次使用单个字典测试一个参数，其他参数保持不变。</li>
+</ul>
+<p>这些模式你可以自行灵活使用。</p>
+<h3 id="匹配返回特征"><a href="#匹配返回特征" class="headerlink" title="匹配返回特征:"></a>匹配返回特征:</h3><p>下面是一些使用 ffuf 匹配返回特征选项的示例：</p>
+<h4 id="匹配状态码"><a href="#匹配状态码" class="headerlink" title="匹配状态码"></a>匹配状态码</h4><p>​		<code>ffuf 匹配器</code>的一个基本用法是使用<code>-mc</code>查找具有特定状态代码的响应。例如，如果要查找返回<code>200</code>状态代码的页面，可以使用</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffuf -u https://example.com/FUZZ -w wordlist.txt -mc 200</span><br></pre></td></tr></table></figure>
+
+<p>​		这只会显示状态代码为 200 的响应，过滤掉所有其他响应。</p>
+<h4 id="匹配响应大小"><a href="#匹配响应大小" class="headerlink" title="匹配响应大小"></a>匹配响应大小</h4><p>​		如果要根据响应的大小进行匹配，使用<code>-ms</code>。例如你的目标响应大小正好是 1000 字节：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffuf -u https://example.com/FUZZ -w wordlist.txt -ms 1000</span><br></pre></td></tr></table></figure>
+
+<p>​		你还可以匹配一个范围内的内容长度：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffuf -u https://example.com/FUZZ -w wordlist.txt -ms 900-1100</span><br></pre></td></tr></table></figure>
+
+<p>​		该命令将匹配 900 至 1100 字节的响应。</p>
+<h4 id="字数匹配"><a href="#字数匹配" class="headerlink" title="字数匹配"></a>字数匹配</h4><p>​		你可以使用<code>-mw</code>根据正文中的字数过滤回包。例如，如果你要查找字数正好为 50 的回包：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffuf -u https://example.com/FUZZ -w wordlist.txt -mw 50</span><br></pre></td></tr></table></figure>
+
+<h4 id="按响应行匹配"><a href="#按响应行匹配" class="headerlink" title="按响应行匹配"></a>按响应行匹配</h4><p>​		根据回包的行数进行匹配。使用<code>-ml</code>选项可根据行数过滤回包。例如，如果你要查找行数正好为 10 行的回包：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffuf -u https://example.com/FUZZ -w wordlist.txt -ml 10</span><br></pre></td></tr></table></figure>
+
+<p>​		通过这些匹配器选项，你可以对fuzz进行微调，以过滤掉不相关的结果，并专注于特定的响应模式。</p>
+<h4 id="Regex-匹配"><a href="#Regex-匹配" class="headerlink" title="Regex 匹配"></a>Regex 匹配</h4><p>​		有时，仅根据状态代码或大小进行过滤是不够的。ffuf 提供了 regex 匹配功能，让你只需要关注包含特定内容的响应。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffuf -w /path/to/wordlist.txt -u https://example.com/FUZZ -mr &quot;success|welcome&quot;</span><br></pre></td></tr></table></figure>
+
+<p>​		此命令显示内容包含 “success “或 “welcome “的响应。当某些关键字典示有效或有漏洞的页面时，Regex 匹配就很有用了。</p>
+<p>​		要匹配包含<code>/\...*/</code> 等模式的响应（可识别隐藏文件或目录），可以使用</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffuf -u https://example.com/FUZZ -w wordlist.txt -mr &#x27;/\..*/&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>​		此命令将搜索包含句号和任意字符的响应。</p>
+<h3 id="速度限制"><a href="#速度限制" class="headerlink" title="速度限制:"></a>速度限制:</h3><p>​		如果你正在对带有访问速度限制或时间<strong>限制</strong>的网络应用程序进行fuzz，那么 ffuf 的<strong>超时和速度限制</strong>选项可以帮助你管理请求而不被阻止。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffuf -w /path/to/wordlist.txt -u https://example.com/FUZZ -rate 50 -timeout 5</span><br></pre></td></tr></table></figure>
+
+<p>​		在这种情况下，ffuf 将每秒最多发送 50 个请求，并最多等待 5 秒以获得响应。这对于规避有访问速度限制的目标的安全保护特别有用。</p>
+<h4 id="延迟"><a href="#延迟" class="headerlink" title="延迟"></a>延迟</h4><p>​		ffuf 可以调整发送请求的速度，以避免触发速度限制：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffuf -w wordlist.txt -u https://example.com/FUZZ -t 2 -p 1</span><br></pre></td></tr></table></figure>
+
+<p>​		该命令将线程数 (-t) 设置为 2，并在请求之间引入 1 秒的延迟 (-p)。这样可以减少被防护的几率。</p>
+<h3 id="对-POST-请求进行fuzz"><a href="#对-POST-请求进行fuzz" class="headerlink" title="对 POST 请求进行fuzz:"></a>对 POST 请求进行fuzz:</h3><p>​		例如，测试登录表单中的用户名值：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffuf -w usernames.txt -u https://example.com/login -X POST -d &quot;username=FUZZ&amp;password=admin&quot;</span><br></pre></td></tr></table></figure>
+
+<p>​		该命令测试不同的用户名，同时保持密码不变，类似内网渗透中的密码喷洒，很有用。</p>
+<h4 id="测试-JSON-POST-数据"><a href="#测试-JSON-POST-数据" class="headerlink" title="测试 JSON POST 数据"></a>测试 JSON POST 数据</h4><p>​		如果目标使用基于 JSON 的 API，你可以在payload中加入 FUZZ 关键字，对 JSON 数据进行测试：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffuf -X POST -H &quot;Content-Type: application/json&quot; -d &#x27;&#123;&quot;username&quot;: &quot;admin&quot;, &quot;password&quot;: &quot;FUZZ&quot;&#125;&#x27; -w /path/to/wordlist.txt -u http://example.com/api/login</span><br></pre></td></tr></table></figure>
+
+<p>该命令向指定 URL 发送 JSON 格式的 POST 请求，用单字典中的每个值替换 FUZZ。</p>
+<p>​		这个例子使用<strong>鉴权参数</strong>值对接口进行fuzz：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffuf -w tokens.txt -H &quot;Authorization: Bearer FUZZ&quot; -u https://example.com/api/resource</span><br></pre></td></tr></table></figure>
+
+<p>这将对不同的<strong>鉴权参数</strong>进行fuzz。</p>
+<p>​		另一个例子——用于识别 X-Forwarded-For 或 User-Agent 等标头中的漏洞。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffuf -w /path/to/wordlist.txt -u http://example.com -H &quot;X-Forwarded-For: FUZZ&quot;</span><br></pre></td></tr></table></figure>
+
+<p>该命令将 FUZZ 替换为页眉中字典的每个值，使你能够发现可能绕过安全检查或泄露内部细节的变化。</p>
+<h3 id="输出选项："><a href="#输出选项：" class="headerlink" title="输出选项："></a>输出选项：</h3><p>​		完成fuzz后，把结果存下来以便日后分析或者其他操作。<code>ffuf 允许以各种格式（如 JSON 或 CSV）输出</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffuf -w /path/to/wordlist.txt -u https://example.com/FUZZ -o results.json -of json</span><br></pre></td></tr></table></figure>
+
+<p>这将以 JSON 格式存储输出，然后就可以用其他工具继续利用或进行手工测试。</p>
+<p>​		你还可以 <strong>CSV</strong> 或 <strong>HTML</strong> 格式记录：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffuf -w wordlist.txt -u https://example.com/FUZZ -o results.csv -of csv</span><br></pre></td></tr></table></figure>
+
+<p>​		要将输出保存为所有支持的格式，请使用</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffuf -w wordlist.txt -u https://example.com/FUZZ -o results -of all</span><br></pre></td></tr></table></figure>
+
+<h2 id="在线参考："><a href="#在线参考：" class="headerlink" title="在线参考："></a>在线参考：</h2><p>本文参考与<code>棉花糖</code>文章学习</p>
+<p>这里有一份在线参考：</p>
+<p><code>https://www.mhtsec.com/tool/ffuf/</code></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://Iconabc.github.io">icon</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://iconabc.github.io/posts/efd2e96b.html">https://iconabc.github.io/posts/efd2e96b.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://Iconabc.github.io" target="_blank">icon'Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/tool/">tool</a></div><div class="post-share"><div class="social-share" data-image="/img/mbc.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/posts/4f0d5716.html" title="Kerberos-认证原理"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">Kerberos-认证原理</div></div><div class="info-2"><div class="info-item-1">...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/posts/93eb49a0.html" title="docker的简单使用"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-11-16</div><div class="info-item-2">docker的简单使用</div></div><div class="info-2"><div class="info-item-1">docker的使用：1，安装docker123sudo apt-get install docker安装docker    123sudo apt install docker-compose运行和定义多容器的docker工具，借助它可以使用yaml配置程序和服务一条命令启动所有服务    123sudo docker version检查docker版本  2，docker的使用123docker-compose pull可以拉取docker-compose.yml或者docker-stack.yml文件中定义的服务关联的镜像    123docker-compose up -d在后台启动容器并使他们保持运行  12345678910111213141516启动docker：sudo service docker start停止docker：sudo service docker stop重启docker：sudo service docker restart    1234567显示docker版本和信息：docker --versiondocker...</div></div></div></a><a class="pagination-related" href="/posts/72c8ab20.html" title="tmux使用说明"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-11-14</div><div class="info-item-2">tmux使用说明</div></div><div class="info-2"><div class="info-item-1">Tmux使用说明：1.tmux会话退出1231. 输入exit 然后 ‘enter’2.ctrl+b，than press ‘x’3.ctrl+d  注意：1，2，3的区别： 1.直接退出tmux窗口 2，3.都是依次关闭tmux会话中的窗口，直到关闭最后一个窗口时，退出tmux窗口 2.前缀键 tmux窗口有大量的快捷键。所有快捷键都要通过前缀键唤起。默认的前缀键是Ctrl+b，即先按下Ctrl+b，快捷键才会生效。  举例来说: 帮助命令的快捷键是Ctrl+b ?。它的用法是，在 Tmux 窗口中，先按下Ctrl+b，再按下?，就会显示帮助信息。 然后，按下ESC 键或q键，就可以退出帮助。 3.会话管理3.1新建会话启动tmux窗口第一个窗口编号是0，第二个窗口编号是1，以此类推。这些窗口对应的会话，就是0号会话，1号会话。 使用编号区分会话的话不太直观，更直观的是给会话取名 1[root@bogon ~]# tmux new -s nws01    3.2分离会话（退出但是后台会话依旧存在）有奇用 在 Tmux 窗口中，按下Ctrl+b d或者输入tmux...</div></div></div></a><a class="pagination-related" href="/posts/50aa4c3b.html" title="Metasploit简介及使用"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-11-16</div><div class="info-item-2">Metasploit简介及使用</div></div><div class="info-2"><div class="info-item-1">Metasploit使用：安装： 在一般的linux中，默认是不安装MSF的。以下是在非kali的Linux下安装MSF框架。 一键安装： 123456789101112curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb &gt; msfinstall &amp;&amp; chmod 755 msfinstall &amp;&amp; ./msfinstalladduser msf #添加msf用户su msf #切换到msf用户cd /opt/metasploit-framework/bin #切换到msf所在的目录./msfconsole #以后启动msfconsole，都切换到msf用户下启动，这样会同步数据库。如果使用root用户启动的话，不会同步数据库也可以将msfconsole加入到执行目录下，这样在任何目录直接msfconsole就可以了ln -s...</div></div></div></a></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="disqus_thread"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/mbc.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">icon</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">14</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">8</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">14</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Iconabc"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/Iconabc/" target="_blank" title="Github"><i class="fab fa-github" style="color: #hdhfbb;"></i></a><a class="social-icon" href="mailto:2899345299@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #000000;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">up up</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#FFUF%E8%BF%9B%E9%98%B6%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97"><span class="toc-number">1.</span> <span class="toc-text">FFUF进阶使用指南</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E7%94%A8-ffuf%EF%BC%9F"><span class="toc-number">1.2.</span> <span class="toc-text">为什么要用 ffuf？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E5%AD%97%E5%85%B8%E5%92%8C%E9%80%92%E5%BD%92%E6%B5%8B%E8%AF%95%EF%BC%9A"><span class="toc-number">1.2.1.</span> <span class="toc-text">自定义字典和递归测试：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%84%E7%90%86%E5%85%B6%E4%BB%96-HTTP-%E6%96%B9%E6%B3%95%EF%BC%9A"><span class="toc-number">1.2.2.</span> <span class="toc-text">处理其他 HTTP 方法：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A9%E7%94%A8%E5%9F%BA%E4%BA%8E%E5%8F%82%E6%95%B0%E7%9A%84%E6%BC%8F%E6%B4%9E%EF%BC%9A"><span class="toc-number">1.2.3.</span> <span class="toc-text">利用基于参数的漏洞：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-ffuf-%E7%9A%84-DNS-%E6%A8%A1%E5%BC%8F%E7%88%86%E7%A0%B4%E5%AD%90%E5%9F%9F%EF%BC%9A"><span class="toc-number">1.2.4.</span> <span class="toc-text">使用 ffuf 的 DNS 模式爆破子域：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A9%E7%94%A8-Burp-%E8%BF%9B%E8%A1%8C%E5%A4%8D%E6%9D%82fuzz%EF%BC%9A"><span class="toc-number">1.2.5.</span> <span class="toc-text">利用 Burp 进行复杂fuzz：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#API-%E5%92%8C-WebSockets%EF%BC%9A"><span class="toc-number">1.2.6.</span> <span class="toc-text">API 和 WebSockets：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%9B%A0%EF%B8%8F-ffuf-%E9%AB%98%E7%BA%A7%E6%89%8B%E5%86%8C-%F0%9F%9B%A0%EF%B8%8F"><span class="toc-number">1.3.</span> <span class="toc-text">🛠️ ffuf 高级手册 🛠️</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTP-%E9%80%89%E9%A1%B9%EF%BC%9A"><span class="toc-number">1.3.1.</span> <span class="toc-text">HTTP 选项：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A3%E7%90%86%E5%92%8C%E9%87%8D%E6%94%BE%EF%BC%9A"><span class="toc-number">1.3.2.</span> <span class="toc-text">代理和重放：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#API-Fuzzing-WebSockets"><span class="toc-number">1.3.3.</span> <span class="toc-text">API Fuzzing &amp; WebSockets:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%A7%E8%83%BD%E8%B0%83%E6%95%B4%EF%BC%9A"><span class="toc-number">1.3.4.</span> <span class="toc-text">性能调整：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8E%E5%85%B6%E4%BB%96%E5%B7%A5%E5%85%B7%E8%81%94%E5%8A%A8%EF%BC%9A"><span class="toc-number">1.3.5.</span> <span class="toc-text">与其他工具联动：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%9A%E4%B8%AA%E5%AD%97%E5%85%B8"><span class="toc-number">1.3.6.</span> <span class="toc-text">多个字典:</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#clusterbomb%E6%A8%A1%E5%BC%8F"><span class="toc-number">1.3.6.1.</span> <span class="toc-text">clusterbomb模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Pitchfork%E6%A8%A1%E5%BC%8F"><span class="toc-number">1.3.6.2.</span> <span class="toc-text">Pitchfork模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Sniper%E6%A8%A1%E5%BC%8F"><span class="toc-number">1.3.6.3.</span> <span class="toc-text">Sniper模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%BB%E8%A6%81%E5%8C%BA%E5%88%AB"><span class="toc-number">1.3.6.4.</span> <span class="toc-text">主要区别</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8C%B9%E9%85%8D%E8%BF%94%E5%9B%9E%E7%89%B9%E5%BE%81"><span class="toc-number">1.3.7.</span> <span class="toc-text">匹配返回特征:</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8C%B9%E9%85%8D%E7%8A%B6%E6%80%81%E7%A0%81"><span class="toc-number">1.3.7.1.</span> <span class="toc-text">匹配状态码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8C%B9%E9%85%8D%E5%93%8D%E5%BA%94%E5%A4%A7%E5%B0%8F"><span class="toc-number">1.3.7.2.</span> <span class="toc-text">匹配响应大小</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%97%E6%95%B0%E5%8C%B9%E9%85%8D"><span class="toc-number">1.3.7.3.</span> <span class="toc-text">字数匹配</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8C%89%E5%93%8D%E5%BA%94%E8%A1%8C%E5%8C%B9%E9%85%8D"><span class="toc-number">1.3.7.4.</span> <span class="toc-text">按响应行匹配</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Regex-%E5%8C%B9%E9%85%8D"><span class="toc-number">1.3.7.5.</span> <span class="toc-text">Regex 匹配</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%9F%E5%BA%A6%E9%99%90%E5%88%B6"><span class="toc-number">1.3.8.</span> <span class="toc-text">速度限制:</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BB%B6%E8%BF%9F"><span class="toc-number">1.3.8.1.</span> <span class="toc-text">延迟</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%B9-POST-%E8%AF%B7%E6%B1%82%E8%BF%9B%E8%A1%8Cfuzz"><span class="toc-number">1.3.9.</span> <span class="toc-text">对 POST 请求进行fuzz:</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95-JSON-POST-%E6%95%B0%E6%8D%AE"><span class="toc-number">1.3.9.1.</span> <span class="toc-text">测试 JSON POST 数据</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BE%93%E5%87%BA%E9%80%89%E9%A1%B9%EF%BC%9A"><span class="toc-number">1.3.10.</span> <span class="toc-text">输出选项：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%A8%E7%BA%BF%E5%8F%82%E8%80%83%EF%BC%9A"><span class="toc-number">1.4.</span> <span class="toc-text">在线参考：</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/efd2e96b.html" title="ffuf使用介绍">ffuf使用介绍</a><time datetime="2024-12-10T01:16:26.000Z" title="发表于 2024-12-10 09:16:26">2024-12-10</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/4f0d5716.html" title="Kerberos-认证原理">Kerberos-认证原理</a><time datetime="2024-11-24T15:16:31.000Z" title="发表于 2024-11-24 23:16:31">2024-11-24</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/23837ad8.html" title="HTB-Driver">HTB-Driver</a><time datetime="2024-11-22T15:52:37.000Z" title="发表于 2024-11-22 23:52:37">2024-11-22</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/98ed62e4.html" title="vulntarget-k靶场">vulntarget-k靶场</a><time datetime="2024-11-19T04:25:59.000Z" title="发表于 2024-11-19 12:25:59">2024-11-19</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/93eb49a0.html" title="docker的简单使用">docker的简单使用</a><time datetime="2024-11-15T16:53:44.000Z" title="发表于 2024-11-16 00:53:44">2024-11-16</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url(/img/shuai.jpg);"><div id="footer-wrap"><div class="copyright">&copy;2023 - 2024 By icon</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text"><a href="/">icon</a> is striving to become stronger!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>(() => {
+  const isShuoshuo = GLOBAL_CONFIG_SITE.isShuoshuo
+
+  const disqusReset = conf => {
+    window.DISQUS && window.DISQUS.reset({
+      reload: true,
+      config: conf
+    })
+  }
+
+  const loadDisqus = (el, path) => {
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyDisqus = () => {
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+
+    window.disqus_identifier = isShuoshuo ? path : '/posts/efd2e96b.html'
+    window.disqus_url = isShuoshuo ? location.origin + path : 'https://iconabc.github.io/posts/efd2e96b.html'
+
+    const disqus_config = function () {
+      this.page.url = disqus_url
+      this.page.identifier = disqus_identifier
+      this.page.title = 'ffuf使用介绍'
+    }
+
+    if (window.DISQUS) disqusReset(disqus_config)
+    else {
+      const script = document.createElement('script')
+      script.src = 'https://.disqus.com/embed.js'
+      script.setAttribute('data-timestamp', +new Date())
+      document.head.appendChild(script)
+    }
+
+    btf.addGlobalFn('themeChange', () => disqusReset(disqus_config), 'disqus')
+  }
+
+  const getCount = async() => {
+    try {
+      const eleGroup = document.querySelector('#post-meta .disqus-comment-count')
+      if (!eleGroup) return
+      const cleanedLinks = eleGroup.href.replace(/#post-comment$/, '')
+
+      const res = await fetch(`https://disqus.com/api/3.0/threads/set.json?forum=&api_key=&thread:link=${cleanedLinks}`,{
+        method: 'GET'
+      })
+      const result = await res.json()
+
+      const count = result.response.length ? result.response[0].posts : 0
+      eleGroup.textContent = count
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+  if (isShuoshuo) {
+    'Disqus' === 'Disqus'
+      ? window.shuoshuoComment = { loadComment: loadDisqus }
+      : window.loadOtherComment = loadDisqus
+    return
+  }
+
+  if ('Disqus' === 'Disqus' || !false) {
+    if (false) btf.loadComment(document.getElementById('disqus_thread'), loadDisqus)
+    else {
+      loadDisqus()
+      
+    }
+  } else {
+    window.loadOtherComment = loadDisqus
+  }
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
