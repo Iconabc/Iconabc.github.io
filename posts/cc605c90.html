@@ -1,13 +1,13 @@
-<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>03-C/C++软件逆向技术 | icon'Blog</title><meta name="author" content="icon"><meta name="copyright" content="icon"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="C&#x2F;C++软件逆向技术分析定位目标功能：设置一下Debug：如下   设置一下Release：如下   对如下代码生成不同版本的exe: 123456#include &lt;stdio.h&gt;int main() &#123;	printf(&quot;hello Re&quot;);	return 0;&#125;  将debug版本的直接脱入ida：   拖入成功后。 它会给你">
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>03-C/C++软件逆向技术 | icon'Blog</title><meta name="author" content="icon"><meta name="copyright" content="icon"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="C&#x2F;C++软件逆向技术分析定位目标功能：(第一天)设置一下Debug：如下   设置一下Release：如下   对如下代码生成不同版本的exe: 123456#include &lt;stdio.h&gt;int main() &#123;	printf(&quot;hello Re&quot;);	return 0;&#125;  将debug版本的直接脱入ida：   拖入成功后。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="03-C&#x2F;C++软件逆向技术">
 <meta property="og:url" content="https://iconabc.github.io/posts/cc605c90.html">
 <meta property="og:site_name" content="icon&#39;Blog">
-<meta property="og:description" content="C&#x2F;C++软件逆向技术分析定位目标功能：设置一下Debug：如下   设置一下Release：如下   对如下代码生成不同版本的exe: 123456#include &lt;stdio.h&gt;int main() &#123;	printf(&quot;hello Re&quot;);	return 0;&#125;  将debug版本的直接脱入ida：   拖入成功后。 它会给你">
+<meta property="og:description" content="C&#x2F;C++软件逆向技术分析定位目标功能：(第一天)设置一下Debug：如下   设置一下Release：如下   对如下代码生成不同版本的exe: 123456#include &lt;stdio.h&gt;int main() &#123;	printf(&quot;hello Re&quot;);	return 0;&#125;  将debug版本的直接脱入ida：   拖入成功后。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://iconabc.github.io/img/mbc.jpg">
 <meta property="article:published_time" content="2024-12-28T05:19:21.000Z">
-<meta property="article:modified_time" content="2024-12-28T17:16:03.276Z">
+<meta property="article:modified_time" content="2024-12-29T16:07:25.058Z">
 <meta property="article:author" content="icon">
 <meta property="article:tag" content="武器化开发学习">
 <meta property="article:tag" content="免杀">
@@ -147,21 +147,21 @@
   isHighlightShrink: false,
   isToc: true,
   isShuoshuo: false
-}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/mbc.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">21</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">14</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">21</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> about</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/img/shuai.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">icon'Blog</span></a><a class="nav-page-title" href="/"><span class="site-name">03-C/C++软件逆向技术</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> about</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">03-C/C++软件逆向技术</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-12-28T05:19:21.000Z" title="发表于 2024-12-28 13:19:21">2024-12-28</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-12-28T17:16:03.276Z" title="更新于 2024-12-29 01:16:03">2024-12-29</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/C-C-%E8%BD%AF%E4%BB%B6%E9%80%86%E5%90%91%E6%8A%80%E6%9C%AF/">C/C++软件逆向技术</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">2.6k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>8分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="C-C-软件逆向技术"><a href="#C-C-软件逆向技术" class="headerlink" title="C&#x2F;C++软件逆向技术"></a>C&#x2F;C++软件逆向技术</h1><h2 id="分析定位目标功能："><a href="#分析定位目标功能：" class="headerlink" title="分析定位目标功能："></a>分析定位目标功能：</h2><p>设置一下Debug：如下</p>
-<img src="/posts/undefined/image-20241228141831808.png" class="" title="image-20241228141831808">
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/mbc.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">21</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">14</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">21</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> about</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/img/shuai.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">icon'Blog</span></a><a class="nav-page-title" href="/"><span class="site-name">03-C/C++软件逆向技术</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> about</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">03-C/C++软件逆向技术</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-12-28T05:19:21.000Z" title="发表于 2024-12-28 13:19:21">2024-12-28</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-12-29T16:07:25.058Z" title="更新于 2024-12-30 00:07:25">2024-12-30</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/C-C-%E8%BD%AF%E4%BB%B6%E9%80%86%E5%90%91%E6%8A%80%E6%9C%AF/">C/C++软件逆向技术</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">4.4k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>14分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="C-C-软件逆向技术"><a href="#C-C-软件逆向技术" class="headerlink" title="C&#x2F;C++软件逆向技术"></a>C&#x2F;C++软件逆向技术</h1><h2 id="分析定位目标功能：-第一天"><a href="#分析定位目标功能：-第一天" class="headerlink" title="分析定位目标功能：(第一天)"></a>分析定位目标功能：(第一天)</h2><p>设置一下Debug：如下</p>
+<img src="/posts/cc605c90/image-20241228141831808.png" class="" title="image-20241228141831808">
 
 <p>设置一下Release：如下</p>
-<img src="/posts/undefined/image-20241228141932693.png" class="" title="image-20241228141932693">
+<img src="/posts/cc605c90/image-20241228141932693.png" class="" title="image-20241228141932693">
 
 <p>对如下代码生成不同版本的exe:</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;hello Re&quot;</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>将debug版本的直接脱入ida：</p>
-<img src="/posts/undefined/image-20241228160642858.png" class="" title="image-20241228160642858">
+<img src="/posts/cc605c90/image-20241228160642858.png" class="" title="image-20241228160642858">
 
 <p>拖入成功后。</p>
 <p>它会给你三种选项，如下：</p>
-<img src="/posts/undefined/image-20241228161437585.png" class="" title="image-20241228161437585">
+<img src="/posts/cc605c90/image-20241228161437585.png" class="" title="image-20241228161437585">
 
 <p>让你选择以某一种方式对他进行解析：</p>
 <p>第一种方式：pe文件的方式对你的文件进行解析</p>
@@ -169,57 +169,57 @@
 <p>第三种方式：是利用二进制文本的方式对它进行解析，想怎么解就怎么解</p>
 <p>这里我们已经知道是pe的可以直接选择第一种。</p>
 <p>下面这个是可以简单选择一些架构的：我们选择metapoc</p>
-<img src="/posts/undefined/image-20241228161823929.png" class="" title="image-20241228161823929">
+<img src="/posts/cc605c90/image-20241228161823929.png" class="" title="image-20241228161823929">
 
 <p>加载完毕后来到这个：这个页面：</p>
-<img src="/posts/undefined/image-20241228162701775.png" class="" title="image-20241228162701775">
+<img src="/posts/cc605c90/image-20241228162701775.png" class="" title="image-20241228162701775">
 
 <p>我们可以通过如下方法来定位一手主函数main：</p>
-<h3 id="第一种方式：通过字符串来找"><a href="#第一种方式：通过字符串来找" class="headerlink" title="第一种方式：通过字符串来找"></a>第一种方式：通过字符串来找</h3><img src="/posts/undefined/image-20241228163410444.png" class="" title="image-20241228163410444">
+<h3 id="第一种方式：通过字符串来找"><a href="#第一种方式：通过字符串来找" class="headerlink" title="第一种方式：通过字符串来找"></a>第一种方式：通过字符串来找</h3><img src="/posts/cc605c90/image-20241228163410444.png" class="" title="image-20241228163410444">
 
 <p>我们直接ctrl+f进行一下搜索：</p>
-<img src="/posts/undefined/image-20241228163618117.png" class="" title="image-20241228163618117">
+<img src="/posts/cc605c90/image-20241228163618117.png" class="" title="image-20241228163618117">
 
 <p>然后双击点进去：</p>
-<img src="/posts/undefined/image-20241228163719641.png" class="" title="image-20241228163719641">
+<img src="/posts/cc605c90/image-20241228163719641.png" class="" title="image-20241228163719641">
 
 <p>会发现有个名字这个是ida自动给你取的。</p>
 <p>然后点击这个名字以后按下<code>ctrl+x</code>它会弹出一个交叉引用：(这里我是用的本机的ida7.7才弹出的)</p>
-<img src="/posts/undefined/image-20241228163939324.png" class="" title="image-20241228163939324">
+<img src="/posts/cc605c90/image-20241228163939324.png" class="" title="image-20241228163939324">
 
 <p>这个所谓的<code>交叉引用</code>呢？就是你的这个字符串在全局内被调用了多少次，在哪被调用的，观察上图我们可以发现上图只有被调用了一次点击以后，选择ok。</p>
 <p>ida9中可以右键点击：如下选择也可弹出：</p>
-<img src="/posts/undefined/image-20241228164138212.png" class="" title="image-20241228164138212">
+<img src="/posts/cc605c90/image-20241228164138212.png" class="" title="image-20241228164138212">
 
 <p>观察上图我们可以发现上图只有被调用了一次点击以后，选择ok。</p>
 <p>ok以后就跳到如下界面了，如下界面也就是我们的main函数：</p>
-<img src="/posts/undefined/image-20241228164437847.png" class="" title="image-20241228164437847">
+<img src="/posts/cc605c90/image-20241228164437847.png" class="" title="image-20241228164437847">
 
 <p>接下来呢我们可以按空格把他切换到文本模式，也可以再按空格切换回流程图模式，如下：</p>
-<img src="/posts/undefined/image-20241228164532559.png" class="" title="image-20241228164532559">
+<img src="/posts/cc605c90/image-20241228164532559.png" class="" title="image-20241228164532559">
 
 
 
 <p>也可以直接按F5把他转换成伪代码的形式：如下</p>
-<img src="/posts/undefined/image-20241228164922054.png" class="" title="image-20241228164922054">
+<img src="/posts/cc605c90/image-20241228164922054.png" class="" title="image-20241228164922054">
 
 <h3 id="第二种方式：根据一定规则来确定"><a href="#第二种方式：根据一定规则来确定" class="headerlink" title="第二种方式：根据一定规则来确定"></a>第二种方式：根据一定规则来确定</h3><p>假设我们已经知道了其对应的生成规则：然后重新生成一个demo.。</p>
 <p>然后一层一层网上找，尝试了解他的main函数是如何找到的</p>
 <p>我们直接右键，选择<code>交叉引用</code>，找它的上一级调用：如下：</p>
-<img src="/posts/undefined/image-20241228170023653.png" class="" title="image-20241228170023653">
+<img src="/posts/cc605c90/image-20241228170023653.png" class="" title="image-20241228170023653">
 
 <p>有一个<code> jmp main</code>，我们跳过去:如下</p>
-<img src="/posts/undefined/image-20241228170216772.png" class="" title="image-20241228170216772">
+<img src="/posts/cc605c90/image-20241228170216772.png" class="" title="image-20241228170216772">
 
 <p>这层是只有一个 <code>jmp _main</code>跳过去的：</p>
 <p><strong>确定第1层：</strong><code>jmp _main</code></p>
 <hr>
 
 <p>接下来我们直接：右键查看上一层：如下</p>
-<img src="/posts/undefined/image-20241228170444961.png" class="" title="image-20241228170444961">
+<img src="/posts/cc605c90/image-20241228170444961.png" class="" title="image-20241228170444961">
 
 <p>我们会发现它传入了3个参数：</p>
-<img src="/posts/undefined/image-20241228170554453.png" class="" title="image-20241228170554453">
+<img src="/posts/cc605c90/image-20241228170554453.png" class="" title="image-20241228170554453">
 
 <p>然后我们观察会发现他是这3个<code>call</code>里面的最后一个<code>call</code></p>
 <p>于是乎我们可以记录如下特征：</p>
@@ -231,10 +231,10 @@
 
 <p>接下来我们继续进入上一层：</p>
 <p>还是右键进入同上一样的操作：如下</p>
-<img src="/posts/undefined/image-20241228171049211.png" class="" title="image-20241228171049211">
+<img src="/posts/cc605c90/image-20241228171049211.png" class="" title="image-20241228171049211">
 
 <p>我们可以将这几行作为一个特征：如下</p>
-<img src="/posts/undefined/image-20241228171211010.png" class="" title="image-20241228171211010">
+<img src="/posts/cc605c90/image-20241228171211010.png" class="" title="image-20241228171211010">
 
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">经过整理：如下所示即为这一层的特征</span><br><span class="line">movzx</span><br><span class="line">test</span><br><span class="line">jz</span><br><span class="line">mov</span><br><span class="line">mov</span><br><span class="line">push</span><br><span class="line">call</span><br><span class="line">add</span><br><span class="line">call</span><br></pre></td></tr></table></figure>
 
@@ -242,10 +242,10 @@
 <hr>
 
 <p>接下来我们继续往上找，找到这里的函数头：</p>
-<img src="/posts/undefined/image-20241228171822419.png" class="" title="image-20241228171822419">
+<img src="/posts/cc605c90/image-20241228171822419.png" class="" title="image-20241228171822419">
 
 <p>找到其函数头然后进入上一层：如下</p>
-<img src="/posts/undefined/image-20241228172202914.png" class="" title="image-20241228172202914">
+<img src="/posts/cc605c90/image-20241228172202914.png" class="" title="image-20241228172202914">
 
 <p>发现如下特征：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">call</span><br><span class="line">call</span><br><span class="line">然后我们可以记录一下特征是第二个call</span><br></pre></td></tr></table></figure>
@@ -255,10 +255,10 @@
 
 <p>接下来我们继续向上找看看还有没有上一层：</p>
 <p>找到函数头，然后进入上一层：如下：</p>
-<img src="/posts/undefined/image-20241228172439028.png" class="" title="image-20241228172439028">
+<img src="/posts/cc605c90/image-20241228172439028.png" class="" title="image-20241228172439028">
 
 <p>进入后如下</p>
-<img src="/posts/undefined/image-20241228172513294.png" class="" title="image-20241228172513294">
+<img src="/posts/cc605c90/image-20241228172513294.png" class="" title="image-20241228172513294">
 
 <p>这一层就1个<code>call</code>:</p>
 <p>直接记录就对了：</p>
@@ -268,7 +268,7 @@
 <hr>
 
 <p>再继续向上一层：</p>
-<img src="/posts/undefined/image-20241228172723292.png" class="" title="image-20241228172723292">
+<img src="/posts/cc605c90/image-20241228172723292.png" class="" title="image-20241228172723292">
 
 <p>这一层呢是一个jmp，并且jmp这一层呢已经到start了，说明已经到头了</p>
 <p>特征：</p>
@@ -281,50 +281,50 @@
 <p>接下来我们根据上述流程正着进这个main函数。</p>
 <p>利用<strong>x64dbg</strong>来进行一下动态调试：</p>
 <p>一打开我们就来到了：ntdll.dll模块下，如下：</p>
-<img src="/posts/undefined/image-20241228185007916.png" class="" title="image-20241228185007916">
+<img src="/posts/cc605c90/image-20241228185007916.png" class="" title="image-20241228185007916">
 
 <p>直接F9跳入到我自己的程序临空：如下：</p>
-<img src="/posts/undefined/image-20241228185158107.png" class="" title="image-20241228185158107">
+<img src="/posts/cc605c90/image-20241228185158107.png" class="" title="image-20241228185158107">
 
 <p>进入以后我就可以掏出我自己的规则：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">X86 Debug：</span><br><span class="line">1.jmp main</span><br><span class="line">2.进入最后一个call</span><br><span class="line">3.</span><br><span class="line">movzx</span><br><span class="line">test</span><br><span class="line">jz</span><br><span class="line">mov</span><br><span class="line">mov</span><br><span class="line">push</span><br><span class="line">call</span><br><span class="line">add</span><br><span class="line">call</span><br><span class="line">4.第二个call</span><br><span class="line">5.call</span><br><span class="line">6.jmp</span><br><span class="line"></span><br><span class="line">倒过来就是正向的进入main规则了</span><br></pre></td></tr></table></figure>
 
 <p>直接F8<code> jmp</code>进入 入口点：如下：</p>
-<img src="/posts/undefined/image-20241228185730275.png" class="" title="image-20241228185730275">
+<img src="/posts/cc605c90/image-20241228185730275.png" class="" title="image-20241228185730275">
 
 <p>进入以后这里就一个call我们直接：<strong>F8下一步到call上以后直接F7跟进这个call</strong></p>
-<img src="/posts/undefined/image-20241228185833944.png" class="" title="image-20241228185833944">
+<img src="/posts/cc605c90/image-20241228185833944.png" class="" title="image-20241228185833944">
 
 <p>跟进以后可以看到如下内容：如下图：</p>
-<img src="/posts/undefined/image-20241228185955728.png" class="" title="image-20241228185955728">
+<img src="/posts/cc605c90/image-20241228185955728.png" class="" title="image-20241228185955728">
 
 <p><strong>根据规则我们需要进入第二个call</strong>：F8 F8 F7跟进：如下图：</p>
-<img src="/posts/undefined/image-20241228190213587.png" class="" title="image-20241228190213587">
+<img src="/posts/cc605c90/image-20241228190213587.png" class="" title="image-20241228190213587">
 
 <p>然后根据下一个规则：</p>
 <p>找如下特征：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">3.</span><br><span class="line">movzx</span><br><span class="line">test</span><br><span class="line">jz</span><br><span class="line">mov</span><br><span class="line">mov</span><br><span class="line">push</span><br><span class="line">call</span><br><span class="line">add</span><br><span class="line">call</span><br></pre></td></tr></table></figure>
 
 <p>找到如下特征以后：F2下个断点：如下:</p>
-<img src="/posts/undefined/image-20241228190718677.png" class="" title="image-20241228190718677">
+<img src="/posts/cc605c90/image-20241228190718677.png" class="" title="image-20241228190718677">
 
 <p>然后F9运行到此：然后F2取消断点：如下：</p>
-<img src="/posts/undefined/image-20241228190848258.png" class="" title="image-20241228190848258">
+<img src="/posts/cc605c90/image-20241228190848258.png" class="" title="image-20241228190848258">
 
 <p>然后继续F7跟进：如下：</p>
-<img src="/posts/undefined/image-20241228191335207.png" class="" title="image-20241228191335207">
+<img src="/posts/cc605c90/image-20241228191335207.png" class="" title="image-20241228191335207">
 
 <p>然后继续根据规则：进入最后一个call:</p>
 <p>F2下个断点然后F9运行到这，以后F2取消断点：如下：</p>
-<img src="/posts/undefined/image-20241228191511004.png" class="" title="image-20241228191511004">
+<img src="/posts/cc605c90/image-20241228191511004.png" class="" title="image-20241228191511004">
 
 <p>F7跟进去：如下：</p>
-<img src="/posts/undefined/image-20241228191605680.png" class="" title="image-20241228191605680">
+<img src="/posts/cc605c90/image-20241228191605680.png" class="" title="image-20241228191605680">
 
 <p>然后我们直接F8jmp：可以成功看到我们的main函数：如下：</p>
-<img src="/posts/undefined/image-20241228191709022.png" class="" title="image-20241228191709022">
+<img src="/posts/cc605c90/image-20241228191709022.png" class="" title="image-20241228191709022">
 
-<img src="/posts/undefined/image-20241228191843017.png" class="" title="image-20241228191843017">
+<img src="/posts/cc605c90/image-20241228191843017.png" class="" title="image-20241228191843017">
 
 <p>上述的就是X86 Debug的一个根据结果倒过来找路线的全过程。</p>
 <p>然后可以自己调试一下前面生成的<code>x64 debug</code></p>
@@ -334,7 +334,7 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">x86 release：</span><br><span class="line"></span><br><span class="line">第一层：</span><br><span class="line">push    eax             ; envp</span><br><span class="line">push    edi             ; argv</span><br><span class="line">push    dword ptr [esi] ; argc</span><br><span class="line">call    _main</span><br><span class="line"></span><br><span class="line">第二层：</span><br><span class="line">call    ___security_init_cookie</span><br><span class="line">jmp     __scrt_common_main_seh</span><br><span class="line">直接jmp</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p>选择高亮模式进行调试是个看着会舒服很多：</p>
-<img src="/posts/undefined/image-20241228200450777.png" class="" title="image-20241228200450777">
+<img src="/posts/cc605c90/image-20241228200450777.png" class="" title="image-20241228200450777">
 
 <h3 id="第三种方式：导入表查看"><a href="#第三种方式：导入表查看" class="headerlink" title="第三种方式：导入表查看"></a>第三种方式：导入表查看</h3><p>首先生成如下代码exe</p>
 <p><code>Release x86</code>：</p>
@@ -342,17 +342,17 @@
 
 <h4 id="静态调试查询演示："><a href="#静态调试查询演示：" class="headerlink" title="静态调试查询演示："></a>静态调试查询演示：</h4><p>拖入IDA9.0</p>
 <p>首先，它已经直接识别出main函数：如下：</p>
-<img src="/posts/undefined/image-20241228213543861.png" class="" title="image-20241228213543861">
+<img src="/posts/cc605c90/image-20241228213543861.png" class="" title="image-20241228213543861">
 
 <p><strong>如果没有识别出来呢？</strong></p>
 <p>我们可以去导入表内看看：如下：用到的api都在下显示了</p>
-<img src="/posts/undefined/image-20241228213708436.png" class="" title="image-20241228213708436">
+<img src="/posts/cc605c90/image-20241228213708436.png" class="" title="image-20241228213708436">
 
 <p>我们ctrl+F进行一下搜索：如下：</p>
-<img src="/posts/undefined/image-20241228213835358.png" class="" title="image-20241228213835358">
+<img src="/posts/cc605c90/image-20241228213835358.png" class="" title="image-20241228213835358">
 
 <p>双击点击进入：如下：</p>
-<img src="/posts/undefined/image-20241228214009926.png" class="" title="image-20241228214009926">
+<img src="/posts/cc605c90/image-20241228214009926.png" class="" title="image-20241228214009926">
 
 <p>我们会看到他进行了一个跨模块的引用：</p>
 <p><strong><code>@16</code>是什么呢？</strong></p>
@@ -362,103 +362,103 @@
 <p>粉色就代表着它是一个跨模块的调用，它是在其他的模块里拥有的这么一个东西</p>
 <p>上方<code>int (__stdcall *MessageBoxA)</code>还说明其返回值，以及调用约定</p>
 <p>接下来我们直接对其进行一个<code>右键+交叉引用</code>的形式来找他的这个位置，如下：</p>
-<img src="/posts/undefined/image-20241228214748691.png" class="" title="image-20241228214748691">
+<img src="/posts/cc605c90/image-20241228214748691.png" class="" title="image-20241228214748691">
 
 <p>发现两个位置都在调用，其实两个位置都一样，如下：</p>
-<img src="/posts/undefined/image-20241228214918232.png" class="" title="image-20241228214918232">
+<img src="/posts/cc605c90/image-20241228214918232.png" class="" title="image-20241228214918232">
 
 <p>会发现我们已经成功找到main函数了。</p>
 <h4 id="动态调试演示："><a href="#动态调试演示：" class="headerlink" title="动态调试演示："></a>动态调试演示：</h4><p>利用x64dbg打开程序，右键——&gt;搜索——&gt;所有模块——&gt;跨模块调用如下：</p>
-<img src="/posts/undefined/image-20241228215448207.png" class="" title="image-20241228215448207">
+<img src="/posts/cc605c90/image-20241228215448207.png" class="" title="image-20241228215448207">
 
-<img src="/posts/undefined/image-20241228215554752.png" class="" title="image-20241228215554752">
+<img src="/posts/cc605c90/image-20241228215554752.png" class="" title="image-20241228215554752">
 
 <p>在左下角的搜索框内搜索：MessageBoxA：如下：</p>
-<img src="/posts/undefined/image-20241228215645332.png" class="" title="image-20241228215645332">
+<img src="/posts/cc605c90/image-20241228215645332.png" class="" title="image-20241228215645332">
 
 <p>然后双击直接进入：</p>
-<img src="/posts/undefined/image-20241228215721599.png" class="" title="image-20241228215721599">
+<img src="/posts/cc605c90/image-20241228215721599.png" class="" title="image-20241228215721599">
 
 <h3 id="利用方法找到指定功能："><a href="#利用方法找到指定功能：" class="headerlink" title="利用方法找到指定功能："></a>利用方法找到指定功能：</h3><p>上述的这些方法也不见得非得用来找main函数，也可以用来找一些指定的功能。</p>
 <p>比方说我来写这样一个程序：（选择MFC程序）</p>
 <p>创建新项目：如下</p>
-<img src="/posts/undefined/image-20241228215952185.png" class="" title="image-20241228215952185">
+<img src="/posts/cc605c90/image-20241228215952185.png" class="" title="image-20241228215952185">
 
 <p>然后直接生成这个文件点击<code>资源文件</code>选择<code>MFCApplication1.rc</code>进入如下界面：</p>
-<img src="/posts/undefined/image-20241228234024080.png" class="" title="image-20241228234024080">
+<img src="/posts/cc605c90/image-20241228234024080.png" class="" title="image-20241228234024080">
 
 <p>并且修改成上图模样，然后右键<code>button1</code>属性</p>
 <p>修改如下：</p>
-<img src="/posts/undefined/image-20241228234308485.png" class="" title="image-20241228234308485">
+<img src="/posts/cc605c90/image-20241228234308485.png" class="" title="image-20241228234308485">
 
 <p>然后双击<code>Msg</code>：如下：</p>
-<img src="/posts/undefined/image-20241228234503803.png" class="" title="image-20241228234503803">
+<img src="/posts/cc605c90/image-20241228234503803.png" class="" title="image-20241228234503803">
 
 <p>跳转到此处：如下：</p>
-<img src="/posts/undefined/image-20241228234544180.png" class="" title="image-20241228234544180">
+<img src="/posts/cc605c90/image-20241228234544180.png" class="" title="image-20241228234544180">
 
 <p>并在其中写入弹窗代码：如下：</p>
-<img src="/posts/undefined/image-20241228234725822.png" class="" title="image-20241228234725822">
+<img src="/posts/cc605c90/image-20241228234725822.png" class="" title="image-20241228234725822">
 
 <p>完成以后配置一下项目属性：设置成如下：</p>
-<img src="/posts/undefined/image-20241228234902369.png" class="" title="image-20241228234902369">
+<img src="/posts/cc605c90/image-20241228234902369.png" class="" title="image-20241228234902369">
 
 <p>完成以后我们直接**<code>右键</code>——&gt;<code>重新生成</code>**生成一个exe文件。如下：</p>
-<img src="/posts/undefined/image-20241228235114189.png" class="" title="image-20241228235114189">
+<img src="/posts/cc605c90/image-20241228235114189.png" class="" title="image-20241228235114189">
 
 <p>其能达到这么一个效果：如下：</p>
-<img src="/posts/undefined/image-20241229001646272.png" class="" title="image-20241229001646272">
+<img src="/posts/cc605c90/image-20241229001646272.png" class="" title="image-20241229001646272">
 
 <h4 id="分析："><a href="#分析：" class="headerlink" title="分析："></a>分析：</h4><p>我们该如何找到如下功能点呢？</p>
-<img src="/posts/undefined/image-20241229000140394.png" class="" title="image-20241229000140394">
+<img src="/posts/cc605c90/image-20241229000140394.png" class="" title="image-20241229000140394">
 
 <p>拖入ida以后：</p>
 <p>我们可以看看其字符串，也可以看看其导入表。</p>
 <p>这里我直接对导入表进行一个翻看然后<code>ctrl+F</code>搜索<code>MessageBoxA</code>然后找到其函数以后再对其进行<code>右键查询交叉引用</code>找到其调用然后对函数进行一个重命名：如下：</p>
-<img src="/posts/undefined/image-20241229000422227.png" class="" title="image-20241229000422227">
+<img src="/posts/cc605c90/image-20241229000422227.png" class="" title="image-20241229000422227">
 
 <p>接下来对其再进行一个交叉引用：如下：</p>
-<img src="/posts/undefined/image-20241229000533596.png" class="" title="image-20241229000533596">
+<img src="/posts/cc605c90/image-20241229000533596.png" class="" title="image-20241229000533596">
 
 <p>跳转过来以后我们继续对其进行交叉引用继续往上追：如下：</p>
-<img src="/posts/undefined/image-20241229000641348.png" class="" title="image-20241229000641348">
+<img src="/posts/cc605c90/image-20241229000641348.png" class="" title="image-20241229000641348">
 
 <p>上层结果如下：</p>
-<img src="/posts/undefined/image-20241229001042381.png" class="" title="image-20241229001042381">
+<img src="/posts/cc605c90/image-20241229001042381.png" class="" title="image-20241229001042381">
 
 <hr>
 
 <p><strong>接下来我们给原本的这个程序加点东西来分析：</strong></p>
-<img src="/posts/undefined/image-20241229001329439.png" class="" title="image-20241229001329439">
+<img src="/posts/cc605c90/image-20241229001329439.png" class="" title="image-20241229001329439">
 
 <p>然后给其添加变量，如下：</p>
-<img src="/posts/undefined/image-20241229001403784.png" class="" title="image-20241229001403784">
+<img src="/posts/cc605c90/image-20241229001403784.png" class="" title="image-20241229001403784">
 
-<img src="/posts/undefined/image-20241229001454624.png" class="" title="image-20241229001454624">
+<img src="/posts/cc605c90/image-20241229001454624.png" class="" title="image-20241229001454624">
 
 <p>这样设置完两个变量之后我们双击就不弹窗，我们让其做一个对比比较：</p>
 <p>功能：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">CMFCApplication1Dlg::OnBnClickedButton1</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">UpdateData</span>(TRUE);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (m_IntA == m_IntB)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">MessageBoxA</span>(<span class="literal">NULL</span>, <span class="string">&quot;Success!&quot;</span>, <span class="string">&quot;Msg&quot;</span>, MB_OK);</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">MessageBoxA</span>(<span class="literal">NULL</span>, <span class="string">&quot;Faild!&quot;</span>, <span class="string">&quot;Msg&quot;</span>, MB_OK);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">UpdateData</span>(FALSE);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>如下：</p>
-<img src="/posts/undefined/image-20241229003553590.png" class="" title="image-20241229003553590">
+<img src="/posts/cc605c90/image-20241229003553590.png" class="" title="image-20241229003553590">
 
 <p>然后<strong>重新生成</strong>。</p>
 <p>先将其拖入ida中加载，有一些慢，那我们进行一下动态调试：如下：</p>
-<img src="/posts/undefined/image-20241229004024866.png" class="" title="image-20241229004024866">
+<img src="/posts/cc605c90/image-20241229004024866.png" class="" title="image-20241229004024866">
 
 <p>现在我们要做的就是要找出他的对比：</p>
 <p>可以看到有如下效果：</p>
-<img src="/posts/undefined/image-20241229004139732.png" class="" title="image-20241229004139732">
+<img src="/posts/cc605c90/image-20241229004139732.png" class="" title="image-20241229004139732">
 
-<img src="/posts/undefined/image-20241229004158469.png" class="" title="image-20241229004158469">
+<img src="/posts/cc605c90/image-20241229004158469.png" class="" title="image-20241229004158469">
 
 <p>先将其运行起来：如下：</p>
-<img src="/posts/undefined/image-20241229004626350.png" class="" title="image-20241229004626350">
+<img src="/posts/cc605c90/image-20241229004626350.png" class="" title="image-20241229004626350">
 
 <p>那么现在呢我们就是要找出他其中的对比。</p>
 <p>我们直接**<code>右键搜索</code>——&gt;<code>跨模块调用</code>**</p>
-<img src="/posts/undefined/image-20241229004818255.png" class="" title="image-20241229004818255">
+<img src="/posts/cc605c90/image-20241229004818255.png" class="" title="image-20241229004818255">
 
 <p><strong>从这里找到他的弹窗的那个东西！</strong>！！</p>
 <p>我们找他是有一定依据的：</p>
@@ -467,30 +467,221 @@
 <p>我们可以追踪到他的根源，我们可以做出如下操作：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bp MessageBoxA 下断点（软件断点）</span><br></pre></td></tr></table></figure>
 
-<img src="/posts/undefined/image-20241229005318707.png" class="" title="image-20241229005318707">
+<img src="/posts/cc605c90/image-20241229005318707.png" class="" title="image-20241229005318707">
 
 <p>然后回车，这样他就根据我们的api给我们下了一个断点。如下：</p>
-<img src="/posts/undefined/image-20241229005428915.png" class="" title="image-20241229005428915">
+<img src="/posts/cc605c90/image-20241229005428915.png" class="" title="image-20241229005428915">
 
 <p>又或者我们可以来查看跨模块调用以后直接搜索这个函数<code>MessageBoxA</code>,如下：</p>
-<img src="/posts/undefined/image-20241229005650418.png" class="" title="image-20241229005650418">
+<img src="/posts/cc605c90/image-20241229005650418.png" class="" title="image-20241229005650418">
 
 <p>然后双击进入，再点击如下：</p>
-<img src="/posts/undefined/image-20241229005936043.png" class="" title="image-20241229005936043">
+<img src="/posts/cc605c90/image-20241229005936043.png" class="" title="image-20241229005936043">
 
 <p>随便点一个跟进去，无论是不是你都可以下个断点，如下：</p>
-<img src="/posts/undefined/image-20241229010043713.png" class="" title="image-20241229010043713">
+<img src="/posts/cc605c90/image-20241229010043713.png" class="" title="image-20241229010043713">
 
 <p>不论是上面的那种方式我们都是可以找到这个位置的。</p>
 <p>接下来让其运行起来我们就可以进行调试了，然后点击按钮：如下：</p>
-<img src="/posts/undefined/image-20241229010952692.png" class="" title="image-20241229010952692">
+<img src="/posts/cc605c90/image-20241229010952692.png" class="" title="image-20241229010952692">
 
 <p>接下来我们还要找一个向上的堆栈：他停在上面的断点后，我们点击调用堆栈如下：</p>
 <p>调用堆栈就你来源于哪，就是你上一级的调用和上上一级的调用都是来源于哪。</p>
-<img src="/posts/undefined/image-20241229011354436.png" class="" title="image-20241229011354436">
+<img src="/posts/cc605c90/image-20241229011354436.png" class="" title="image-20241229011354436">
 
-<p>41：30</p>
-</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://Iconabc.github.io">icon</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://iconabc.github.io/posts/cc605c90.html">https://iconabc.github.io/posts/cc605c90.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://Iconabc.github.io" target="_blank">icon'Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%AD%A6%E5%99%A8%E5%8C%96%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0/">武器化开发学习</a><a class="post-meta__tags" href="/tags/%E5%85%8D%E6%9D%80/">免杀</a></div><div class="post-share"><div class="social-share" data-image="/img/mbc.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/posts/be4abe2b.html" title="02-x86_64架构汇编语言"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">02-x86_64架构汇编语言</div></div><div class="info-2"><div class="info-item-1">x86_64架构汇编语言汇编的概念与常用寄存器汇编语言（Assembly Language）是一种低级编程语言，直接与计算机硬件交互。它是机器语言的符号化表示，人类可以通过汇编语言编写程序，而计算机则通过汇编语言指令与硬件进行通信。汇编语言具有与特定计算机体系结构（如 x86、ARM 等）密切相关的语法和指令集。 主要特点：  低级语言：汇编语言离机器语言非常近，指令与机器代码几乎一一对应。 面向硬件：汇编语言能精确控制计算机硬件资源，如寄存器、内存、I&#x2F;O...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/posts/e11d0610.html" title="01-C++基础学习"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-12-22</div><div class="info-item-2">01-C++基础学习</div></div><div class="info-2"><div class="info-item-1">C&#x2F;C++基础学习环境搭建windows环境基础搭建：这个不介绍一路下一步就行 linux环境基础搭建： 我是搭建在Ubuntu上的： 1234567891011#首先更新一下源sudo apt update#安装一个文本编辑器sudo apt install vim#安装gccsudo apt install gcc#安装g++sudo apt install g++  让我来写第一个代码并将其编译看看是否已经下载完毕： Hello.c: 12345#include &lt;stdio.h&gt;int main()&#123;    printf(&quot;Hello World&quot;);    return 0;&#125;  编译.c文件成可执行文件： gcc -o hello hello.c   执行这个可执行文件：   因为我们的Ubuntu系统是64位的系统，所以他也默认给我们生成了64位的文件。 我们可以下载如下库这样就支持我们编译成32位的文件了 12sudo apt install gcc-multilibsudo apt install...</div></div></div></a><a class="pagination-related" href="/posts/be4abe2b.html" title="02-x86_64架构汇编语言"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-12-26</div><div class="info-item-2">02-x86_64架构汇编语言</div></div><div class="info-2"><div class="info-item-1">x86_64架构汇编语言汇编的概念与常用寄存器汇编语言（Assembly Language）是一种低级编程语言，直接与计算机硬件交互。它是机器语言的符号化表示，人类可以通过汇编语言编写程序，而计算机则通过汇编语言指令与硬件进行通信。汇编语言具有与特定计算机体系结构（如 x86、ARM 等）密切相关的语法和指令集。 主要特点：  低级语言：汇编语言离机器语言非常近，指令与机器代码几乎一一对应。 面向硬件：汇编语言能精确控制计算机硬件资源，如寄存器、内存、I&#x2F;O...</div></div></div></a></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="disqus_thread"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/mbc.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">icon</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">21</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">14</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">21</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Iconabc"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/Iconabc/" target="_blank" title="Github"><i class="fab fa-github" style="color: #hdhfbb;"></i></a><a class="social-icon" href="mailto:2899345299@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #000000;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">up up</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#C-C-%E8%BD%AF%E4%BB%B6%E9%80%86%E5%90%91%E6%8A%80%E6%9C%AF"><span class="toc-number">1.</span> <span class="toc-text">C&#x2F;C++软件逆向技术</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E6%9E%90%E5%AE%9A%E4%BD%8D%E7%9B%AE%E6%A0%87%E5%8A%9F%E8%83%BD%EF%BC%9A"><span class="toc-number">1.1.</span> <span class="toc-text">分析定位目标功能：</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E7%A7%8D%E6%96%B9%E5%BC%8F%EF%BC%9A%E9%80%9A%E8%BF%87%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%9D%A5%E6%89%BE"><span class="toc-number">1.1.1.</span> <span class="toc-text">第一种方式：通过字符串来找</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E7%A7%8D%E6%96%B9%E5%BC%8F%EF%BC%9A%E6%A0%B9%E6%8D%AE%E4%B8%80%E5%AE%9A%E8%A7%84%E5%88%99%E6%9D%A5%E7%A1%AE%E5%AE%9A"><span class="toc-number">1.1.2.</span> <span class="toc-text">第二种方式：根据一定规则来确定</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E7%A7%8D%E6%96%B9%E5%BC%8F%EF%BC%9A%E5%AF%BC%E5%85%A5%E8%A1%A8%E6%9F%A5%E7%9C%8B"><span class="toc-number">1.1.3.</span> <span class="toc-text">第三种方式：导入表查看</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E8%B0%83%E8%AF%95%E6%9F%A5%E8%AF%A2%E6%BC%94%E7%A4%BA%EF%BC%9A"><span class="toc-number">1.1.3.1.</span> <span class="toc-text">静态调试查询演示：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E8%B0%83%E8%AF%95%E6%BC%94%E7%A4%BA%EF%BC%9A"><span class="toc-number">1.1.3.2.</span> <span class="toc-text">动态调试演示：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A9%E7%94%A8%E6%96%B9%E6%B3%95%E6%89%BE%E5%88%B0%E6%8C%87%E5%AE%9A%E5%8A%9F%E8%83%BD%EF%BC%9A"><span class="toc-number">1.1.4.</span> <span class="toc-text">利用方法找到指定功能：</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%86%E6%9E%90%EF%BC%9A"><span class="toc-number">1.1.4.1.</span> <span class="toc-text">分析：</span></a></li></ol></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/cc605c90.html" title="03-C/C++软件逆向技术">03-C/C++软件逆向技术</a><time datetime="2024-12-28T05:19:21.000Z" title="发表于 2024-12-28 13:19:21">2024-12-28</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/be4abe2b.html" title="02-x86_64架构汇编语言">02-x86_64架构汇编语言</a><time datetime="2024-12-26T08:44:51.000Z" title="发表于 2024-12-26 16:44:51">2024-12-26</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/e11d0610.html" title="01-C++基础学习">01-C++基础学习</a><time datetime="2024-12-22T01:59:42.000Z" title="发表于 2024-12-22 09:59:42">2024-12-22</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/ad068c24.html" title="多级代理工具">多级代理工具</a><time datetime="2024-12-18T12:33:28.000Z" title="发表于 2024-12-18 20:33:28">2024-12-18</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/868e8d19.html" title="网络通信知识点小总">网络通信知识点小总</a><time datetime="2024-12-17T07:23:58.000Z" title="发表于 2024-12-17 15:23:58">2024-12-17</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url(/img/shuai.jpg);"><div id="footer-wrap"><div class="copyright">&copy;2023 - 2024 By icon</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text"><a href="/">icon</a> is striving to become stronger!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>(() => {
+<p>或者你调用堆栈都不用找，直接在<code>堆栈窗口</code>，右键选择<code>转到ESP</code>，如下：</p>
+<img src="/posts/cc605c90/image-20241229134217446.png" class="" title="image-20241229134217446">
+
+<p>这里就直接找到了：如下：</p>
+<img src="/posts/cc605c90/image-20241229134928360.png" class="" title="image-20241229134928360">
+
+<p>成功找到了返回地址。</p>
+<p>既然已经找到了其返回地址，我们来分析一下这段逻辑：如下：</p>
+<img src="/posts/cc605c90/image-20241229135538475.png" class="" title="image-20241229135538475">
+
+<p>我们可以看到<code>jne mfcapplication1.6253AA</code>这条指令，来执行的跳转，如果失败他就会是一条虚线跳转到后面指定的地址<code>6253AA</code>，成功则继续执行向下的逻辑。</p>
+<p>我们可以看到其上方有个<code>jne</code>的上方有个<code>cmp</code>，不出意外的情况下这个<code>cmp</code>就起到了一个关键的对比作用：于是我F2下个断点来分析：如下：</p>
+<img src="/posts/cc605c90/image-20241229140208469.png" class="" title="image-20241229140208469">
+
+<p>然后我们直接给其运行起来：如下：</p>
+<img src="/posts/cc605c90/image-20241229140313678.png" class="" title="image-20241229140313678">
+
+<p>然后我们再给其设置个值然后点击按钮看看，如下：</p>
+<img src="/posts/cc605c90/image-20241229140438126.png" class="" title="image-20241229140438126">
+
+<p>点击完毕以后其断在了这里：如下：</p>
+<img src="/posts/cc605c90/image-20241229140549499.png" class="" title="image-20241229140549499">
+
+<p>他断在这里以后我们查看其后面对应存储的值都在哪：观察如下：</p>
+<p>edx：</p>
+<img src="/posts/cc605c90/image-20241229140737626.png" class="" title="image-20241229140737626">
+
+<p>然后我们右键转到内存中指定地址查看其对应所存值：如下：</p>
+<img src="/posts/cc605c90/image-20241229141051273.png" class="" title="image-20241229141051273">
+
+<p>其<code>[ecx+D8]</code>内存中对应存的值正是<code>0</code></p>
+<img src="/posts/cc605c90/image-20241229141502133.png" class="" title="image-20241229141502133">
+
+<p>然后我们点击运行：如下：0并不等于2于是其发生跳转</p>
+<img src="/posts/cc605c90/image-20241229141836720.png" class="" title="image-20241229141836720">
+
+<p>继续实验：我们重新调整值：如下</p>
+<img src="/posts/cc605c90/image-20241229142035537.png" class="" title="image-20241229142035537">
+
+<p>观察所存值的变化：如下：</p>
+<img src="/posts/cc605c90/image-20241229142155305.png" class="" title="image-20241229142155305">
+
+<p>当他们两者相同时，我F8向下走一步我们会发现**<code>ZF</code>位**就等于1了，也就说明其两者相减为0也就是说，其两者相等：如下：</p>
+<img src="/posts/cc605c90/image-20241229142410629.png" class="" title="image-20241229142410629">
+
+<p>既然两者相等再运行他自然而然的就走向成功了，如下：</p>
+<img src="/posts/cc605c90/image-20241229143025723.png" class="" title="image-20241229143025723">
+
+<h5 id="扩展："><a href="#扩展：" class="headerlink" title="扩展："></a>扩展：</h5><p>现在我们大概知道了他的运行逻辑，<strong>那么是不是可以尝试逆转一下结果呢，让本该Faild的，变成Success</strong></p>
+<p>一个<code>Msg</code>停在此处：如下：</p>
+<img src="/posts/cc605c90/image-20241229144044153.png" class="" title="image-20241229144044153">
+
+<p><strong>法一</strong>：修改内存地址中的值为2：如下：</p>
+<img src="/posts/cc605c90/image-20241229144341902.png" class="" title="image-20241229144341902">
+
+<p>一直<code>F8</code>下一步发现成功逆转结果：</p>
+<img src="/posts/cc605c90/image-20241229144506190.png" class="" title="image-20241229144506190">
+
+<p><strong>法二</strong>：在发生跳转之前改变flag标志位<code>ZF</code>的值：如下：</p>
+<img src="/posts/cc605c90/image-20241229145011655.png" class="" title="image-20241229145011655">
+
+<p>双击<code>ZF</code>就改了：如下：</p>
+<img src="/posts/cc605c90/image-20241229145258084.png" class="" title="image-20241229145258084">
+
+<p>成功逆转。</p>
+<p><strong>法三</strong>：直接改变跳转指令：</p>
+<p>快捷键“Space”直接修改汇编指令：如下：</p>
+<img src="/posts/cc605c90/image-20241229150645613.png" class="" title="image-20241229150645613">
+
+<p>修改完成后成功逆转，如下：</p>
+<img src="/posts/cc605c90/image-20241229150834352.png" class="" title="image-20241229150834352">
+
+<img src="/posts/cc605c90/image-20241229150855181.png" class="" title="image-20241229150855181">
+
+<p><strong>法四</strong>：直接将<code>jne</code>指令nop掉：</p>
+<img src="/posts/cc605c90/image-20241229151104725.png" class="" title="image-20241229151104725">
+
+<p>成功逆转，如下：</p>
+<img src="/posts/cc605c90/image-20241229151208390.png" class="" title="image-20241229151208390">
+
+<img src="/posts/cc605c90/image-20241229151147024.png" class="" title="image-20241229151147024">
+
+<p>以上的四种方法也就是，我们破解的一种思路，也是我们功能定位的一种思路。</p>
+<hr>
+
+<h2 id="函数调用约定：（第二天）"><a href="#函数调用约定：（第二天）" class="headerlink" title="函数调用约定：（第二天）"></a>函数调用约定：（第二天）</h2><p>示例代码如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;HelloWorld!\r\n&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line"> 	<span class="built_in">test</span>();</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>对其生成的exe文件拖入IDA进行调试：进入到如下位置：如下：</p>
+<img src="/posts/cc605c90/image-20241229213709288.png" class="" title="image-20241229213709288">
+
+<p>一般来说第二个call就是我们自己的函数。</p>
+<p>高版本的编译器就是如下：</p>
+<p>上下两个<code>call</code>：</p>
+<p><strong>第一个是编译器给你加的一个安全检查,获取类似一个线程id之类，反正就是做一个安全检查</strong></p>
+<p><strong>第二个同样是一个安全检查<code>Checkesp</code>,检查你的堆栈是否是安全的，是否是平衡的。</strong></p>
+<p>我们来利用x64dbg来动态调试来看一看会更明确一些。如下：</p>
+<img src="/posts/cc605c90/image-20241229214406685.png" class="" title="image-20241229214406685">
+
+<img src="/posts/cc605c90/image-20241229214438572.png" class="" title="image-20241229214438572">
+
+<img src="/posts/cc605c90/image-20241229214658915.png" class="" title="image-20241229214658915">
+
+<img src="/posts/cc605c90/image-20241229215740305.png" class="" title="image-20241229215740305">
+
+<img src="/posts/cc605c90/image-20241229215803106.png" class="" title="image-20241229215803106">
+
+<p>上面是走过来的流程我们主要看下面两张图：如下：</p>
+<p>第一个call:</p>
+<img src="/posts/cc605c90/image-20241229215845160.png" class="" title="image-20241229215845160">
+
+<img src="/posts/cc605c90/image-20241229215906484.png" class="" title="image-20241229215906484">
+
+<p>第二个call:</p>
+<img src="/posts/cc605c90/image-20241229215951178.png" class="" title="image-20241229215951178">
+
+<img src="/posts/cc605c90/image-20241229220007650.png" class="" title="image-20241229220007650">
+
+<p>其实他的安全检查也是可以删掉的在设置内进行一下调整，如下：</p>
+<img src="/posts/cc605c90/image-20241229220431744.png" class="" title="image-20241229220431744">
+
+<p>现在我将上述规则设置成默认值，然后重新生成exe来调试看看呢：如下：</p>
+<img src="/posts/cc605c90/image-20241229220806560.png" class="" title="image-20241229220806560">
+
+<p>我们会发现下面那个checkEsp不见了对吧。</p>
+<p>既然如此，那么我们尝试给他的所有保护都给关了，看看程序最原始的状态是个什么样子：如下：</p>
+<img src="/posts/cc605c90/image-20241229221110943.png" class="" title="image-20241229221110943">
+
+<p>还有将SDL检查关闭：如下：</p>
+<img src="/posts/cc605c90/image-20241229221332487.png" class="" title="image-20241229221332487">
+
+<p>重新生成。</p>
+<p>我们已经将能关的的都尽量关了，现在main函数长这个样子：如下：</p>
+<img src="/posts/cc605c90/image-20241229221842368.png" class="" title="image-20241229221842368">
+
+<p>进入下面这个call就是我们自己写的那个函数test：如下：</p>
+<img src="/posts/cc605c90/image-20241229221941156.png" class="" title="image-20241229221941156">
+
+<p>ida打开看看test函数：如下：</p>
+<img src="/posts/cc605c90/image-20241229222509583.png" class="" title="image-20241229222509583">
+
+<p>现在我们进入test程序来分析这个函数，这段汇编大概干了些什么：右键如下可以进行一下记录：</p>
+<img src="/posts/cc605c90/image-20241229222735687.png" class="" title="image-20241229222735687">
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">test proc near</span><br><span class="line">push    ebp             ; 保存环境，保存原始ebp的值，因为一会会把esp的值覆盖到现有的ebp上</span><br><span class="line">mov     ebp, esp        ; 把esp给到ebp，然后后续在函数内部均使用ebp作为基准进行寻址</span><br><span class="line">sub     esp, 40h        ; 保护原有堆栈不被覆盖，抬出一块</span><br><span class="line">push    ebx             ; 保存ebx，esi，edi的值，函数的使用过程中可能会用到，防止原有的值丢失</span><br><span class="line">push    esi</span><br><span class="line">push    edi</span><br><span class="line">mov     ecx, offset unk_50F003</span><br><span class="line">call    j_@__CheckForDebuggerJustMyCode@4 ; 编译器添加的安全检查函数</span><br><span class="line">push    offset Format   ; &quot;HelloWorld!\r\n&quot;</span><br><span class="line">call    j__printf       ; 这里就是我们打印用的一个printf函数</span><br><span class="line">add     esp, 4          ; 保持堆栈平衡，平掉1个参数（4字节）就是上面的那个安全检查函数</span><br><span class="line">pop     edi</span><br><span class="line">pop     esi</span><br><span class="line">pop     ebx             ; 还原现场ebx，edi，esi的值</span><br><span class="line">mov     esp, ebp        ; 还原esp的值</span><br><span class="line">pop     ebp             ; 原有的ebp的值还原给ebp</span><br><span class="line">retn                    ; 返回函数结束</span><br><span class="line">test endp</span><br></pre></td></tr></table></figure>
+
+<h3 id="函数调用约定："><a href="#函数调用约定：" class="headerlink" title="函数调用约定："></a>函数调用约定：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">_cdecl</span><br><span class="line">_stdcall</span><br><span class="line">_fastcall</span><br></pre></td></tr></table></figure>
+
+<p>示例代码：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;Windows.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> _cdecl <span class="title">test</span><span class="params">(<span class="type">int</span> a,<span class="type">int</span> b,<span class="type">int</span> c,<span class="type">int</span> d,<span class="type">int</span> f)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">return</span> a + b + c + d + f;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//_cdecl</span></span><br><span class="line"><span class="comment">//_stdcall</span></span><br><span class="line"><span class="comment">//_fastcall</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="type">int</span> nRes = <span class="built_in">test</span>(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;Res = %d \r\n&quot;</span>, nRes);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>生成exe后拖入ida进行一手分析：</p>
+<p>首先我们来到main函数下，如下：</p>
+<img src="/posts/cc605c90/image-20241229230648801.png" class="" title="image-20241229230648801">
+
+<p>我们来着重关注一下这一段：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">push    5               ; int</span><br><span class="line">push    4               ; int</span><br><span class="line">push    3               ; int</span><br><span class="line">push    2               ; int</span><br><span class="line">push    1               ; int</span><br><span class="line">call    _test</span><br><span class="line">add     esp, 14h    ;平栈上面各是4字节一共20字节也就是0x14个字节</span><br></pre></td></tr></table></figure>
+
+<p>点击<code>_test</code>我们会进入一个跳转表：如下：</p>
+<img src="/posts/cc605c90/image-20241229231053996.png" class="" title="image-20241229231053996">
+
+<p>跳入我们的函数<code>test</code>：如下：</p>
+<img src="/posts/cc605c90/image-20241229231210271.png" class="" title="image-20241229231210271">
+
+<img src="/posts/cc605c90/image-20241229231311628.png" class="" title="image-20241229231311628">
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">arg_0= dword ptr  8		;这里也就是arg_0参数他在堆栈中的地址就在：[ebp + 8h]</span><br><span class="line">arg_4= dword ptr  0Ch		;[ebp + Ch]</span><br><span class="line">arg_8= dword ptr  10h		;[ebp + 10h]</span><br><span class="line">arg_C= dword ptr  14h		;[ebp + 14h]</span><br><span class="line">arg_10= dword ptr  18h		;[ebp + 18h]</span><br><span class="line"></span><br><span class="line">他存储了如下一些内容：</span><br><span class="line"></span><br><span class="line">[ebp] : ret</span><br><span class="line">[ebp + 8h]</span><br><span class="line">[ebp + Ch]</span><br><span class="line">[ebp + 10h]</span><br><span class="line">[ebp + 14h]</span><br><span class="line">[ebp + 18h]</span><br></pre></td></tr></table></figure>
+
+<p> 然后我们利用x64dbg来进行查看我们调用这个函数时堆栈的相关变化：如下：</p>
+<img src="/posts/cc605c90/image-20241229233419083.png" class="" title="image-20241229233419083">
+
+<p>当我们跟进call以后，堆栈就会存入等会我们要返回的地址：如下：</p>
+<img src="/posts/cc605c90/image-20241229233521547.png" class="" title="image-20241229233521547">
+
+<p><code>push ebp</code>：如下：</p>
+<img src="/posts/cc605c90/image-20241229233702781.png" class="" title="image-20241229233702781">
+
+<p>进入堆栈的是如下内容：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ ==&gt;    0019FE88                                        0019FEF4   ebp   </span><br><span class="line">$+4      0019FE8C                                        004503D2   返回到 funcrule._main+22 自 funcrule.__enc$textbss$end+2373</span><br><span class="line">$+8      0019FE90                                        00000001   </span><br><span class="line">$+C      0019FE94                                        00000002   </span><br><span class="line">$+10     0019FE98                                        00000003   </span><br><span class="line">$+14     0019FE9C                                        00000004   </span><br><span class="line">$+18     0019FEA0                                        00000005   </span><br></pre></td></tr></table></figure>
+
+<p><code>mov ebp,esp</code>：如下效果：</p>
+<img src="/posts/cc605c90/image-20241229234103024.png" class="" title="image-20241229234103024">
+
+<p><code>sub esp,40</code>：进行抬栈操作：<strong>这40h个字节能够保证我们在函数堆栈内出现问题不会淹没到原有的堆栈</strong>，如下：</p>
+<img src="/posts/cc605c90/image-20241229234504508.png" class="" title="image-20241229234504508">
+
+<p>这中间就相当于是一层缓冲层：</p>
+<p><strong>底下呢就是我们的老的堆栈，上方呢就是我们为我们的内部函数的堆栈，中间呢是缓冲层防止我们内部函数的堆栈溢出淹没到我们原来的堆栈。</strong></p>
+<p> 后面的指令就是进行加法以后存储到eax中：如下</p>
+<img src="/posts/cc605c90/image-20241230000144148.png" class="" width="">
+
+<p>35:20</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://Iconabc.github.io">icon</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://iconabc.github.io/posts/cc605c90.html">https://iconabc.github.io/posts/cc605c90.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://Iconabc.github.io" target="_blank">icon'Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%AD%A6%E5%99%A8%E5%8C%96%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0/">武器化开发学习</a><a class="post-meta__tags" href="/tags/%E5%85%8D%E6%9D%80/">免杀</a></div><div class="post-share"><div class="social-share" data-image="/img/mbc.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/posts/be4abe2b.html" title="02-x86_64架构汇编语言"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">02-x86_64架构汇编语言</div></div><div class="info-2"><div class="info-item-1">x86_64架构汇编语言汇编的概念与常用寄存器汇编语言（Assembly Language）是一种低级编程语言，直接与计算机硬件交互。它是机器语言的符号化表示，人类可以通过汇编语言编写程序，而计算机则通过汇编语言指令与硬件进行通信。汇编语言具有与特定计算机体系结构（如 x86、ARM 等）密切相关的语法和指令集。 主要特点：  低级语言：汇编语言离机器语言非常近，指令与机器代码几乎一一对应。 面向硬件：汇编语言能精确控制计算机硬件资源，如寄存器、内存、I&#x2F;O...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/posts/e11d0610.html" title="01-C++基础学习"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-12-22</div><div class="info-item-2">01-C++基础学习</div></div><div class="info-2"><div class="info-item-1">C&#x2F;C++基础学习环境搭建windows环境基础搭建：这个不介绍一路下一步就行 linux环境基础搭建： 我是搭建在Ubuntu上的： 1234567891011#首先更新一下源sudo apt update#安装一个文本编辑器sudo apt install vim#安装gccsudo apt install gcc#安装g++sudo apt install g++  让我来写第一个代码并将其编译看看是否已经下载完毕： Hello.c: 12345#include &lt;stdio.h&gt;int main()&#123;    printf(&quot;Hello World&quot;);    return 0;&#125;  编译.c文件成可执行文件： gcc -o hello hello.c   执行这个可执行文件：   因为我们的Ubuntu系统是64位的系统，所以他也默认给我们生成了64位的文件。 我们可以下载如下库这样就支持我们编译成32位的文件了 12sudo apt install gcc-multilibsudo apt install...</div></div></div></a><a class="pagination-related" href="/posts/be4abe2b.html" title="02-x86_64架构汇编语言"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-12-26</div><div class="info-item-2">02-x86_64架构汇编语言</div></div><div class="info-2"><div class="info-item-1">x86_64架构汇编语言汇编的概念与常用寄存器汇编语言（Assembly Language）是一种低级编程语言，直接与计算机硬件交互。它是机器语言的符号化表示，人类可以通过汇编语言编写程序，而计算机则通过汇编语言指令与硬件进行通信。汇编语言具有与特定计算机体系结构（如 x86、ARM 等）密切相关的语法和指令集。 主要特点：  低级语言：汇编语言离机器语言非常近，指令与机器代码几乎一一对应。 面向硬件：汇编语言能精确控制计算机硬件资源，如寄存器、内存、I&#x2F;O...</div></div></div></a></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="disqus_thread"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/mbc.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">icon</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">21</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">14</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">21</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Iconabc"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/Iconabc/" target="_blank" title="Github"><i class="fab fa-github" style="color: #hdhfbb;"></i></a><a class="social-icon" href="mailto:2899345299@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #000000;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">up up</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#C-C-%E8%BD%AF%E4%BB%B6%E9%80%86%E5%90%91%E6%8A%80%E6%9C%AF"><span class="toc-number">1.</span> <span class="toc-text">C&#x2F;C++软件逆向技术</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E6%9E%90%E5%AE%9A%E4%BD%8D%E7%9B%AE%E6%A0%87%E5%8A%9F%E8%83%BD%EF%BC%9A-%E7%AC%AC%E4%B8%80%E5%A4%A9"><span class="toc-number">1.1.</span> <span class="toc-text">分析定位目标功能：(第一天)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E7%A7%8D%E6%96%B9%E5%BC%8F%EF%BC%9A%E9%80%9A%E8%BF%87%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%9D%A5%E6%89%BE"><span class="toc-number">1.1.1.</span> <span class="toc-text">第一种方式：通过字符串来找</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E7%A7%8D%E6%96%B9%E5%BC%8F%EF%BC%9A%E6%A0%B9%E6%8D%AE%E4%B8%80%E5%AE%9A%E8%A7%84%E5%88%99%E6%9D%A5%E7%A1%AE%E5%AE%9A"><span class="toc-number">1.1.2.</span> <span class="toc-text">第二种方式：根据一定规则来确定</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E7%A7%8D%E6%96%B9%E5%BC%8F%EF%BC%9A%E5%AF%BC%E5%85%A5%E8%A1%A8%E6%9F%A5%E7%9C%8B"><span class="toc-number">1.1.3.</span> <span class="toc-text">第三种方式：导入表查看</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E8%B0%83%E8%AF%95%E6%9F%A5%E8%AF%A2%E6%BC%94%E7%A4%BA%EF%BC%9A"><span class="toc-number">1.1.3.1.</span> <span class="toc-text">静态调试查询演示：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E8%B0%83%E8%AF%95%E6%BC%94%E7%A4%BA%EF%BC%9A"><span class="toc-number">1.1.3.2.</span> <span class="toc-text">动态调试演示：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A9%E7%94%A8%E6%96%B9%E6%B3%95%E6%89%BE%E5%88%B0%E6%8C%87%E5%AE%9A%E5%8A%9F%E8%83%BD%EF%BC%9A"><span class="toc-number">1.1.4.</span> <span class="toc-text">利用方法找到指定功能：</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%86%E6%9E%90%EF%BC%9A"><span class="toc-number">1.1.4.1.</span> <span class="toc-text">分析：</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%89%A9%E5%B1%95%EF%BC%9A"><span class="toc-number">1.1.4.1.1.</span> <span class="toc-text">扩展：</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8%E7%BA%A6%E5%AE%9A%EF%BC%9A%EF%BC%88%E7%AC%AC%E4%BA%8C%E5%A4%A9%EF%BC%89"><span class="toc-number">1.2.</span> <span class="toc-text">函数调用约定：（第二天）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8%E7%BA%A6%E5%AE%9A%EF%BC%9A"><span class="toc-number">1.2.1.</span> <span class="toc-text">函数调用约定：</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/cc605c90.html" title="03-C/C++软件逆向技术">03-C/C++软件逆向技术</a><time datetime="2024-12-28T05:19:21.000Z" title="发表于 2024-12-28 13:19:21">2024-12-28</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/be4abe2b.html" title="02-x86_64架构汇编语言">02-x86_64架构汇编语言</a><time datetime="2024-12-26T08:44:51.000Z" title="发表于 2024-12-26 16:44:51">2024-12-26</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/e11d0610.html" title="01-C++基础学习">01-C++基础学习</a><time datetime="2024-12-22T01:59:42.000Z" title="发表于 2024-12-22 09:59:42">2024-12-22</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/ad068c24.html" title="多级代理工具">多级代理工具</a><time datetime="2024-12-18T12:33:28.000Z" title="发表于 2024-12-18 20:33:28">2024-12-18</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/868e8d19.html" title="网络通信知识点小总">网络通信知识点小总</a><time datetime="2024-12-17T07:23:58.000Z" title="发表于 2024-12-17 15:23:58">2024-12-17</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url(/img/shuai.jpg);"><div id="footer-wrap"><div class="copyright">&copy;2023 - 2024 By icon</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text"><a href="/">icon</a> is striving to become stronger!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>(() => {
   const isShuoshuo = GLOBAL_CONFIG_SITE.isShuoshuo
 
   const disqusReset = conf => {
