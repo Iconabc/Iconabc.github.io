@@ -1,0 +1,428 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>05-进程通信 | icon'Blog</title><meta name="author" content="icon"><meta name="copyright" content="icon"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="进程通信所谓进程通信，其本质就是共享内存 一，邮槽邮槽（Mailslot）是一种简单的 进程间通信（IPC）机制，它允许不同进程之间传递信息。邮槽的设计比较简单，适用于 单向通信 的场景，也就是说，一个进程只能向邮槽写入数据，另一个进程才能从中读取数据。它是 Windows 操作系统提供的一个特性。 邮槽的工作原理： 服务端：创建一个邮槽（Mailslot），用于接收客户端的消息。服务端可以是一个">
+<meta property="og:type" content="article">
+<meta property="og:title" content="05-进程通信">
+<meta property="og:url" content="https://iconabc.github.io/posts/e82b2357.html">
+<meta property="og:site_name" content="icon&#39;Blog">
+<meta property="og:description" content="进程通信所谓进程通信，其本质就是共享内存 一，邮槽邮槽（Mailslot）是一种简单的 进程间通信（IPC）机制，它允许不同进程之间传递信息。邮槽的设计比较简单，适用于 单向通信 的场景，也就是说，一个进程只能向邮槽写入数据，另一个进程才能从中读取数据。它是 Windows 操作系统提供的一个特性。 邮槽的工作原理： 服务端：创建一个邮槽（Mailslot），用于接收客户端的消息。服务端可以是一个">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://iconabc.github.io/img/mbc.jpg">
+<meta property="article:published_time" content="2025-01-25T13:35:11.000Z">
+<meta property="article:modified_time" content="2025-01-25T17:23:48.788Z">
+<meta property="article:author" content="icon">
+<meta property="article:tag" content="武器化开发学习">
+<meta property="article:tag" content="免杀">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://iconabc.github.io/img/mbc.jpg"><link rel="shortcut icon" href="/img/shasha.png"><link rel="canonical" href="https://iconabc.github.io/posts/e82b2357.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":150,"languages":{"author":"作者: icon","link":"链接: ","source":"来源: icon'Blog","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '05-进程通信',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  isShuoshuo: false
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/mbc.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">23</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">14</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> about</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/img/shuai.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">icon'Blog</span></a><a class="nav-page-title" href="/"><span class="site-name">05-进程通信</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> about</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">05-进程通信</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-01-25T13:35:11.000Z" title="发表于 2025-01-25 21:35:11">2025-01-25</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-01-25T17:23:48.788Z" title="更新于 2025-01-26 01:23:48">2025-01-26</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%BF%9B%E7%A8%8B%E9%80%9A%E4%BF%A1/">进程通信</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">4.4k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>15分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="进程通信"><a href="#进程通信" class="headerlink" title="进程通信"></a>进程通信</h1><p>所谓<code>进程通信</code>，其本质就是<code>共享内存</code></p>
+<h2 id="一，邮槽"><a href="#一，邮槽" class="headerlink" title="一，邮槽"></a>一，邮槽</h2><p><strong>邮槽</strong>（<strong>Mailslot</strong>）是一种简单的 <strong>进程间通信</strong>（IPC）机制，它允许不同进程之间传递信息。邮槽的设计比较简单，适用于 <strong>单向通信</strong> 的场景，也就是说，<strong>一个进程只能向邮槽写入数据，另一个进程才能从中读取数据。</strong>它是 Windows 操作系统提供的一个特性。</p>
+<h3 id="邮槽的工作原理："><a href="#邮槽的工作原理：" class="headerlink" title="邮槽的工作原理："></a>邮槽的工作原理：</h3><ul>
+<li><strong>服务端</strong>：创建一个邮槽（<strong>Mailslot</strong>），用于接收客户端的消息。服务端可以是一个持续运行的程序，它会持续等待其他进程向它的邮槽写入数据。</li>
+<li><strong>客户端</strong>：客户端打开已经存在的邮槽，并向邮槽写入消息。客户端只能写入数据，无法读取数据。</li>
+</ul>
+<h3 id="特点："><a href="#特点：" class="headerlink" title="特点："></a>特点：</h3><ol>
+<li><strong>单向通信</strong>：邮槽只允许单向通信，即客户端只能向邮槽写数据，服务端只能从邮槽读取数据。</li>
+<li><strong>广播通信</strong>：邮槽支持广播通信，一个进程可以向多个接收者发送消息。如果多个客户端监听同一个邮槽，它们会收到相同的消息。</li>
+<li><strong>简易性</strong>：与其他更复杂的 IPC 机制（如共享内存、管道等）相比，邮槽的实现简单，适用于需要快速且简单实现的场景。</li>
+<li><strong>无连接</strong>：邮槽是无连接的通信机制，客户端和服务端不需要事先建立连接，服务端只需要创建一个邮槽，客户端可以随时通过路径打开它。</li>
+</ol>
+<h3 id="使用场景："><a href="#使用场景：" class="headerlink" title="使用场景："></a>使用场景：</h3><p>邮槽适合用于<strong>简单的单向消息传递</strong>，例如：</p>
+<ul>
+<li>客户端向服务器发送一个通知或请求。</li>
+<li>服务端向多个客户端广播某个事件。</li>
+</ul>
+<p>它在一些简单的应用程序或旧版 Windows 系统中可能仍然使用，但在现代应用程序中，可能会选择更灵活和高效的通信机制，如 <strong>管道</strong> 或 <strong>网络套接字</strong>。</p>
+<h3 id="邮槽的创建与使用："><a href="#邮槽的创建与使用：" class="headerlink" title="邮槽的创建与使用："></a>邮槽的创建与使用：</h3><ol>
+<li><strong>创建邮槽</strong>：服务端创建一个邮槽，指定它的路径。<ul>
+<li>使用 <code>CreateMailslot</code> 函数来创建邮槽。</li>
+</ul>
+</li>
+<li><strong>写入数据</strong>：客户端向邮槽写入数据。<ul>
+<li>使用 <code>CreateFile</code> 打开邮槽，并使用 <code>WriteFile</code> 向其写入数据。</li>
+</ul>
+</li>
+<li><strong>读取数据</strong>：服务端从邮槽中读取数据。<ul>
+<li>使用 <code>ReadFile</code> 从邮槽读取数据。</li>
+</ul>
+</li>
+</ol>
+<h3 id="示例："><a href="#示例：" class="headerlink" title="示例："></a>示例：</h3><p><strong>服务端</strong>代码如下：Process1.cpp</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;Windows.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">单向进程间的通信方式，</span></span><br><span class="line"><span class="comment">只有服务端才能从邮槽中去读取消息，</span></span><br><span class="line"><span class="comment">客户端只能写入消息</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">步骤：</span></span><br><span class="line"><span class="comment">服务器去创建邮槽</span></span><br><span class="line"><span class="comment">客户端去打开邮槽 ReadFile WirteFile CreateFile</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">//准备一个缓冲区</span></span><br><span class="line">	CHAR szBuffer[MAX_PATH] = &#123; <span class="number">0</span> &#125;;</span><br><span class="line"></span><br><span class="line">	</span><br><span class="line">    <span class="comment">//服务器创建邮槽</span></span><br><span class="line">	HANDLE hMailsolt = <span class="built_in">CreateMailslot</span>(<span class="string">L&quot;\\\\.\\mailslot\\TesT&quot;</span>, <span class="number">0</span>, MAILSLOT_WAIT_FOREVER, <span class="literal">NULL</span>);</span><br><span class="line"></span><br><span class="line">	<span class="comment">//实际读写的字节数</span></span><br><span class="line">	DWORD dwRead;</span><br><span class="line">	<span class="keyword">if</span>(!<span class="built_in">ReadFile</span>(hMailsolt, szBuffer,MAX_PATH,&amp;dwRead,<span class="literal">NULL</span>))</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">//失败了直接关闭这个句柄</span></span><br><span class="line">		<span class="built_in">CloseHandle</span>(hMailsolt);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%s\r\n&quot;</span>, szBuffer);</span><br><span class="line">	<span class="built_in">CloseHandle</span>(hMailsolt);</span><br><span class="line">	<span class="built_in">system</span>(<span class="string">&quot;pause&quot;</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>客户端</strong>代码如下：Process2.cpp</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;Windows.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">//缓冲区</span></span><br><span class="line">	CHAR szBuffer[MAX_PATH] = <span class="string">&quot;Hello World!&quot;</span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//实际读取</span></span><br><span class="line">	DWORD dwRet;</span><br><span class="line">    <span class="comment">//客户端，像邮槽内写入内容</span></span><br><span class="line">	HANDLE h = <span class="built_in">CreateFile</span>(<span class="string">L&quot;\\\\.\\mailslot\\TesT&quot;</span>, GENERIC_WRITE, FILE_SHARE_READ, <span class="literal">NULL</span>, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, <span class="literal">NULL</span>);</span><br><span class="line">	<span class="comment">//往里写数据</span></span><br><span class="line">	<span class="built_in">WriteFile</span>(h, szBuffer, <span class="built_in">strlen</span>(szBuffer) + <span class="number">1</span>, &amp;dwRet, <span class="literal">NULL</span>);</span><br><span class="line">	<span class="built_in">CloseHandle</span>(h);</span><br><span class="line">	<span class="built_in">system</span>(<span class="string">&quot;pause&quot;</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>最后成功向邮槽中写入：<code>Hello world!</code></p>
+<p>如图：</p>
+<p>等待写入消息：process1.cpp</p>
+<img src="/posts/undefined/eca6065b-14a7-45c9-9e6f-46914db4d7f1.png" class="" title="img">
+
+<p>成功向邮槽中写入内容：如下：</p>
+<img src="/posts/undefined/aec13530-ea3f-471a-9edd-673945d419f2.png" class="" title="img">
+
+
+
+<h2 id="二，管道"><a href="#二，管道" class="headerlink" title="二，管道"></a>二，管道</h2><p><strong>管道（Pipe）</strong> 是一种常见的进程间通信（IPC）机制，允许不同进程之间通过共享内存区域进行数据交换。管道可以看作是一个“数据通道”，进程可以通过它将数据传递给另一个进程。</p>
+<h3 id="管道的类型："><a href="#管道的类型：" class="headerlink" title="管道的类型："></a>管道的类型：</h3><ol>
+<li><strong>匿名管道</strong>（Anonymous Pipe）：<ul>
+<li><strong>只能在父子进程之间使用，即一个父进程和它的子进程之间传递数据</strong>。</li>
+<li>通常用于在同一台机器上进行进程间的简单通信。</li>
+<li>数据传输是单向的，但可以通过创建两个管道（一个用于从父进程到子进程，另一个用于反向通信）来实现双向通信。</li>
+</ul>
+</li>
+<li><strong>命名管道</strong>（Named Pipe）：<ul>
+<li><strong>可以在任意进程之间进行通信，不限于父子进程，可以是不同计算机上的进程。</strong></li>
+<li>它通过一个名字在系统中创建，允许不同的进程通过该名字打开管道进行数据交换。</li>
+<li>命名管道支持双向通信。</li>
+</ul>
+</li>
+</ol>
+<h3 id="管道的工作原理："><a href="#管道的工作原理：" class="headerlink" title="管道的工作原理："></a>管道的工作原理：</h3><ul>
+<li><strong>写入端（写入数据）</strong>：一个进程将数据写入管道的写入端。</li>
+<li><strong>读取端（读取数据）</strong>：另一个进程从管道的读取端读取数据。</li>
+</ul>
+<h3 id="匿名管道："><a href="#匿名管道：" class="headerlink" title="匿名管道："></a>匿名管道：</h3><p>匿名管道通常在父子进程之间使用，可以在创建管道时指定管道的读端和写端。匿名管道适合于同一台计算机上进程间的简单数据传输。</p>
+<h3 id="命名管道："><a href="#命名管道：" class="headerlink" title="命名管道："></a>命名管道：</h3><p>命名管道在系统中有一个名字，可以被任何进程通过该名字访问，因此它不仅可以用于本地进程之间的通信，还可以用于跨网络进行通信。命名管道可以支持双向通信，即允许数据在两个方向上流动。</p>
+<h3 id="管道的特点："><a href="#管道的特点：" class="headerlink" title="管道的特点："></a>管道的特点：</h3><ol>
+<li><strong>单向或双向通信</strong>：匿名管道通常是单向的（写入端和读取端），而命名管道可以支持双向通信。</li>
+<li><strong>进程间通信</strong>：管道是为了进程间的通信设计的，可以在父子进程间，或者是跨进程（甚至跨计算机）进行数据交换。</li>
+<li><strong>阻塞性</strong>：默认情况下，管道是阻塞的。如果管道的缓冲区满了，写操作将被阻塞；如果管道为空，读取操作会被阻塞。</li>
+</ol>
+<h3 id="管道的创建与使用："><a href="#管道的创建与使用：" class="headerlink" title="管道的创建与使用："></a>管道的创建与使用：</h3><ul>
+<li><strong>创建管道</strong>：在 Windows 中，匿名管道使用 <code>CreatePipe</code> 函数创建；命名管道使用 <code>CreateNamedPipe</code> 函数创建。</li>
+<li><strong>读写管道</strong>：进程可以通过 <code>ReadFile</code> 和 <code>WriteFile</code> 来进行管道的读写操作。</li>
+</ul>
+<h3 id="示例：-1"><a href="#示例：-1" class="headerlink" title="示例："></a>示例：</h3><p><strong>下面两个进程是不同进程：</strong></p>
+<p>process1.cpp:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;Windows.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">//创建管道</span></span><br><span class="line">	HANDLE hPipe = <span class="built_in">CreateNamedPipe</span>(<span class="string">L&quot;\\\\.\\pipe\\test&quot;</span>,<span class="comment">//管道名名字</span></span><br><span class="line">		PIPE_ACCESS_DUPLEX| FILE_FLAG_OVERLAPPED,<span class="comment">//管道的打开方式；标志，启用重叠模式，异步</span></span><br><span class="line">		PIPE_TYPE_BYTE,<span class="comment">//管道模式，字节流</span></span><br><span class="line">		<span class="number">1</span>,<span class="comment">//最大实例数，1个就够了</span></span><br><span class="line">		<span class="number">1024</span>,<span class="comment">//输入缓冲区的字节数</span></span><br><span class="line">		<span class="number">1024</span>,<span class="comment">//输出缓冲区的字节数</span></span><br><span class="line">		<span class="number">0</span>,<span class="comment">//超时时间，默认为50毫秒</span></span><br><span class="line">		<span class="literal">NULL</span></span><br><span class="line">		);</span><br><span class="line"></span><br><span class="line">	HANDLE hEvent = <span class="built_in">CreateEvent</span>(<span class="literal">NULL</span>, TRUE, FALSE, <span class="literal">NULL</span>);</span><br><span class="line"></span><br><span class="line">	OVERLAPPED lvLap;</span><br><span class="line">	<span class="comment">//进行一下清空</span></span><br><span class="line">	<span class="built_in">ZeroMemory</span>(&amp;lvLap, <span class="built_in">sizeof</span>(lvLap));</span><br><span class="line">	<span class="comment">//然后将创建事件放入这个重叠模型中：</span></span><br><span class="line">	lvLap.hEvent = hEvent;</span><br><span class="line">	<span class="comment">//连接这个管道</span></span><br><span class="line">	<span class="built_in">ConnectNamedPipe</span>(hPipe,<span class="comment">//连接的管道句柄</span></span><br><span class="line">		&amp;lvLap<span class="comment">/*重叠模型，因为其是一个异步的所以要使用一个结构体~LPOVERLAPPED~，主要是通过这个事件进行绑定</span></span><br><span class="line"><span class="comment">				typedef struct _OVERLAPPED &#123;</span></span><br><span class="line"><span class="comment">					ULONG_PTR Internal;</span></span><br><span class="line"><span class="comment">					ULONG_PTR InternalHigh;</span></span><br><span class="line"><span class="comment">					union &#123;</span></span><br><span class="line"><span class="comment">						struct &#123;</span></span><br><span class="line"><span class="comment">							DWORD Offset;</span></span><br><span class="line"><span class="comment">							DWORD OffsetHigh;</span></span><br><span class="line"><span class="comment">						&#125; DUMMYSTRUCTNAME;</span></span><br><span class="line"><span class="comment">						PVOID Pointer;</span></span><br><span class="line"><span class="comment">					&#125; DUMMYUNIONNAME;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">					HANDLE  hEvent;</span></span><br><span class="line"><span class="comment">				&#125; OVERLAPPED, *LPOVERLAPPED;</span></span><br><span class="line"><span class="comment">		*/</span>	</span><br><span class="line">	);</span><br><span class="line">	<span class="comment">//等待信号，等待其可用</span></span><br><span class="line">	<span class="built_in">WaitForSingleObject</span>(hEvent, INFINITE);</span><br><span class="line"></span><br><span class="line">	<span class="built_in">CloseHandle</span>(hEvent);</span><br><span class="line"></span><br><span class="line">	<span class="type">char</span> szBuffer[<span class="number">0x100</span>] = &#123; <span class="number">0</span> &#125;;</span><br><span class="line">	DWORD dwSize = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">ReadFile</span>(hPipe,szBuffer,<span class="number">0x100</span>,&amp;dwSize,<span class="literal">NULL</span>);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%s\r\n&quot;</span>, szBuffer);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="type">char</span> WriteBuffer[] = <span class="string">&quot;Hello&quot;</span>;</span><br><span class="line">	DWORD dwRetSize = <span class="number">0</span>;</span><br><span class="line">	<span class="comment">//写数据</span></span><br><span class="line">	<span class="built_in">WriteFile</span>(hPipe, WriteBuffer, <span class="built_in">strlen</span>(WriteBuffer)<span class="number">+1</span>, &amp;dwRetSize, <span class="literal">NULL</span>);</span><br><span class="line"></span><br><span class="line">	<span class="built_in">system</span>(<span class="string">&quot;pause&quot;</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>process2.cpp:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;Windows.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//首先是连接管道</span></span><br><span class="line">	<span class="built_in">WaitNamedPipe</span>(<span class="string">L&quot;\\\\.\\pipe\\test&quot;</span>,</span><br><span class="line">		NMPWAIT_USE_DEFAULT_WAIT</span><br><span class="line">	);</span><br><span class="line"></span><br><span class="line">	<span class="comment">//打开管道</span></span><br><span class="line">	HANDLE hpipe = <span class="built_in">CreateFile</span>(<span class="string">L&quot;\\\\.\\pipe\\test&quot;</span>, GENERIC_READ | GENERIC_WRITE, <span class="literal">NULL</span>, <span class="literal">NULL</span>, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, <span class="literal">NULL</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="type">char</span> WriteBuffer[] = <span class="string">&quot;Hello World!&quot;</span>;</span><br><span class="line">	DWORD dwRetSize = <span class="number">0</span>;</span><br><span class="line">	<span class="comment">//写数据</span></span><br><span class="line">	<span class="built_in">WriteFile</span>(hpipe, WriteBuffer, <span class="built_in">strlen</span>(WriteBuffer) + <span class="number">1</span>, &amp;dwRetSize, <span class="literal">NULL</span>);</span><br><span class="line"></span><br><span class="line">	<span class="comment">//然后我们再读</span></span><br><span class="line">	<span class="type">char</span> szBuffer[<span class="number">0x100</span>] = &#123; <span class="number">0</span> &#125;;</span><br><span class="line">	DWORD dwSize = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">ReadFile</span>(hpipe, szBuffer, <span class="number">0x100</span>, &amp;dwSize, <span class="literal">NULL</span>);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%s\r\n&quot;</span>, szBuffer);</span><br><span class="line"></span><br><span class="line">	<span class="built_in">system</span>(<span class="string">&quot;pause&quot;</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>最后运行结果如下：</p>
+<img src="/posts/undefined/3e9e72fc-6cd1-4923-bf69-59b1cb15b553.png" class="" title="img">
+
+
+
+<h2 id="三，剪切板"><a href="#三，剪切板" class="headerlink" title="三，剪切板"></a>三，剪切板</h2><p><code>进程通信</code>的第一种方式：<strong>剪切板</strong></p>
+<p><strong>剪切板</strong>（Clipboard）是操作系统提供的一种临时存储区域，用于在不同应用程序之间传输数据。剪切板可以保存文本、图像、文件、格式化数据等信息，<strong>允许用户通过复制、剪切和粘贴操作在不同程序或不同进程之间交换数据</strong>。</p>
+<h3 id="剪切板的工作原理："><a href="#剪切板的工作原理：" class="headerlink" title="剪切板的工作原理："></a>剪切板的工作原理：</h3><ul>
+<li><strong>复制（Copy）</strong>：用户选择要复制的数据，操作系统将其保存到剪切板。</li>
+<li><strong>剪切（Cut）</strong>：用户选择要剪切的数据，操作系统将数据从源位置移至剪切板，并标记源位置为空（如删除）。</li>
+<li><strong>粘贴（Paste）</strong>：用户从剪切板粘贴数据到目标位置，操作系统将数据从剪切板传输到目标应用程序或文件。</li>
+</ul>
+<h3 id="常见的剪切板数据类型："><a href="#常见的剪切板数据类型：" class="headerlink" title="常见的剪切板数据类型："></a>常见的剪切板数据类型：</h3><ul>
+<li><strong>文本数据</strong>：普通文本（如字符串）或富文本（带格式的文本，如加粗、斜体）。</li>
+<li><strong>图像数据</strong>：位图、图形图像（如JPEG、PNG）。</li>
+<li><strong>文件数据</strong>：文件或文件路径。</li>
+<li><strong>自定义数据格式</strong>：特定应用程序定义的数据格式。</li>
+</ul>
+<h3 id="使用剪切板进行进程间通信："><a href="#使用剪切板进行进程间通信：" class="headerlink" title="使用剪切板进行进程间通信："></a>使用剪切板进行进程间通信：</h3><p>通过剪切板，两个进程（应用程序）可以共享数据。在一个进程中将数据放入剪切板，另一个进程可以读取这些数据。</p>
+<h3 id="示例：-2"><a href="#示例：-2" class="headerlink" title="示例："></a>示例：</h3><p>process1.cpp：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;Windows.h&gt;</span></span></span><br><span class="line"><span class="comment">//进程通信的本质就是共享内存</span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">1.剪切板：</span></span><br><span class="line"><span class="comment">其是有操作系统维护的一段内存区域，</span></span><br><span class="line"><span class="comment">这块内存区域，每个进程都可以访问这块内存，</span></span><br><span class="line"><span class="comment">A进程可以打开剪切板，然后写入数据</span></span><br><span class="line"><span class="comment">B进程可以打开剪切板，然后获取数据</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">//首先准备一个要传送的一个数据，共享数据</span></span><br><span class="line">	<span class="type">const</span> <span class="type">char</span> * pStr = <span class="string">&quot;this is a string&quot;</span>;<span class="comment">//共享数据</span></span><br><span class="line">	<span class="comment">//1.打开剪切板</span></span><br><span class="line">	<span class="keyword">if</span> (<span class="built_in">OpenClipboard</span>(<span class="literal">NULL</span>))<span class="comment">//NULL代表当前进程打开剪切板</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="type">char</span> * szBuffer = <span class="literal">NULL</span>;</span><br><span class="line">		<span class="comment">//剪切板数据清空</span></span><br><span class="line">		<span class="built_in">EmptyClipboard</span>();</span><br><span class="line"></span><br><span class="line">		HGLOBAL hClip = <span class="built_in">GlobalAlloc</span>(GHND,<span class="built_in">strlen</span>(pStr)<span class="number">+1</span>);</span><br><span class="line">		<span class="comment">//锁定</span></span><br><span class="line">		szBuffer = (<span class="type">char</span>*)<span class="built_in">GlobalLock</span>(hClip);</span><br><span class="line">		<span class="comment">//拷贝这段内存</span></span><br><span class="line">		<span class="comment">//strcpy(szBuffer,pStr);</span></span><br><span class="line"></span><br><span class="line">		<span class="comment">//使用 strcpy_s 替代 strcpy</span></span><br><span class="line">		<span class="built_in">strcpy_s</span>(szBuffer, <span class="built_in">strlen</span>(pStr) + <span class="number">1</span>, pStr);  <span class="comment">// 安全的拷贝</span></span><br><span class="line">		<span class="comment">//然后我们就可以解锁这段内存了</span></span><br><span class="line">		<span class="built_in">GlobalUnlock</span>(hClip);</span><br><span class="line">		</span><br><span class="line">		<span class="built_in">SetClipboardData</span>(CF_TEXT, hClip);</span><br><span class="line">		<span class="comment">//关闭掉</span></span><br><span class="line">		<span class="built_in">CloseClipboard</span>();</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">system</span>(<span class="string">&quot;pause&quot;</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>process2.cpp：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;Windows.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//1.打开剪切板</span></span><br><span class="line">	<span class="keyword">if</span> (<span class="built_in">OpenClipboard</span>(<span class="literal">NULL</span>))<span class="comment">//NULL代表当前进程打开剪切板</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">//略有不同，需要判断一下格式是否正确</span></span><br><span class="line">		<span class="keyword">if</span> (<span class="built_in">IsClipboardFormatAvailable</span>(CF_TEXT))</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="comment">//获取数据：</span></span><br><span class="line">			HGLOBAL hClip = <span class="built_in">GetClipboardData</span>(CF_TEXT);</span><br><span class="line">			<span class="comment">//拷贝出这段内存</span></span><br><span class="line">			<span class="type">char</span> * szBuffer = <span class="literal">NULL</span>;</span><br><span class="line">			<span class="comment">//锁定</span></span><br><span class="line">			szBuffer = (<span class="type">char</span>*)<span class="built_in">GlobalLock</span>(hClip);</span><br><span class="line">			<span class="comment">//然后我们就可以解锁这段内存了</span></span><br><span class="line">			<span class="built_in">GlobalUnlock</span>(hClip);</span><br><span class="line">			<span class="comment">//然后将其打印出来</span></span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">&quot;%s\r\n&quot;</span>,szBuffer);</span><br><span class="line"></span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">//关闭掉剪切板</span></span><br><span class="line">		<span class="built_in">CloseClipboard</span>();</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">system</span>(<span class="string">&quot;pause&quot;</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们可以直接运行这段代码，可以看到，剪切板多了如下内容：</p>
+<img src="/posts/undefined/8396f57c-0203-43a7-9de7-d7ca5589222d.png" class="" title="img">
+
+<p>我们再写一段代码，来读取剪切板：</p>
+<p>process2.cpp:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;Windows.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//1.打开剪切板</span></span><br><span class="line">	<span class="keyword">if</span> (<span class="built_in">OpenClipboard</span>(<span class="literal">NULL</span>))<span class="comment">//NULL代表当前进程打开剪切板</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">//略有不同，需要判断一下格式是否正确</span></span><br><span class="line">		<span class="keyword">if</span> (<span class="built_in">IsClipboardFormatAvailable</span>(CF_TEXT))</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="comment">//获取数据：</span></span><br><span class="line">			HGLOBAL hClip = <span class="built_in">GetClipboardData</span>(CF_TEXT);</span><br><span class="line">			<span class="comment">//拷贝出这段内存</span></span><br><span class="line">			<span class="type">char</span> * szBuffer = <span class="literal">NULL</span>;</span><br><span class="line">			<span class="comment">//锁定</span></span><br><span class="line">			szBuffer = (<span class="type">char</span>*)<span class="built_in">GlobalLock</span>(hClip);</span><br><span class="line">			<span class="comment">//然后我们就可以解锁这段内存了</span></span><br><span class="line">			<span class="built_in">GlobalUnlock</span>(hClip);</span><br><span class="line">			<span class="comment">//然后将其打印出来</span></span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">&quot;%s\r\n&quot;</span>,szBuffer);</span><br><span class="line"></span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">&quot;格式不正确\r\n&quot;</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">//关闭掉剪切板</span></span><br><span class="line">		<span class="built_in">CloseClipboard</span>();</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">system</span>(<span class="string">&quot;pause&quot;</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>我们可以看到其内容如下：</p>
+<img src="/posts/undefined/6881d5ba-1b46-4497-98b4-8d7948dccef3.png" class="" title="img">
+
+
+
+<h2 id="四，WM-COPYDATA"><a href="#四，WM-COPYDATA" class="headerlink" title="四，WM_COPYDATA"></a>四，WM_COPYDATA</h2><p><code>进程通信</code>的第二种方式：<strong>利用WM_COPYDATA</strong></p>
+<p><code>WM_COPYDATA</code> 是 Windows 消息机制中的一种特殊消息，用于进程间通信。它通常用于一个进程将数据发送到另一个进程。与其他消息不同，<code>WM_COPYDATA</code> 允许一个进程通过一个结构体传递数据，而无需通过文件或剪贴板等中介。</p>
+<h3 id="基本概念："><a href="#基本概念：" class="headerlink" title="基本概念："></a>基本概念：</h3><p><code>WM_COPYDATA</code> 消息的发送者和接收者之间通过一个 <code>COPYDATASTRUCT</code> 结构体进行数据交换。这个结构体包含了<strong>数据的指针</strong>和<strong>数据的大小</strong>等信息。</p>
+<h3 id="结构体-COPYDATASTRUCT："><a href="#结构体-COPYDATASTRUCT：" class="headerlink" title="结构体 COPYDATASTRUCT："></a>结构体 <code>COPYDATASTRUCT</code>：</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> <span class="title class_">tagCOPYDATASTRUCT</span> &#123;</span><br><span class="line">    ULONG_PTR dwData;     <span class="comment">// 自定义的标识符，可以用于传递特定的信息（如版本号等）</span></span><br><span class="line">    DWORD cbData;         <span class="comment">// 数据的大小（字节数）</span></span><br><span class="line">    PVOID lpData;         <span class="comment">// 指向数据的指针</span></span><br><span class="line">&#125; COPYDATASTRUCT;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p><strong>dwData</strong>：可以用来传递一些额外的标识信息，通常是一个指针或者整数。</p>
+</li>
+<li><p><strong>cbData</strong>：要发送的数据的大小（字节数）。</p>
+</li>
+<li><p><strong>lpData</strong>：指向要传输的数据的指针。</p>
+</li>
+</ul>
+<h3 id="发送-WM-COPYDATA-消息："><a href="#发送-WM-COPYDATA-消息：" class="headerlink" title="发送 WM_COPYDATA 消息："></a>发送 <code>WM_COPYDATA</code> 消息：</h3><p><code>WM_COPYDATA</code> 消息通过 <code>SendMessage</code> 或 <code>PostMessage</code> 发送。发送者通过该消息将数据传递给接收者。</p>
+<h3 id="示例：-3"><a href="#示例：-3" class="headerlink" title="示例："></a>示例：</h3><p>首先我们创建两个<code>基于对话框</code>的新项目：如下：</p>
+<img src="/posts/undefined/d51d7fd4-a800-4f1e-96c4-4c4d539bbd36.png" class="" title="img">
+
+<p>创建完毕以后点击<code>资源视图</code>，再点击<code>Dialog</code>，如下：</p>
+<img src="/posts/undefined/image-20250126004857833.png" class="" title="image-20250126004857833">
+
+<p>他就会弹出一个可视化<code>对话框</code>，然后双击确定按钮：</p>
+<img src="/posts/undefined/image-20250126004949876.png" class="" title="image-20250126004949876">
+
+<p>然后我写入如下代码：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">CwmcopydataDlg::OnBnClickedOk</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">// <span class="doctag">TODO:</span> 在此添加控件通知处理程序代码</span></span><br><span class="line">	<span class="comment">//wm_copydata其就是一个消息,第一个参数：传递的窗口句柄；第二个参数：是一个结构体tagCOPYDATASTRUCT</span></span><br><span class="line">	<span class="comment">/*</span></span><br><span class="line"><span class="comment">	typedef struct tagCOPYDATASTRUCT &#123;</span></span><br><span class="line"><span class="comment">	  ULONG_PTR dwData;		//自定义数据 </span></span><br><span class="line"><span class="comment">	  DWORD     cbData;		//数据的大小</span></span><br><span class="line"><span class="comment">	  PVOID     lpData;		//数据的指针</span></span><br><span class="line"><span class="comment">	&#125; COPYDATASTRUCT, *PCOPYDATASTRUCT; </span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">	其本质上来说还是共享内存</span></span><br><span class="line"><span class="comment">	*/</span></span><br><span class="line">	</span><br><span class="line">	<span class="comment">//首先找到窗口句柄</span></span><br><span class="line">	HWND hRecv = ::<span class="built_in">FindWindow</span>(<span class="literal">NULL</span>, _T(<span class="string">&quot;123&quot;</span>));</span><br><span class="line">	<span class="comment">//发送内容</span></span><br><span class="line">	CString strDataToSend = _T(<span class="string">&quot;HELLO COPY DATA&quot;</span>);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">if</span> (hRecv != <span class="literal">NULL</span>)<span class="comment">//判断该窗口是否有效</span></span><br><span class="line">	&#123;</span><br><span class="line">		COPYDATASTRUCT cpd;</span><br><span class="line">		cpd.cbData = strDataToSend.<span class="built_in">GetLength</span>() * <span class="built_in">sizeof</span>(TCHAR);</span><br><span class="line">		cpd.dwData = <span class="number">0</span>;</span><br><span class="line">		cpd.lpData = (PVOID)strDataToSend.<span class="built_in">GetBuffer</span>(<span class="number">0</span>);</span><br><span class="line">		::<span class="built_in">SendMessage</span>(hRecv, WM_COPYDATA, (WPARAM)<span class="built_in">AfxGetApp</span>()-&gt;m_pMainWnd, (LPARAM)&amp;cpd);</span><br><span class="line">	&#125;</span><br><span class="line">	CDialogEx::<span class="built_in">OnOK</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>继续打开另外一个项目，然后右键，点击<code>类向导</code>：</p>
+<img src="/posts/undefined/image-20250126005127805.png" class="" title="image-20250126005127805">
+
+<p>然后将其<code>Caption</code>设置为<code>123</code>，如下：</p>
+<img src="/posts/undefined/image-20250126010228884.png" class="" title="image-20250126010228884">
+
+
+
+<p>点击<code>消息</code>，然后输入<code>WM_COPYDATA</code>：如下</p>
+<img src="/posts/undefined/image-20250126005250512.png" class="" title="image-20250126005250512">
+
+<p>写入如下代码：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">BOOL <span class="title">Cwmcopydata2Dlg::OnCopyData</span><span class="params">(CWnd* pWnd, COPYDATASTRUCT* pCopyDataStruct)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">// <span class="doctag">TODO:</span> 在此添加消息处理程序代码和/或调用默认值</span></span><br><span class="line">	LPCTSTR szText = (LPCTSTR)pCopyDataStruct-&gt;lpData;</span><br><span class="line">	DWORD dwLen = pCopyDataStruct-&gt;cbData;</span><br><span class="line">	TCHAR szRecvText[<span class="number">1024</span>] = &#123; <span class="number">0</span> &#125;;</span><br><span class="line">	<span class="built_in">memcpy</span>(szRecvText, szText, dwLen);</span><br><span class="line">	<span class="built_in">MessageBox</span>(szRecvText);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> CDialogEx::<span class="built_in">OnCopyData</span>(pWnd, pCopyDataStruct);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>先运行后者，再运行前者，然后点击前者的确定按钮我们会发现，其弹窗在后者窗口上，成功实现了进程通信。</p>
+<p>如下：</p>
+<img src="/posts/undefined/image-20250126011133489.png" class="" title="image-20250126011133489">
+
+<p>左侧是发送端，右侧是接受端，我们可以看到点击发送端确定按钮，就成功发送过去了。</p>
+<h3 id="说明："><a href="#说明：" class="headerlink" title="说明："></a>说明：</h3><ul>
+<li>发送端使用 <code>SendMessage</code> 将数据通过 <code>WM_COPYDATA</code> 消息发送给接收端。</li>
+<li>接收端的窗口过程会处理 <code>WM_COPYDATA</code> 消息，提取数据并可以进行后续处理。</li>
+</ul>
+<h3 id="优点："><a href="#优点：" class="headerlink" title="优点："></a>优点：</h3><ul>
+<li><code>WM_COPYDATA</code> 是一种相对简单且高效的进程间通信方式，特别适用于跨进程的数据交换。</li>
+<li>与管道、套接字等方法相比，它更适合小规模的数据传递。</li>
+</ul>
+<h3 id="注意："><a href="#注意：" class="headerlink" title="注意："></a>注意：</h3><ul>
+<li>发送的数据需要遵循约定的格式，以便接收端能够正确解码。</li>
+<li>数据大小和类型需要通过 <code>COPYDATASTRUCT</code> 明确指定。</li>
+</ul>
+<h2 id="五，文件映射"><a href="#五，文件映射" class="headerlink" title="五，文件映射"></a>五，文件映射</h2><p><code>进程通信</code>的第三种方式：<strong>文件映射</strong></p>
+<p><strong>文件映射</strong>（File Mapping）是Windows操作系统提供的一种机制，允许<strong>将磁盘上的文件</strong>映射到<strong>进程的虚拟内存空间</strong>，<strong>使得文件内容可以像访问内存一样被进程操作</strong>。文件映射的一个重要优势是，它能够在多个进程之间共享文件内容，从而实现进程间通信（IPC），并且可以避免频繁的磁盘I&#x2F;O操作，提高性能。</p>
+<h3 id="文件映射的工作原理："><a href="#文件映射的工作原理：" class="headerlink" title="文件映射的工作原理："></a>文件映射的工作原理：</h3><p>通过文件映射，操作系统<strong>将磁盘上的文件内容映射到内存中，进程可以直接访问这些映射的内存区域，就像访问普通的内存一样</strong>。文件内容并不会立即加载到内存，而是根据访问需要按需加载。这种机制可以减少内存的消耗，尤其是在处理大文件时。</p>
+<h3 id="文件映射的关键概念："><a href="#文件映射的关键概念：" class="headerlink" title="文件映射的关键概念："></a>文件映射的关键概念：</h3><ol>
+<li><strong>文件映射对象（File Mapping Object）</strong>： 文件映射对象是一个在内存中的结构，它表示了文件映射的映射区域。通过文件映射对象，操作系统能够管理文件的内存映射。</li>
+<li><strong>内存视图（Memory View）</strong>： 内存视图是应用程序映射到其地址空间的文件的一部分。多个进程可以共享同一个文件映射对象，但每个进程都有自己的内存视图。</li>
+</ol>
+<h3 id="文件映射的主要步骤："><a href="#文件映射的主要步骤：" class="headerlink" title="文件映射的主要步骤："></a>文件映射的主要步骤：</h3><ol>
+<li><strong>创建或打开文件映射对象</strong>：首先，使用 <code>CreateFileMapping</code> 函数创建一个文件映射对象，或者打开一个已存在的文件映射对象。</li>
+<li><strong>映射文件到进程的内存</strong>：通过 <code>MapViewOfFile</code> 函数将文件的某一部分映射到进程的虚拟地址空间。</li>
+<li><strong>操作映射的内存</strong>：映射到内存中的文件内容可以直接通过指针进行读写。</li>
+<li><strong>解除映射并关闭文件映射</strong>：操作完毕后，通过 <code>UnmapViewOfFile</code> 解除映射，并通过 <code>CloseHandle</code> 关闭文件映射对象。</li>
+</ol>
+<h3 id="常用API："><a href="#常用API：" class="headerlink" title="常用API："></a>常用API：</h3><p><strong>CreateFileMapping</strong>：创建或打开一个文件映射对象。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">HANDLE <span class="title">CreateFileMapping</span><span class="params">(</span></span></span><br><span class="line"><span class="params"><span class="function">    HANDLE hFile,                     <span class="comment">// 文件句柄</span></span></span></span><br><span class="line"><span class="params"><span class="function">    LPSECURITY_ATTRIBUTES lpAttributes,<span class="comment">// 安全描述符</span></span></span></span><br><span class="line"><span class="params"><span class="function">    DWORD flProtect,                   <span class="comment">// 文件保护标志</span></span></span></span><br><span class="line"><span class="params"><span class="function">    DWORD dwMaximumSizeHigh,           <span class="comment">// 最大文件大小（高32位）</span></span></span></span><br><span class="line"><span class="params"><span class="function">    DWORD dwMaximumSizeLow,            <span class="comment">// 最大文件大小（低32位）</span></span></span></span><br><span class="line"><span class="params"><span class="function">    LPCTSTR lpName                     <span class="comment">// 映射对象的名称</span></span></span></span><br><span class="line"><span class="params"><span class="function">)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p><strong>MapViewOfFile</strong>：将文件映射到进程的内存空间。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">LPVOID <span class="title">MapViewOfFile</span><span class="params">(</span></span></span><br><span class="line"><span class="params"><span class="function">    HANDLE hFileMappingObject,  <span class="comment">// 文件映射对象句柄</span></span></span></span><br><span class="line"><span class="params"><span class="function">    DWORD dwDesiredAccess,      <span class="comment">// 访问权限</span></span></span></span><br><span class="line"><span class="params"><span class="function">    DWORD dwFileOffsetHigh,     <span class="comment">// 文件偏移（高32位）</span></span></span></span><br><span class="line"><span class="params"><span class="function">    DWORD dwFileOffsetLow,      <span class="comment">// 文件偏移（低32位）</span></span></span></span><br><span class="line"><span class="params"><span class="function">    SIZE_T dwNumberOfBytesToMap <span class="comment">// 映射字节数</span></span></span></span><br><span class="line"><span class="params"><span class="function">)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p><strong>UnmapViewOfFile</strong>：解除文件映射。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">BOOL <span class="title">UnmapViewOfFile</span><span class="params">(LPCVOID lpBaseAddress)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p><strong>CloseHandle</strong>：关闭文件映射对象。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">BOOL <span class="title">CloseHandle</span><span class="params">(HANDLE hObject)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="示例：-4"><a href="#示例：-4" class="headerlink" title="示例："></a>示例：</h3></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://Iconabc.github.io">icon</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://iconabc.github.io/posts/e82b2357.html">https://iconabc.github.io/posts/e82b2357.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://Iconabc.github.io" target="_blank">icon'Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%AD%A6%E5%99%A8%E5%8C%96%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0/">武器化开发学习</a><a class="post-meta__tags" href="/tags/%E5%85%8D%E6%9D%80/">免杀</a></div><div class="post-share"><div class="social-share" data-image="/img/mbc.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/posts/111fe729.html" title="04-Win32编程"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">04-Win32编程</div></div><div class="info-2"><div class="info-item-1">Win32编程一,消息机制创建窗口的五个步骤：  注册窗口：RegisterClass&#x2F;RegisterClassEx  用户窗口：多种多样的，我们需要提前去注册，填充一个数据结构(窗口的清单) 系统窗口   创建窗口：CreateWindow&#x2F;CreateWindowEx  显示刷新窗口：ShowWindow&#x2F;UpdateWindow  消息循环：GetMessage&#x2F;PeekMessage  消息处理：LRESULT CALLBACK WinProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM...</div></div></div></a><a class="pagination-related" href="/posts/cc605c90.html" title="03-C/C++软件逆向技术"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">03-C/C++软件逆向技术</div></div><div class="info-2"><div class="info-item-1">C&#x2F;C++软件逆向技术分析定位目标功能：(第一天)设置一下Debug：如下   设置一下Release：如下   对如下代码生成不同版本的exe: 123456#include &lt;stdio.h&gt;int main() &#123;	printf(&quot;hello Re&quot;);	return...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/posts/e11d0610.html" title="01-C++基础学习"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-12-22</div><div class="info-item-2">01-C++基础学习</div></div><div class="info-2"><div class="info-item-1">C&#x2F;C++基础学习环境搭建windows环境基础搭建：这个不介绍一路下一步就行 linux环境基础搭建： 我是搭建在Ubuntu上的： 1234567891011#首先更新一下源sudo apt update#安装一个文本编辑器sudo apt install vim#安装gccsudo apt install gcc#安装g++sudo apt install g++  让我来写第一个代码并将其编译看看是否已经下载完毕： Hello.c: 12345#include &lt;stdio.h&gt;int main()&#123;    printf(&quot;Hello World&quot;);    return 0;&#125;  编译.c文件成可执行文件： gcc -o hello hello.c   执行这个可执行文件：   因为我们的Ubuntu系统是64位的系统，所以他也默认给我们生成了64位的文件。 我们可以下载如下库这样就支持我们编译成32位的文件了 12sudo apt install gcc-multilibsudo apt install...</div></div></div></a><a class="pagination-related" href="/posts/be4abe2b.html" title="02-x86_64架构汇编语言"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-12-26</div><div class="info-item-2">02-x86_64架构汇编语言</div></div><div class="info-2"><div class="info-item-1">x86_64架构汇编语言汇编的概念与常用寄存器汇编语言（Assembly Language）是一种低级编程语言，直接与计算机硬件交互。它是机器语言的符号化表示，人类可以通过汇编语言编写程序，而计算机则通过汇编语言指令与硬件进行通信。汇编语言具有与特定计算机体系结构（如 x86、ARM 等）密切相关的语法和指令集。 主要特点：  低级语言：汇编语言离机器语言非常近，指令与机器代码几乎一一对应。 面向硬件：汇编语言能精确控制计算机硬件资源，如寄存器、内存、I&#x2F;O...</div></div></div></a><a class="pagination-related" href="/posts/cc605c90.html" title="03-C&#x2F;C++软件逆向技术"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-01-11</div><div class="info-item-2">03-C&#x2F;C++软件逆向技术</div></div><div class="info-2"><div class="info-item-1">C&#x2F;C++软件逆向技术分析定位目标功能：(第一天)设置一下Debug：如下   设置一下Release：如下   对如下代码生成不同版本的exe: 123456#include &lt;stdio.h&gt;int main() &#123;	printf(&quot;hello Re&quot;);	return...</div></div></div></a><a class="pagination-related" href="/posts/111fe729.html" title="04-Win32编程"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-01-25</div><div class="info-item-2">04-Win32编程</div></div><div class="info-2"><div class="info-item-1">Win32编程一,消息机制创建窗口的五个步骤：  注册窗口：RegisterClass&#x2F;RegisterClassEx  用户窗口：多种多样的，我们需要提前去注册，填充一个数据结构(窗口的清单) 系统窗口   创建窗口：CreateWindow&#x2F;CreateWindowEx  显示刷新窗口：ShowWindow&#x2F;UpdateWindow  消息循环：GetMessage&#x2F;PeekMessage  消息处理：LRESULT CALLBACK WinProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM...</div></div></div></a></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="disqus_thread"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/mbc.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">icon</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">23</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">14</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Iconabc"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/Iconabc/" target="_blank" title="Github"><i class="fab fa-github" style="color: #hdhfbb;"></i></a><a class="social-icon" href="mailto:2899345299@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #000000;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">up up</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E9%80%9A%E4%BF%A1"><span class="toc-number">1.</span> <span class="toc-text">进程通信</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%EF%BC%8C%E9%82%AE%E6%A7%BD"><span class="toc-number">1.1.</span> <span class="toc-text">一，邮槽</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%82%AE%E6%A7%BD%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86%EF%BC%9A"><span class="toc-number">1.1.1.</span> <span class="toc-text">邮槽的工作原理：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%B9%E7%82%B9%EF%BC%9A"><span class="toc-number">1.1.2.</span> <span class="toc-text">特点：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF%EF%BC%9A"><span class="toc-number">1.1.3.</span> <span class="toc-text">使用场景：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%82%AE%E6%A7%BD%E7%9A%84%E5%88%9B%E5%BB%BA%E4%B8%8E%E4%BD%BF%E7%94%A8%EF%BC%9A"><span class="toc-number">1.1.4.</span> <span class="toc-text">邮槽的创建与使用：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B%EF%BC%9A"><span class="toc-number">1.1.5.</span> <span class="toc-text">示例：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%EF%BC%8C%E7%AE%A1%E9%81%93"><span class="toc-number">1.2.</span> <span class="toc-text">二，管道</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%A1%E9%81%93%E7%9A%84%E7%B1%BB%E5%9E%8B%EF%BC%9A"><span class="toc-number">1.2.1.</span> <span class="toc-text">管道的类型：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%A1%E9%81%93%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86%EF%BC%9A"><span class="toc-number">1.2.2.</span> <span class="toc-text">管道的工作原理：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8C%BF%E5%90%8D%E7%AE%A1%E9%81%93%EF%BC%9A"><span class="toc-number">1.2.3.</span> <span class="toc-text">匿名管道：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%91%BD%E5%90%8D%E7%AE%A1%E9%81%93%EF%BC%9A"><span class="toc-number">1.2.4.</span> <span class="toc-text">命名管道：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%A1%E9%81%93%E7%9A%84%E7%89%B9%E7%82%B9%EF%BC%9A"><span class="toc-number">1.2.5.</span> <span class="toc-text">管道的特点：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%A1%E9%81%93%E7%9A%84%E5%88%9B%E5%BB%BA%E4%B8%8E%E4%BD%BF%E7%94%A8%EF%BC%9A"><span class="toc-number">1.2.6.</span> <span class="toc-text">管道的创建与使用：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B%EF%BC%9A-1"><span class="toc-number">1.2.7.</span> <span class="toc-text">示例：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%EF%BC%8C%E5%89%AA%E5%88%87%E6%9D%BF"><span class="toc-number">1.3.</span> <span class="toc-text">三，剪切板</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%89%AA%E5%88%87%E6%9D%BF%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86%EF%BC%9A"><span class="toc-number">1.3.1.</span> <span class="toc-text">剪切板的工作原理：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E7%9A%84%E5%89%AA%E5%88%87%E6%9D%BF%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%EF%BC%9A"><span class="toc-number">1.3.2.</span> <span class="toc-text">常见的剪切板数据类型：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E5%89%AA%E5%88%87%E6%9D%BF%E8%BF%9B%E8%A1%8C%E8%BF%9B%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1%EF%BC%9A"><span class="toc-number">1.3.3.</span> <span class="toc-text">使用剪切板进行进程间通信：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B%EF%BC%9A-2"><span class="toc-number">1.3.4.</span> <span class="toc-text">示例：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%EF%BC%8CWM-COPYDATA"><span class="toc-number">1.4.</span> <span class="toc-text">四，WM_COPYDATA</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5%EF%BC%9A"><span class="toc-number">1.4.1.</span> <span class="toc-text">基本概念：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%93%E6%9E%84%E4%BD%93-COPYDATASTRUCT%EF%BC%9A"><span class="toc-number">1.4.2.</span> <span class="toc-text">结构体 COPYDATASTRUCT：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%91%E9%80%81-WM-COPYDATA-%E6%B6%88%E6%81%AF%EF%BC%9A"><span class="toc-number">1.4.3.</span> <span class="toc-text">发送 WM_COPYDATA 消息：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B%EF%BC%9A-3"><span class="toc-number">1.4.4.</span> <span class="toc-text">示例：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%B4%E6%98%8E%EF%BC%9A"><span class="toc-number">1.4.5.</span> <span class="toc-text">说明：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%98%E7%82%B9%EF%BC%9A"><span class="toc-number">1.4.6.</span> <span class="toc-text">优点：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%EF%BC%9A"><span class="toc-number">1.4.7.</span> <span class="toc-text">注意：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%EF%BC%8C%E6%96%87%E4%BB%B6%E6%98%A0%E5%B0%84"><span class="toc-number">1.5.</span> <span class="toc-text">五，文件映射</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E6%98%A0%E5%B0%84%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86%EF%BC%9A"><span class="toc-number">1.5.1.</span> <span class="toc-text">文件映射的工作原理：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E6%98%A0%E5%B0%84%E7%9A%84%E5%85%B3%E9%94%AE%E6%A6%82%E5%BF%B5%EF%BC%9A"><span class="toc-number">1.5.2.</span> <span class="toc-text">文件映射的关键概念：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E6%98%A0%E5%B0%84%E7%9A%84%E4%B8%BB%E8%A6%81%E6%AD%A5%E9%AA%A4%EF%BC%9A"><span class="toc-number">1.5.3.</span> <span class="toc-text">文件映射的主要步骤：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8API%EF%BC%9A"><span class="toc-number">1.5.4.</span> <span class="toc-text">常用API：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B%EF%BC%9A-4"><span class="toc-number">1.5.5.</span> <span class="toc-text">示例：</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/111fe729.html" title="04-Win32编程">04-Win32编程</a><time datetime="2025-01-25T14:13:28.000Z" title="发表于 2025-01-25 22:13:28">2025-01-25</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/e82b2357.html" title="05-进程通信">05-进程通信</a><time datetime="2025-01-25T13:35:11.000Z" title="发表于 2025-01-25 21:35:11">2025-01-25</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/cc605c90.html" title="03-C/C++软件逆向技术">03-C/C++软件逆向技术</a><time datetime="2025-01-11T13:52:21.000Z" title="发表于 2025-01-11 21:52:21">2025-01-11</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/be4abe2b.html" title="02-x86_64架构汇编语言">02-x86_64架构汇编语言</a><time datetime="2024-12-26T08:44:51.000Z" title="发表于 2024-12-26 16:44:51">2024-12-26</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/e11d0610.html" title="01-C++基础学习">01-C++基础学习</a><time datetime="2024-12-22T01:59:42.000Z" title="发表于 2024-12-22 09:59:42">2024-12-22</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url(/img/shuai.jpg);"><div id="footer-wrap"><div class="copyright">&copy;2023 - 2025 By icon</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text"><a href="/">icon</a> is striving to become stronger!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>(() => {
+  const isShuoshuo = GLOBAL_CONFIG_SITE.isShuoshuo
+
+  const disqusReset = conf => {
+    window.DISQUS && window.DISQUS.reset({
+      reload: true,
+      config: conf
+    })
+  }
+
+  const loadDisqus = (el, path) => {
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyDisqus = () => {
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+
+    window.disqus_identifier = isShuoshuo ? path : '/posts/e82b2357.html'
+    window.disqus_url = isShuoshuo ? location.origin + path : 'https://iconabc.github.io/posts/e82b2357.html'
+
+    const disqus_config = function () {
+      this.page.url = disqus_url
+      this.page.identifier = disqus_identifier
+      this.page.title = '05-进程通信'
+    }
+
+    if (window.DISQUS) disqusReset(disqus_config)
+    else {
+      const script = document.createElement('script')
+      script.src = 'https://.disqus.com/embed.js'
+      script.setAttribute('data-timestamp', +new Date())
+      document.head.appendChild(script)
+    }
+
+    btf.addGlobalFn('themeChange', () => disqusReset(disqus_config), 'disqus')
+  }
+
+  const getCount = async() => {
+    try {
+      const eleGroup = document.querySelector('#post-meta .disqus-comment-count')
+      if (!eleGroup) return
+      const cleanedLinks = eleGroup.href.replace(/#post-comment$/, '')
+
+      const res = await fetch(`https://disqus.com/api/3.0/threads/set.json?forum=&api_key=&thread:link=${cleanedLinks}`,{
+        method: 'GET'
+      })
+      const result = await res.json()
+
+      const count = result.response.length ? result.response[0].posts : 0
+      eleGroup.textContent = count
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+  if (isShuoshuo) {
+    'Disqus' === 'Disqus'
+      ? window.shuoshuoComment = { loadComment: loadDisqus }
+      : window.loadOtherComment = loadDisqus
+    return
+  }
+
+  if ('Disqus' === 'Disqus' || !false) {
+    if (false) btf.loadComment(document.getElementById('disqus_thread'), loadDisqus)
+    else {
+      loadDisqus()
+      
+    }
+  } else {
+    window.loadOtherComment = loadDisqus
+  }
+})()</script></div><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-heart.min.js" async="async" mobile="false"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
